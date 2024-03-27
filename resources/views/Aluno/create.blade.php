@@ -45,9 +45,9 @@
                 <form id="alunoForm" action="{{ route('Aluno.store') }}" method="POST" class="form">
                     @csrf
                     <h1 class="text-center mb-4 display-6">Cadastro de Aluno</h1>
-
                     <input type="number" step="0.01" id="altura" name="altura" class="form-control rounded mb-4"
-                        placeholder="Altura (cm)" required title="Insira sua altura em cm">
+                        placeholder="Altura  (cm)" id="floatingInput" required title="Insira sua altura em cm">
+
 
                     <input type="number" step="0.01" id="peso" name="peso" class="form-control rounded mb-4"
                         placeholder="Peso (Kg)" required title="Insira seu peso em Kg">

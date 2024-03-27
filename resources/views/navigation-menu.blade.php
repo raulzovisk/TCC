@@ -1,3 +1,5 @@
+
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -15,9 +17,14 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Fir') }}
+                    <x-nav-link href="{{ route('Aluno.create') }}" :active="request()->routeIs('Aluno.create')">
+                        {{ __('Cadastro Aluno') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('Aluno.show') }}" :active="request()->routeIs('Aluno.show')">
+                        {{ __('Dados Aluno') }}
+                    </x-nav-link>
+                    
+                    
                 </div>
             </div>
             

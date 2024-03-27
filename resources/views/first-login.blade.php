@@ -1,7 +1,12 @@
-<script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
 <style>
     body {
         background: rgb(230, 229, 229);
@@ -45,20 +50,16 @@ integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
     }
 </style>
 <x-app-layout>
-<body>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Cadastro') }}
-        </h2>
-    </x-slot>
-    <div class="opcoes-container">
-        <div class="opcao">
-            <a href="{{ route('Aluno.create') }}">Cadastro de Aluno</a>
-        </div>
-        <div class="opcao">
-            <a href="{{ route('Instrutor.index') }}">Instrutor</a>
-        </div>
-    </div>
 
-</body>
+    <body>
+        <div class="opcoes-container mt-5" >
+            <div class="opcao">
+                <a href="{{ route('Aluno.create') }}">Cadastro de Aluno</a>
+            </div>
+            <div class="opcao">
+                <a href="{{ route('Instrutor.index') }}">Instrutor</a>
+            </div>
+        </div>
+
+    </body>
 </x-app-layout>

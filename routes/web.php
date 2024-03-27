@@ -74,10 +74,11 @@ Route::get('/Aluno', [AlunoController::class, 'index'])->name('Aluno.index')->mi
 Route::get('/Aluno/create', [AlunoController::class, 'create'])->name('Aluno.create')->middleware('auth');
 Route::post('/Aluno/create', [AlunoController::class, 'store'])->name('Aluno.store')->middleware('auth');
 Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.edit')->middleware('auth');
-Route::post('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
+Route::put('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
 Route::get('/Aluno/delete/{id}', [AlunoController::class, 'delete'])->name('Aluno.delete')->middleware('auth');
+Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
+
 Route::get('/aluno/teste', [AlunoController::class, 'teste'])->name('aluno.teste')->middleware('auth');
-Route::post('/first-login/processar', [AlunoController::class, 'processarFirstLogin'])->name('first-login.processar')->middleware('auth');
 
 
 Route::get('/Categoria', [CategoriaController::class, 'index'])->name('Categoria.index')->middleware('auth');

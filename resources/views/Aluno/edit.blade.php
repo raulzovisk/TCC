@@ -6,15 +6,16 @@
 <style>
     body {
         background: rgb(230, 229, 229);
-        font-family: 'Montserrat', sans-serif;}
+        font-family: 'Montserrat', sans-serif;
+    }
 
-        .btn-primary {
-            background-color: #0d6efd !important
-        }
+    .btn-success {
+        background-color: #157347 !important
+    }
 
-        .btn-primary:hover {
-            background-color:  #0b4397 !important
-        }
+    .btn-success:hover {
+        background-color: #105535 !important
+    }
     }
 </style>
 
@@ -70,7 +71,7 @@
                                 </div>
                         </div>
                         <div class="text-center mt-3">
-                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                            <button type="submit" class="btn btn-success">Salvar Alterações</button>
                         </div>
                     </div>
                 </div>

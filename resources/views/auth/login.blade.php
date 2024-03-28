@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('estilo.css') }}">
-    <title>Seu Título</title>
+    <title>Login/Registro</title>
 </head>
 
 <body>
@@ -34,7 +34,7 @@
         <div class="form-container sign-in" id="login-form">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <h1>Log In</h1>
+                <h1>Log In </h1>
                 <span></span>
                 <input type="email" name="email" placeholder="Email" required autofocus>
                 <input type="password" name="password" placeholder="Password" required>

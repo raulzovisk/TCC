@@ -14,12 +14,12 @@
         }
 
 
-        .btn-success {
-            background-color: #157347 !important;
+        .btn-warning {
+            background-color: #FFCA2C !important;
         }
 
-        .btn-success:hover {
-            background-color: #105535 !important;
+        .btn-warning:hover {
+            background-color: #e4b424 !important;
         }
     </style>
 </head>
@@ -41,12 +41,12 @@
                         </div>
                         <div class="text-center mt-3">
                             <a href="{{ route('Aluno.edit', $aluno->id) }}" type="submit" id="submitButton"
-                                class="btn btn-success">Editar Dados</a>
+                                class="btn btn-warning">Editar Dados</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </x-app-layout>

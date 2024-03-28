@@ -17,7 +17,7 @@ Route::get('/', function () {
             return redirect('/dashboard');
         }
     }
-    return view('auth.login');
+    return view('welcome');
 });
 
 
@@ -77,7 +77,6 @@ Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.ed
 Route::put('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
 Route::get('/Aluno/delete/{id}', [AlunoController::class, 'delete'])->name('Aluno.delete')->middleware('auth');
 Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
-
 Route::get('/aluno/teste', [AlunoController::class, 'teste'])->name('aluno.teste')->middleware('auth');
 
 

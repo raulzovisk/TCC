@@ -42,7 +42,7 @@
     <x-app-layout>
         <div class="div w-100 h-75 mt-5">
             <div class="at">
-                <form id="alunoForm" action="{{ route('Aluno.store') }}" method="POST" class="form">
+                <form id="alunoForm" action="{{ route('Aluno.store') }}" method="POST" class="form ">
                     @csrf
                     <h1 class="text-center mb-4 display-6">Cadastro de Aluno</h1>
                     <input type="number" step="0.01" id="altura" name="altura" class="form-control rounded mb-4"

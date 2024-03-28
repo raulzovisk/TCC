@@ -14,7 +14,6 @@
         }
 
 
-
         .btn-success {
             background-color: #157347 !important;
         }
@@ -27,9 +26,9 @@
 
 <x-app-layout>
     <div class="container-fluid mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
+        <div class="row justify-content-center ">
+            <div class="col-md-8 ">
+                <div class="card shadow mb-5 bg-white rounded">
                     <div class="card-body">
                         <h1 class="text-center mb-4 display-6">Meus Dados</h1>
                         <div class="p-4">

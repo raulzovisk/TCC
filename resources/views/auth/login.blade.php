@@ -9,17 +9,24 @@
 </head>
 
 <body>
-    
+
     <div class="container" id="container">
         <div class="form-container sign-up" id="register-form">
-            <form method="POST" action="{{ route('register') }}">
+            <form  id="signupForm" method="POST" action="{{ route('register') }}">
                 @csrf
                 <h1>Criar Conta</h1>
                 <span></span>
-                <input type="text" name="name" placeholder="Nome" required autofocus>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Senha" required>
-                <input type="password" name="password_confirmation" placeholder="Confirmar Senha" required>
+                <input id="name" type="text" placeholder="Nome" name="name" :value="old('name')" required
+                    autofocus autocomplete="name">
+
+                <input id="email" type="email" placeholder="Email" name="email" :value="old('email')" required
+                    autocomplete="username">
+
+                <input name="password" id="password" placeholder="Senha" type="password" required autocomplete="new-password">
+
+                <input id="password_confirmation" type="password" placeholder="Confirmar Senha"
+                    name="password_confirmation" required autocomplete="new-password">
+
                 <button type="submit">Registrar</button>
             </form>
         </div>
@@ -31,19 +38,19 @@
                 <span></span>
                 <input type="email" name="email" placeholder="Email" required autofocus>
                 <input type="password" name="password" placeholder="Password" required>
-                <div class="block mt-4 flex"> 
+                <div class="block mt-4 flex">
                     <label for="remember_me" class="checkbox-label">
-                        <x-checkbox id="remember_me" name="remember"/>
+                        <x-checkbox id="remember_me" name="remember" />
                         <span class="ms-2 text-sm text-gray-600">{{ __('Lembrar usuário') }}</span>
                     </label>
-                    <div style='margin-right:20px;'></div> 
-                    <button type='submit'>Logar</button> 
+                    <div style='margin-right:20px;'></div>
+                    <button type='submit'>Logar</button>
                 </div>
                 <x-validation-errors class="mb-4" />
             </form>
         </div>
-        
-        
+
+
 
 
         <div class="toggle-container">
@@ -61,7 +68,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <script>
         const container = document.getElementById('container');
@@ -74,7 +81,11 @@
 
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
-        });
+        });  
+
+     
+
+
     </script>
 </body>
 

@@ -25,8 +25,8 @@ class AlunoController extends Controller
             'altura' => 'required|numeric',
             'peso' => 'required|numeric',
             'genero' => 'required|max:1',
-            'gordura' => 'required|integer',
-            'musculo' => 'required|integer',
+           // 'gordura' => 'required|integer',
+           // 'musculo' => 'required|integer',
             'idade' => 'required|integer',
             'id_user' => 'required|integer|unique:aluno,id_user'
         ]);
@@ -60,7 +60,11 @@ class AlunoController extends Controller
     public function show()
     {
         $userId = Auth::id(); // Obtém o ID do usuário autenticado
-        $aluno = Aluno::where('id_user', $userId)->firstOrFail(); // Busca o aluno pelo ID do usuário
+        $aluno = Aluno::where('id_user', $userId)->first(); // Busca o aluno pelo ID do usuário
+        if (!$aluno) {
+            return redirect()->route('dashboard')->with('message', 'Você deve se cadastrar primeiro.');
+        }
+    
         return view('aluno.show', compact('aluno')); // Retorna a view com os dados do aluno
     }
 
@@ -73,7 +77,7 @@ class AlunoController extends Controller
 
         $Aluno->altura = $request->altura;
         $Aluno->peso = $request->peso;
-        $Aluno->genero = $request->genero;
+        //$Aluno->genero = $request->genero;
         $Aluno->gordura = $request->gordura;
         $Aluno->musculo = $request->musculo;
         $Aluno->idade = $request->idade;
@@ -83,17 +87,6 @@ class AlunoController extends Controller
 
         // Busca o aluno pelo ID e pelo ID do usuário autenticado
         $aluno = Aluno::where('id', $id)->where('id_user', $userId)->firstOrFail();
-
-        // Validação dos dados recebidos do formulário
-        $request->validate([
-            'altura' => 'required',
-            'peso' => 'required',
-            'sexo' => 'required',
-            'gordura',
-            'musculo',
-            'idade' => 'required',
-            // Adicione outras regras de validação conforme necessário
-        ]);
 
         // Atualiza os dados do aluno com base nos dados do formulário
         $aluno->update($request->all());

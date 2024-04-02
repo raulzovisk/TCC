@@ -9,48 +9,25 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        $user = Auth::user();
-        if ($user->first_login) {
-            return redirect('/first-login');
-        } else {
-            return redirect('/dashboard');
-        }
-    }
     return view('welcome');
 });
 
 
-
 Route::get('/teste', function () {
-   
     return view('teste');
 });
 
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    $user = Auth::user();
-    if ($user->first_login) {
-        return redirect('/first-login');
-    }
-    return view('dashboard');
-})->name('dashboard');
-
-Route::get('/first-login', function () {
-    return view('first-login');
-})->middleware(['auth']);
 
 Route::post('/register', function (\Illuminate\Http\Request $request) {
     $user = \App\Models\User::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => \Hash::make($request->password),
-        'first_login' => true,
     ]);
 
     Auth::login($user);
 
-    return redirect('/first-login');
+    return redirect('/dashboard');
 });
 
 

@@ -28,6 +28,7 @@
                     name="password_confirmation" required autocomplete="new-password">
 
                 <button type="submit">Registrar</button>
+                
             </form>
         </div>
 
@@ -49,8 +50,6 @@
                 <x-validation-errors class="mb-4" />
             </form>
         </div>
-
-
 
 
         <div class="toggle-container">

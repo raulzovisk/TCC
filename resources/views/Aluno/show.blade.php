@@ -14,12 +14,12 @@
         }
 
 
-        .btn-warning {
-            background-color: #FFCA2C !important;
+        .btn-primary {
+            background-color: #0B5ED7 !important;
         }
 
-        .btn-warning:hover {
-            background-color: #e4b424 !important;
+        .btn-primary:hover {
+            background-color: #0c4191 !important;
         }
     </style>
 </head>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="text-center mt-3">
                             <a href="{{ route('Aluno.edit', $aluno->id) }}" type="submit" id="submitButton"
-                                class="btn btn-warning">Editar Dados</a>
+                                class="btn btn-primary">Editar Dados</a>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-
 class AdminMiddleware
 {
     /**
@@ -19,7 +18,7 @@ class AdminMiddleware
     {
         if (! auth::user()->is_admin) {
             // Redirecionar para uma página de erro ou para a página inicial
-            return redirect('/');
+            return redirect('/dashboard');
         }
     
         return $next($request);

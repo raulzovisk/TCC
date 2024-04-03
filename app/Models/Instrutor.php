@@ -13,6 +13,7 @@ class Instrutor extends Model
     use SoftDeletes;
 
     protected $table = 'instrutor';
+    protected $fillable = ['status'];
 
     public function user()
     {

@@ -86,7 +86,7 @@ Route::put('/Instrutor/update/{id}', [InstrutorController::class, 'update'])->na
 Route::get('/Instrutor/delete/{id}', [InstrutorController::class, 'delete'])->name('Instrutor.delete')->middleware('auth');
 Route::get('/instrutor/teste', [InstrutorController::class, 'teste'])->name('instrutor.teste')->middleware('auth');
 
-
+//TESTE
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/Instrutor', [InstrutorController::class, 'index'])->name('Instrutor.index')->middleware('auth');

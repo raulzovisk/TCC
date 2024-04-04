@@ -25,8 +25,8 @@ class AlunoController extends Controller
             'altura' => 'required|numeric',
             'peso' => 'required|numeric',
             'genero' => 'required|max:1',
-           // 'gordura' => 'required|integer',
-           // 'musculo' => 'required|integer',
+            // 'gordura' => 'required|integer',
+            // 'musculo' => 'required|integer',
             'idade' => 'required|integer',
             'id_user' => 'required|integer|unique:aluno,id_user'
         ]);
@@ -64,7 +64,7 @@ class AlunoController extends Controller
         if (!$aluno) {
             return redirect()->route('dashboard')->with('message', 'Você deve se cadastrar primeiro.');
         }
-    
+
         return view('aluno.show', compact('aluno')); // Retorna a view com os dados do aluno
     }
 

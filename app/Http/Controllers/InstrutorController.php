@@ -55,7 +55,6 @@ class InstrutorController extends Controller
         $Instrutor->status  = $request->status;
         $Instrutor->save();
 
-        // Busca o Instrutor pelo ID e pelo ID do usuário autenticado
 
         // Atualiza os dados do Instrutor com base nos dados do formulário
         $Instrutor->update($request->all());

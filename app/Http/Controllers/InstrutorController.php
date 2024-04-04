@@ -50,14 +50,12 @@ class InstrutorController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $userId = Auth::id();
         $Instrutor = Instrutor::findOrFail($id);
 
         $Instrutor->status  = $request->status;
         $Instrutor->save();
 
         // Busca o Instrutor pelo ID e pelo ID do usuário autenticado
-        $Instrutor = Instrutor::where('id', $id)->where('id_user', $userId)->firstOrFail();
 
         // Atualiza os dados do Instrutor com base nos dados do formulário
         $Instrutor->update($request->all());

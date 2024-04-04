@@ -31,7 +31,6 @@
                                         <th>ID</th>
                                         <th>Nome</th>
                                         <th>Status</th>
-                                        <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>

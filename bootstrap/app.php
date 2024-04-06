@@ -14,6 +14,7 @@ return Application::configure()
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+            'instrutor' => \App\Http\Middleware\CheckInstructor::class,
             
         ]);
     })

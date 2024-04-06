@@ -64,12 +64,12 @@ class InstrutorController extends Controller
     }
     public function delete(Request $request, $id)
     {
-        $obj = Instrutor::findOrFail($id);
-        $obj->delete();
-
-        return redirect()->route('instrutor.index');
-
+        $instrutor = Instrutor::findOrFail($id);
+        $instrutor->forceDelete();
+    
+        return redirect()->route('Instrutor.index');
     }
+    
     public function assign()
     {
         // Busca todos os usuários que ainda não são instrutores
@@ -80,7 +80,6 @@ class InstrutorController extends Controller
         return view('instrutor.assign', compact('users'));
     }
     
-
 
     public function assignUser($id)
 {

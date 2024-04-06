@@ -48,12 +48,13 @@
                 A transformação está ao seu alcance!
             </p>
             <form>
+               
+                <a id="abtn" href="{{ route('login') }}"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">
                 <div class="botao">
-                    <a id="abtn" href="{{ route('login') }}"
-                        class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">
-                        Comece Agora >
-                    </a>
+                    Comece Agora >
                 </div>
+            </a>
 
             </form>
         </aside>

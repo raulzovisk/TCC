@@ -1,5 +1,3 @@
-
-
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,26 +6,42 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />     <!-- LOGO -->
+                        <x-application-mark class="block h-9 w-auto" /> <!-- LOGO -->
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
                     <x-nav-link href="{{ route('Aluno.create') }}" :active="request()->routeIs('Aluno.create')">
                         {{ __('Cadastro Aluno') }}
                     </x-nav-link>
+
                     <x-nav-link href="{{ route('Aluno.show') }}" :active="request()->routeIs('Aluno.show')">
                         {{ __('Dados Aluno') }}
                     </x-nav-link>
-                    
-                    
+
+                    @if (Auth::user() && Auth::user()->is_admin)
+                        <x-nav-link href="{{ route('Instrutor.index') }}" :active="request()->routeIs('Instrutor.index')">
+                            {{ __('Instrutorers') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if (Auth::user() && Auth::user()->is_admin)
+                        <x-nav-link href="{{ route('Instrutor.assign') }}" :active="request()->routeIs('Instrutor.assign')">
+                            {{ __('Atribuir Instrutor') }}
+                        </x-nav-link>
+                    @endif
+                        
+                  
+
                 </div>
             </div>
-            
+
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <!-- Teams Dropdown -->
@@ -166,10 +180,10 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('Aluno.create') }}" :active="request()->routeIs('Aluno.create')">
                 {{ __('Cadastro Aluno') }}
-            </x-nav-link>
-            <x-responsive-nav-link href="{{ route('Aluno.show') }}" :active="request()->routeIs('Aluno.show')">
-                {{ __('Dados Aluno') }}
-            </x-nav-link>
+                </x-nav-link>
+                <x-responsive-nav-link href="{{ route('Aluno.show') }}" :active="request()->routeIs('Aluno.show')">
+                    {{ __('Dados Aluno') }}
+                    </x-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

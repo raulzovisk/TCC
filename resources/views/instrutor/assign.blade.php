@@ -16,7 +16,7 @@
             <div class="col-md-8">
                 <div class="card shadow p-3 mb-5 bg-white">
                     <div class="card-header">
-                        <h1 class="text-center mb-1 display-6">Usuários</h1>
+                        <h1 class="text-center mb-1 display-6">Atribuir Instrutor</h1>
                     </div>
                     <div class="card-body">
                         <input type="text" id="search" class="rounded-pill mb-1" onkeyup="search()"

@@ -20,7 +20,7 @@
 </style>
 
 <x-app-layout>
-    <div class="container-fluid mt-4 w-75">
+    <div class="container-fluid mt-5 w-75">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="shadow p-3 mb-5 bg-white rounded">

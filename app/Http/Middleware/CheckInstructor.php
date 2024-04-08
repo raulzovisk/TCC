@@ -15,14 +15,15 @@ class CheckInstructor
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle($request, Closure $next)
-{
-    if (! auth::user() || ! auth::user()->instrutor()) {
-        // Redirecionar para uma página de erro ou para a página inicial
-        return redirect('/dashboard');
+    {
+        $user = auth()->user()->load('instrutor');
+    
+        if (!$user || (!$user->instrutor && ! $user->is_admin)) {
+            // Redirecionar para uma página de erro ou para a página inicial
+            return redirect('/dashboard');
+        }
+        
+        return $next($request);
     }
 
-    return $next($request);
 }
-
-}
- 

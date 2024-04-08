@@ -8,6 +8,8 @@
         background: rgb(230, 229, 229);
         font-family: 'Montserrat', sans-serif;
     }
+    
+     
 </style>
 
 <x-app-layout>
@@ -36,7 +38,7 @@
                                         <tr>
                                             <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
-                                            <td><a style="color: rgb(16, 125, 161);" href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir como
+                                            <td><a style="color: rgb(16, 125, 161); font-weight: 500" href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir como
                                                     Instrutor</a></td>
                                         </tr>
                                     @endforeach

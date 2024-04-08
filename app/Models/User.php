@@ -64,7 +64,7 @@ class User extends Authenticatable
     }
     public function instrutor()
     {
-        return $this->hasOne(Instrutor::class);
+        return $this->hasOne(Instrutor::class, 'id_user', 'id');
     }
 
 }

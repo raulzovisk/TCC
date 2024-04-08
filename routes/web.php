@@ -14,9 +14,6 @@ Route::get('/', function () {
 });
 
 
-Route::get('/teste', function () {
-    return view('teste');
-});
 
 
 Route::post('/register', function (\Illuminate\Http\Request $request) {
@@ -44,7 +41,7 @@ Route::middleware([
 });
 
 
-Route::get('/Aluno', [AlunoController::class, 'index'])->name('Aluno.index')->middleware('auth');
+
 Route::get('/Aluno/create', [AlunoController::class, 'create'])->name('Aluno.create')->middleware('auth');
 Route::post('/Aluno/create', [AlunoController::class, 'store'])->name('Aluno.store')->middleware('auth');
 Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.edit')->middleware('auth');
@@ -88,8 +85,20 @@ Route::get('/instrutor/teste', [InstrutorController::class, 'teste'])->name('ins
 
 //TESTE
 
-Route::middleware(['admin'])->group(function () {
-    Route::get('/Instrutor', [InstrutorController::class, 'index'])->name('Instrutor.index')->middleware('auth');
-    Route::get('/Instrutor/assign', [InstrutorController::class, 'assign'])->name('Instrutor.assign')->middleware('auth');
-    Route::get('/Instrutor/assign/{id}', [InstrutorController::class, 'assignUser'])->name('Instrutor.assignUser')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/Instrutor', [InstrutorController::class, 'index'])->name('Instrutor.index');
+        Route::get('/Instrutor/assign', [InstrutorController::class, 'assign'])->name('Instrutor.assign');
+        Route::get('/Instrutor/assign/{id}', [InstrutorController::class, 'assignUser'])->name('Instrutor.assignUser');
+    });
+
+    Route::middleware(['instrutor'])->group(function () {
+        Route::get('/Aluno', [AlunoController::class, 'index'])->name('Aluno.index');
+    });
 });
+
+
+
+
+
+

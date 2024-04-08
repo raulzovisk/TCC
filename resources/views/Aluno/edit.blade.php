@@ -16,7 +16,7 @@
     .btn-success:hover {
         background-color: #105535 !important
     }
-    }
+    
 </style>
 
 <x-app-layout>

@@ -9,8 +9,6 @@ use App\Models\User;
 use App\Http\Middleware\AdminMiddleware;
 
 class InstrutorController extends Controller
-
-
 {
 
     //Read -> Mostra todos os instrutores na view index de instrutores.
@@ -45,14 +43,14 @@ class InstrutorController extends Controller
     public function edit(Request $request, $id)
     {
         $instrutor = Instrutor::findOrFail($id);
-        return view('Instrutor.edit', ['instrutor'=> $instrutor]);
+        return view('Instrutor.edit', ['instrutor' => $instrutor]);
 
     }
     public function update(Request $request, $id)
     {
         $Instrutor = Instrutor::findOrFail($id);
 
-        $Instrutor->status  = $request->status;
+        $Instrutor->status = $request->status;
         $Instrutor->save();
 
 
@@ -66,42 +64,38 @@ class InstrutorController extends Controller
     {
         $instrutor = Instrutor::findOrFail($id);
         $instrutor->forceDelete();
-    
-        return redirect()->route('Instrutor.index');
+
+        return redirect()->route('Instrutor.index')->with('success', 'Instrutor desvinculado com sucesso!');
+        ;
     }
-    
+
     public function assign()
     {
         // Busca todos os usuários que ainda não são instrutores
         $users = User::whereNotIn('id', function ($query) {
             $query->select('id_user')->from('instrutor');
         })->get();
-    
+
         return view('instrutor.assign', compact('users'));
     }
-    
+
 
     public function assignUser($id)
-{
-    $user = User::find($id);
-
-    $existingInstrutor = Instrutor::where('id_user', $user->id)->first();
-
-    if ($existingInstrutor) {
-        return redirect()->route('Instrutor.index')->with('error', 'Este usuário já é um instrutor.');
-    }
-
-    $instrutor = new Instrutor();
-    $instrutor->id_user = $user->id;
-    $instrutor->status = 'ativo'; 
-    $instrutor->save();
-
-    return redirect()->route('Instrutor.index');
-}
-
-
-    public function teste(Request $request)
     {
-        return view('instrutor.teste');
+        $user = User::find($id);
+
+        $existingInstrutor = Instrutor::where('id_user', $user->id)->first();
+
+        if ($existingInstrutor) {
+            return redirect()->route('Instrutor.index')->with('error', 'Este usuário já é um instrutor.');
+        }
+
+        $instrutor = new Instrutor();
+        $instrutor->id_user = $user->id;
+        $instrutor->status = 'ativo';
+        $instrutor->save();
+
+        return redirect()->route('Instrutor.index')->with('success', 'Instrutor atribuído com sucesso');
     }
+
 }

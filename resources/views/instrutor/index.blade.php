@@ -158,6 +158,13 @@
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+
 
     <script>
         function search() {
@@ -183,9 +190,16 @@
     <script>
         $(document).ready(function() {
             $('#deleteForm').on('submit', function(event) {
-                event.preventDefault(); // Impede o envio do formulário
-                $('#confirmModal').modal('hide'); // Fecha o modal
-                $(this).unbind('submit').submit(); // Desvincula o evento e envia o formulário
+                event.preventDefault();
+                $('#confirmModal').modal('hide');
+                $(this).unbind('submit').submit();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+                $("#success-alert").slideUp(500);
             });
         });
     </script>

@@ -48,7 +48,6 @@ Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.ed
 Route::put('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
 Route::get('/Aluno/delete/{id}', [AlunoController::class, 'delete'])->name('Aluno.delete')->middleware('auth');
 Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
-Route::get('/aluno/teste', [AlunoController::class, 'teste'])->name('aluno.teste')->middleware('auth');
 
 
 Route::get('/Categoria', [CategoriaController::class, 'index'])->name('Categoria.index')->middleware('auth');
@@ -81,7 +80,6 @@ Route::post('/Instrutor/create', [InstrutorController::class, 'store'])->name('I
 Route::get('/Instrutor/edit/{id}', [InstrutorController::class, 'edit'])->name('Instrutor.edit')->middleware('auth');
 Route::put('/Instrutor/update/{id}', [InstrutorController::class, 'update'])->name('Instrutor.update')->middleware('auth');
 Route::get('/Instrutor/delete/{id}', [InstrutorController::class, 'delete'])->name('Instrutor.delete')->middleware('auth');
-Route::get('/instrutor/teste', [InstrutorController::class, 'teste'])->name('instrutor.teste')->middleware('auth');
 
 //TESTE
 

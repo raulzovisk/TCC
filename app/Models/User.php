@@ -67,5 +67,18 @@ class User extends Authenticatable
         return $this->hasOne(Instrutor::class, 'id_user', 'id');
     }
 
+    public function aluno()
+    {
+        return $this->hasOne(Aluno::class, 'id_user', 'id');
+    }
+
+    public function isNotAluno()
+    {
+        return $this->aluno == null;
+    }
+    
+    
+
+
 }
 

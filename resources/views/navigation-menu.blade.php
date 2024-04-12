@@ -41,7 +41,7 @@
                         </x-nav-link>
                     @endif
 
-                    <!-- DESCOMENTAR POSSIVELMENTE
+                    
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex mt-3">
                         <x-dropdown align="right" width="60">
                             <x-slot name="trigger">
@@ -82,7 +82,7 @@
                             </x-slot>
                         </x-dropdown>
                     </div>
-                -->
+        
 
                 </div>
             </div>

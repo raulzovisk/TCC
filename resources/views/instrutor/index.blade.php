@@ -46,8 +46,10 @@
                         <h1 class="text-center mb-1 display-6">Instrutores</h1>
                     </div>
                     <div class="card-body">
-                        <input type="text" id="search" class="rounded-pill mb-1" onkeyup="search()"
-                            placeholder="Buscar por nomes..">
+                        <form action="{{ route('Instrutor.index') }}" method="GET">
+                            <input type="text" name="search" class="rounded-pill mb-1" placeholder="Buscar por nomes..">
+                            <input type="submit" value="Buscar">
+                        </form>
 
                         @if ($instrutores->count())
                             <table class="table" id="instrutorTable">
@@ -166,27 +168,7 @@
 
 
 
-    <script>
-        function search() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("instrutorTable");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
-    </script>
+    
     <script>
         $(document).ready(function() {
             $('#deleteForm').on('submit', function(event) {

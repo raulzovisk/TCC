@@ -14,8 +14,21 @@ class InstrutorController extends Controller
     //Read -> Mostra todos os instrutores na view index de instrutores.
     public function index(Request $request)
     {
-        return view('instrutor.index', ['instrutores' => Instrutor::orderBy('id', 'desc')->paginate(5)]);
+        $query = Instrutor::join('users', 'instrutor.id_user', '=', 'users.id')
+            ->select('instrutor.*', 'users.name')
+            ->orderBy('instrutor.id', 'desc');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('users.name', 'like', "%{$search}%");
+        }
+
+        $instrutores = $query->paginate(10);
+
+        return view('instrutor.index', ['instrutores' => $instrutores]);
     }
+
+
 
     //Create -> Cria a view de inserção de instrutores.
     public function create(Request $request)
@@ -78,7 +91,6 @@ class InstrutorController extends Controller
 
         return view('instrutor.assign', compact('users'));
     }
-
 
     public function assignUser($id)
     {

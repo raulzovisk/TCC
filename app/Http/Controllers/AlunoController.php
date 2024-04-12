@@ -10,8 +10,20 @@ class AlunoController extends Controller
 {
     public function index(Request $request)
     {
-        return view('aluno.index', ['alunos' => Aluno::orderBy('id', 'desc')->paginate(5)]);
+        $query = Aluno::join('users', 'aluno.id_user', '=', 'users.id')
+            ->select('aluno.*', 'users.name')
+            ->orderBy('aluno.id', 'desc');
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where('users.name', 'like', "%{$search}%");
+        }
+
+        $alunos = $query->paginate(5);
+
+        return view('aluno.index', ['alunos' => $alunos]);
     }
+
 
     public function create(Request $request)
     {
@@ -70,30 +82,22 @@ class AlunoController extends Controller
 
 
     public function update(Request $request, $id)
-    {
+{
+    $userId = Auth::id();
+    $Aluno = Aluno::findOrFail($id);
 
-        $userId = Auth::id();
-        $Aluno = Aluno::findOrFail($id);
+    $Aluno->altura = $request->altura;
+    $Aluno->peso = $request->peso;
+    //$Aluno->genero = $request->genero;
+    $Aluno->gordura = $request->gordura;
+    $Aluno->musculo = $request->musculo;
+    $Aluno->idade = $request->idade;
+    $Aluno->save();
 
-        $Aluno->altura = $request->altura;
-        $Aluno->peso = $request->peso;
-        //$Aluno->genero = $request->genero;
-        $Aluno->gordura = $request->gordura;
-        $Aluno->musculo = $request->musculo;
-        $Aluno->idade = $request->idade;
-        $Aluno->id_user = $userId;
-        $Aluno->save();
+    // Redireciona de volta com uma mensagem de sucesso
+    return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
+}
 
-
-        // Busca o aluno pelo ID e pelo ID do usuário autenticado
-        $aluno = Aluno::where('id', $id)->where('id_user', $userId)->firstOrFail();
-
-        // Atualiza os dados do aluno com base nos dados do formulário
-        $aluno->update($request->all());
-
-        // Redireciona de volta com uma mensagem de sucesso
-        return redirect()->route('Aluno.show')->with('success', 'Dados do aluno atualizados com sucesso!');
-    }
     public function delete(Request $request, $id)
     {
         $obj = Aluno::findOrFail($id);

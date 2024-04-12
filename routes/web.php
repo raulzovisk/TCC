@@ -75,11 +75,7 @@ Route::get('/Ficha/delete/{id}', [FichaController::class, 'delete'])->name('Fich
 Route::get('/ficha/teste', [FichaController::class, 'teste'])->name('ficha.teste')->middleware('auth');
 
 
-Route::get('/Instrutor/create', [InstrutorController::class, 'create'])->name('Instrutor.create')->middleware('auth');
-Route::post('/Instrutor/create', [InstrutorController::class, 'store'])->name('Instrutor.store')->middleware('auth');
-Route::get('/Instrutor/edit/{id}', [InstrutorController::class, 'edit'])->name('Instrutor.edit')->middleware('auth');
-Route::put('/Instrutor/update/{id}', [InstrutorController::class, 'update'])->name('Instrutor.update')->middleware('auth');
-Route::get('/Instrutor/delete/{id}', [InstrutorController::class, 'delete'])->name('Instrutor.delete')->middleware('auth');
+
 
 //TESTE
 
@@ -88,6 +84,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/Instrutor', [InstrutorController::class, 'index'])->name('Instrutor.index');
         Route::get('/Instrutor/assign', [InstrutorController::class, 'assign'])->name('Instrutor.assign');
         Route::get('/Instrutor/assign/{id}', [InstrutorController::class, 'assignUser'])->name('Instrutor.assignUser');
+        Route::get('/Instrutor/create', [InstrutorController::class, 'create'])->name('Instrutor.create')->middleware('auth');
+        Route::post('/Instrutor/create', [InstrutorController::class, 'store'])->name('Instrutor.store')->middleware('auth');
+        Route::get('/Instrutor/edit/{id}', [InstrutorController::class, 'edit'])->name('Instrutor.edit')->middleware('auth');
+        Route::put('/Instrutor/update/{id}', [InstrutorController::class, 'update'])->name('Instrutor.update')->middleware('auth');
+        Route::get('/Instrutor/delete/{id}', [InstrutorController::class, 'delete'])->name('Instrutor.delete')->middleware('auth');
     });
 
     Route::middleware(['instrutor'])->group(function () {

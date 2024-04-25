@@ -38,7 +38,7 @@
 
 
 <x-app-layout>
-    <div class="container mt-5">
+    <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card shadow p-3 mb-5 bg-white rounded">
@@ -90,11 +90,9 @@
 
 
                                             <td>
-                                                <form action="{{ route('Instrutor.delete', $instrutor->id) }}"
-                                                    method="GET">
+                                                <form method="GET">
                                                     @csrf
-                                                    <button type="button" data-bs-toggle="modal"
-                                                        data-bs-target="#confirmModal"
+                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $instrutor->id }}"
                                                         style="display: flex; align-items: center; background: none; border: none; color: #BB2D3B; font-weight: 500">
                                                         <span>Desvincular</span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -116,35 +114,30 @@
                                                         </svg>
                                                     </button>
                                                 </form>
-                                            </td>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="confirmModal" tabindex="-1"
-                                                aria-labelledby="confirmModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="confirmModalLabel">Desvincular
-                                                                Instrutor</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            Tem certeza de que deseja desvincular este instrutor?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cancelar</button>
-                                                            <form id="deleteForm"
-                                                                action="{{ route('Instrutor.delete', $instrutor->id) }}"
-                                                                method="GET">
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-danger">Desvincular</button>
-                                                            </form>
+                                                
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="confirmModal{{ $instrutor->id }}" tabindex="-1" aria-labelledby="confirmModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="confirmModalLabel">Desvincular Instrutor</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Tem certeza de que deseja desvincular este instrutor?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                                <form id="deleteForm" action="{{ route('Instrutor.delete', $instrutor->id) }}" method="GET">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-danger">Desvincular</button>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                
 
                                         </tr>
                                     @endforeach
@@ -168,7 +161,7 @@
 
 
 
-    
+    <!--Modal script -->
     <script>
         $(document).ready(function() {
             $('#deleteForm').on('submit', function(event) {
@@ -178,6 +171,7 @@
             });
         });
     </script>
+    
     <script>
         $(document).ready(function() {
             $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {

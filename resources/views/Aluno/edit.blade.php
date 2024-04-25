@@ -29,7 +29,7 @@
 </style>
 
 <x-app-layout>
-    <div class="container-fluid mt-4 w-75">
+    <div class="container-fluid mt-3 w-75">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="shadow p-3 mb-5 bg-white rounded">
@@ -42,13 +42,13 @@
 
                                 <div class="mb-2 ">
                                     <label for="altura" class="form-label">Altura</label>
-                                    <input type="number" class="form-control" id="altura" name="altura"
+                                    <input type="number" class="form-control rounded" id="altura" name="altura"
                                         value="{{ $aluno->altura }}" required>
                                 </div>
 
                                 <div class="mb-2">
                                     <label for="peso" class="form-label">Peso</label>
-                                    <input type="number" class="form-control" id="peso" name="peso"
+                                    <input type="number" class="form-control rounded" id="peso" name="peso"
                                         value="{{ $aluno->peso }}" required>
                                 </div>
                                 <!--
@@ -63,23 +63,23 @@
                             -->
                                 <div class="mb-2">
                                     <label for="gordura" class="form-label">Gordura</label>
-                                    <input type="number" class="form-control" id="gordura" name="gordura"
+                                    <input type="number" class="form-control rounded" id="gordura" name="gordura"
                                         value="{{ $aluno->gordura }}">
                                 </div>
 
                                 <div class="mb-2">
                                     <label for="musculo" class="form-label">Massa Muscular</label>
-                                    <input type="number" class="form-control" id="musculo" name="musculo"
+                                    <input type="number" class="form-control rounded" id="musculo" name="musculo"
                                         value="{{ $aluno->musculo }}">
                                 </div>
 
                                 <div class="mb-2">
                                     <label for="idade" class="form-label">Idade</label>
-                                    <input type="number" class="form-control" id="idade" name="idade"
+                                    <input type="number" class="form-control rounded" id="idade" name="idade"
                                         value="{{ $aluno->idade }}" required>
                                 </div>
                         </div>
-                        <div class="text-center mt-3">
+                        <div class="text-center ">
                             <button type="submit" class="btn btn-success">Salvar Alterações</button>
                         </div>
                     </div>

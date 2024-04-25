@@ -11,7 +11,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
     body {
         background: rgb(230, 229, 229);
@@ -19,25 +18,31 @@
     }
 </style>
 
+
+
 <x-app-layout>
     <div class="container mt-3">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card shadow p-3 mb-5 bg-white">
+                <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-header">
-                        <h1 class="text-center mb-1 display-6">Atribuir Instrutor</h1>
+                        <h1 class="text-center mb-1 display-6">Cadastrar</h1>
                     </div>
                     <div class="card-body">
-                        <input type="text" id="search" class="rounded-pill mb-1" onkeyup="search()"
-                            placeholder="Buscar por nomes..">
+                        <form action="{{ route('Aluno.list') }}" method="GET">
+                            <input type="text" name="search" class="rounded-pill mb-1" placeholder="Buscar por nomes..">
+                            <input type="submit" value="Buscar">
+                        </form>
+                        
 
                         @if ($users->count())
-                            <table class="table" id="usuariosTable">
+                            <table class="table" id="alunoTable">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Nome</th>
-                                        <th>Atribuição</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Cadastrar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,43 +50,42 @@
                                         <tr>
                                             <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
-                                            <td><a style="color: rgb(16, 125, 161); font-weight: 500"
-                                                    href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir como
-                                                    Instrutor</a></td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>
+                                                <a style="color: rgb(16, 125, 161); font-weight: 500"
+                                                    href="{{ route('Aluno.create', ['id' => $user->id]) }}">Cadastrar
+                                                    como
+                                                    Aluno</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                             {{ $users->links() }}
                         @else
-                            <p>{{ __('Nenhum usuário encontrado.') }}</p>
+                            <p>{{ __('Nenhum aluno encontrado.') }}</p>
                         @endif
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @if (session('success'))
+        <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    
+
 
     <script>
-        function search() {
-            var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("usuariosTable");
-            tr = table.getElementsByTagName("tr");
-
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    txtValue = td.textContent || td.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
+        $(document).ready(function() {
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+                $("#success-alert").slideUp(500);
+            });
+        });
     </script>
-
 
 </x-app-layout>

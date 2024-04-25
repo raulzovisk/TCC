@@ -42,12 +42,7 @@ Route::middleware([
 
 
 
-Route::get('/Aluno/create', [AlunoController::class, 'create'])->name('Aluno.create')->middleware('auth');
-Route::post('/Aluno/create', [AlunoController::class, 'store'])->name('Aluno.store')->middleware('auth');
-Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.edit')->middleware('auth');
-Route::put('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
-Route::get('/Aluno/delete/{id}', [AlunoController::class, 'delete'])->name('Aluno.delete')->middleware('auth');
-Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
+
 
 
 Route::get('/Categoria', [CategoriaController::class, 'index'])->name('Categoria.index')->middleware('auth');
@@ -74,7 +69,7 @@ Route::post('/Ficha/update/{id}', [FichaController::class, 'update'])->name('Fic
 Route::get('/Ficha/delete/{id}', [FichaController::class, 'delete'])->name('Ficha.delete')->middleware('auth');
 Route::get('/ficha/teste', [FichaController::class, 'teste'])->name('ficha.teste')->middleware('auth');
 
-
+Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
 
 
 //TESTE
@@ -93,6 +88,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['instrutor'])->group(function () {
         Route::get('/Aluno', [AlunoController::class, 'index'])->name('Aluno.index');
+        Route::get('/Aluno/list', [AlunoController::class, 'list'])->name('Aluno.list');
+        Route::get('/Aluno/create/{id}', [AlunoController::class, 'create'])->name('Aluno.create')->middleware('auth');
+        Route::post('/Aluno/store', [AlunoController::class, 'store'])->name('Aluno.store');
+        Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.edit')->middleware('auth');
+        Route::put('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
+        Route::get('/Aluno/delete/{id}', [AlunoController::class, 'delete'])->name('Aluno.delete')->middleware('auth');
+        
+
+
     });
 });
 

@@ -51,7 +51,6 @@
                             <input type="submit" value="Buscar">
                         </form>
 
-                        @if ($instrutores->count())
                             <table class="table" id="instrutorTable">
                                 <thead>
                                     <tr>
@@ -145,9 +144,7 @@
                             </table>
 
                             {{ $instrutores->links() }}
-                        @else
-                            <p>{{ __('Nenhum instrutor encontrado.') }}</p>
-                        @endif
+                       
                     </div>
                 </div>
             </div>

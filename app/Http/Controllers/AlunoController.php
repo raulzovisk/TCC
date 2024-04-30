@@ -73,10 +73,10 @@ class AlunoController extends Controller
 
     public function show()
 {
-    $userId = Auth::id(); // Obtém o ID do usuário autenticado
-    $aluno = Aluno::where('id_user', $userId)->first(); // Busca o aluno pelo ID do usuário
+    $userId = Auth::id();
+    $aluno = Aluno::where('id_user', $userId)->first(); 
 
-    return view('aluno.show', compact('aluno')); // Retorna a view com os dados do aluno
+    return view('aluno.show', compact('aluno')); 
 }
 
 
@@ -94,7 +94,6 @@ class AlunoController extends Controller
         $Aluno->idade = $request->idade;
         $Aluno->save();
 
-        // Redireciona de volta com uma mensagem de sucesso
         return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
     }
 
@@ -105,11 +104,6 @@ class AlunoController extends Controller
 
         return redirect()->route('Aluno.index')->with('success', 'Instrutor desvinculado com sucesso!');
         
-    }
-
-    public function teste(Request $request)
-    {
-        return view('aluno.teste');
     }
 
 }

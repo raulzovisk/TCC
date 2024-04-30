@@ -76,8 +76,12 @@ class User extends Authenticatable
     {
         return $this->aluno == null;
     }
-    
-    
+
+    public function fichas()
+    {
+        return $this->hasMany(Ficha::class, 'id_aluno'); // Supondo que 'id_aluno' seja a chave estrangeira na tabela 'fichas'
+    }
+
 
 
 }

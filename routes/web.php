@@ -42,7 +42,7 @@ Route::middleware([
 
 
 
-
+Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
 
 
 Route::get('/Categoria', [CategoriaController::class, 'index'])->name('Categoria.index')->middleware('auth');
@@ -51,7 +51,7 @@ Route::post('/Categoria/create', [CategoriaController::class, 'store'])->name('C
 Route::get('/Categoria/edit/{id}', [CategoriaController::class, 'edit'])->name('Categoria.edit')->middleware('auth');
 Route::post('/Categoria/update/{id}', [CategoriaController::class, 'update'])->name('Categoria.update')->middleware('auth');
 Route::get('/Categoria/delete/{id}', [CategoriaController::class, 'delete'])->name('Categoria.delete')->middleware('auth');
-Route::get('/categoria/teste', [CategoriaController::class, 'teste'])->name('categoria.teste')->middleware('auth');
+
 
 Route::get('/Exercicio', [ExercicioController::class, 'index'])->name('Exercicio.index')->middleware('auth');
 Route::get('/Exercicio/create', [ExercicioController::class, 'create'])->name('Exercicio.create')->middleware('auth');
@@ -59,7 +59,6 @@ Route::post('/Exercicio/create', [ExercicioController::class, 'store'])->name('E
 Route::get('/Exercicio/edit/{id}', [ExercicioController::class, 'edit'])->name('Exercicio.edit')->middleware('auth');
 Route::post('/Exercicio/update/{id}', [ExercicioController::class, 'update'])->name('Exercicio.update')->middleware('auth');
 Route::get('/Exercicio/delete/{id}', [ExercicioController::class, 'delete'])->name('Exercicio.delete')->middleware('auth');
-Route::get('/exercicio/teste', [ExercicioController::class, 'teste'])->name('exercicio.teste')->middleware('auth');
 
 Route::get('/Ficha', [FichaController::class, 'index'])->name('Ficha.index')->middleware('auth');
 Route::get('/Ficha/create', [FichaController::class, 'create'])->name('Ficha.create')->middleware('auth');
@@ -67,12 +66,11 @@ Route::post('/Ficha/create', [FichaController::class, 'store'])->name('Ficha.sto
 Route::get('/Ficha/edit/{id}', [FichaController::class, 'edit'])->name('Ficha.edit')->middleware('auth');
 Route::post('/Ficha/update/{id}', [FichaController::class, 'update'])->name('Ficha.update')->middleware('auth');
 Route::get('/Ficha/delete/{id}', [FichaController::class, 'delete'])->name('Ficha.delete')->middleware('auth');
-Route::get('/ficha/teste', [FichaController::class, 'teste'])->name('ficha.teste')->middleware('auth');
-
-Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
+Route::get('/Ficha/{id}', [FichaController::class, 'show'])->name('ficha.show');
 
 
-//TESTE
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {

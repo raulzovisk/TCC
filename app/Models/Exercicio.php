@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Exercicio extends Model
 {
     use HasFactory;
-    use SoftDeletes;
-
+    public $timestamps = false;
     protected $table = 'exercicio';
 
     protected $fillable = ['nome', 'series', 'repeticoes', 'descricao', 'id_categoria'];
@@ -20,4 +18,10 @@ class Exercicio extends Model
     {
         return $this->belongsTo(Categoria::class, 'id_categoria');
     }
+
+    public function fichas()
+    {
+        return $this->belongsToMany(Ficha::class, 'exercicio_ficha', 'id_exercicio', 'id_ficha');
+    }
+
 }

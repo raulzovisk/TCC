@@ -11,7 +11,6 @@ use App\Http\Middleware\AdminMiddleware;
 class InstrutorController extends Controller
 {
 
-    //Read -> Mostra todos os instrutores na view index de instrutores.
     public function index(Request $request)
     {
         $query = Instrutor::join('users', 'instrutor.id_user', '=', 'users.id')
@@ -30,13 +29,11 @@ class InstrutorController extends Controller
 
 
 
-    //Create -> Cria a view de inserção de instrutores.
     public function create(Request $request)
     {
         return view('instrutor.create');
     }
 
-    //Store -> Insere um instrutor no banco de dados a partir da view create.
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -52,7 +49,6 @@ class InstrutorController extends Controller
         return redirect()->route('instrutor.index');
     }
 
-    //Edit -> Cria a view de edição de instrutores.
     public function edit(Request $request, $id)
     {
         $instrutor = Instrutor::findOrFail($id);
@@ -67,10 +63,8 @@ class InstrutorController extends Controller
         $Instrutor->save();
 
 
-        // Atualiza os dados do Instrutor com base nos dados do formulário
         $Instrutor->update($request->all());
 
-        // Redireciona de volta com uma mensagem de sucesso
         return redirect()->route('Instrutor.index')->with('success', 'Dados do Instrutor atualizados com sucesso!');
     }
     public function delete(Request $request, $id)
@@ -84,7 +78,6 @@ class InstrutorController extends Controller
 
     public function assign()
     {
-        // Busca todos os usuários que ainda não são instrutores
         $users = User::whereNotIn('id', function ($query) {
             $query->select('id_user')->from('instrutor');
         })->get();
@@ -104,7 +97,8 @@ class InstrutorController extends Controller
 
         $instrutor = new Instrutor();
         $instrutor->id_user = $user->id;
-        $instrutor->status = 'ativo';
+        $instrutor->status = 'Ativo 🟢' ; 
+        
         $instrutor->save();
 
         return redirect()->route('Instrutor.index')->with('success', 'Instrutor atribuído com sucesso');

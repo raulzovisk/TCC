@@ -4,39 +4,69 @@ namespace App\Http\Controllers;
 
 use App\Models\Ficha;
 use Illuminate\Http\Request;
+use App\Models\Exercicio;
+use App\Models\Aluno;
 
 class FichaController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        return view('ficha.index', ['fichas' => Ficha::orderBy('id', 'desc')->paginate(5)]);
+        $aluno = Aluno::where('id_user', auth()->user()->id)->first();
+    
+        if ($aluno) {
+            $fichas = Ficha::where('id_aluno', $aluno->id)->get();
+        } else {
+            $fichas = collect(); 
+        }
+    
+        return view('ficha.index', compact('fichas'));
+    }
+    
+
+
+    public function create()
+    {
+        $alunos = Aluno::all(); 
+        $exercicios = Exercicio::all();
+        return view('ficha.create', ['alunos' => $alunos], ['exercicios' => $exercicios]);
     }
 
-    public function create(Request $request)
-    {
-        return view('ficha.create');
-    }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validatedData = $request->validate([
             'objetivo' => 'required',
-            'descricao' => 'required|max:255',
+            'descricao' => 'required',
             'data' => 'required|date',
             'id_instrutor' => 'required|integer',
             'id_aluno' => 'required|integer',
+            'exercicios' => 'required|array',
+            'exercicios.*.id_exercicio' => 'required|exists:exercicio,id',
+            'exercicios.*.repeticoes' => 'required|integer',
+            'exercicios.*.series' => 'required|integer',
         ]);
 
-        $obj = new Ficha();
-        $obj->objetivo = $request->objetivo;
-        $obj->descricao = $request->descricao;
-        $obj->data = $request->data;
-        $obj->id_instrutor = $request->id_instrutor;
-        $obj->id_aluno = $request->id_aluno;
-        $obj->save();
+        $ficha = Ficha::create([
+            'objetivo' => $validatedData['objetivo'],
+            'descricao' => $validatedData['descricao'],
+            'data' => $validatedData['data'],
+            'id_instrutor' => $validatedData['id_instrutor'],
+            'id_aluno' => $validatedData['id_aluno'],
+        ]);
 
-        return redirect()->route('ficha.index');
+        foreach ($validatedData['exercicios'] as $exercicio) {
+            if (!$ficha->exercicios()->where('id_exercicio', $exercicio['id_exercicio'])->exists()) {
+                $ficha->exercicios()->attach($exercicio['id_exercicio'], [
+                    'repeticoes' => $exercicio['repeticoes'],
+                    'series' => $exercicio['series'],
+                ]);
+            }
+
+        }
+
+        return view('/dashboard');
     }
+
 
     public function edit(Request $request, $id)
     {
@@ -54,6 +84,8 @@ class FichaController extends Controller
         $Ficha->id_aluno = $request->id_aluno;
         $Ficha->save();
 
+        $Ficha->exercicios()->sync($request->exercicios);
+
         return redirect()->route('ficha.index');
     }
     public function delete(Request $request, $id)
@@ -64,8 +96,12 @@ class FichaController extends Controller
         return redirect()->route('ficha.index');
     }
 
-    public function teste(Request $request)
+
+    public function show($id)
     {
-        return view('ficha.teste');
+        $ficha = Ficha::with('exercicios')->findOrFail($id);
+
+        return view('ficha.show', ['ficha' => $ficha]);
     }
+
 }

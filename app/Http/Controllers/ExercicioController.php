@@ -8,31 +8,30 @@ use Illuminate\Http\Request;
 
 class ExercicioController extends Controller
 {
-    public function index (Request $request){
+    public function index(Request $request)
+    {
         return view('exercicio.index', ['exercicios' => Exercicio::orderBy('id', 'desc')->paginate(5)]);
-        
+
     }
 
     public function create()
-{
-    $categorias = Categoria::all();
-    return view('exercicio.create', ['categorias' => $categorias]);
-}
+    {
+        $categorias = Categoria::all();
+        return view('exercicio.create', ['categorias' => $categorias]);
 
+    }
 
-
-    public function store(Request $request ){
+    public function store(Request $request)
+    {
         $validated = $request->validate([
             'nome' => 'required|max:255',
-            'series' => 'integer',
-            'repeticoes' => 'integer',
             'id_categoria' => 'required|integer',
         ]);
 
         $obj = new Exercicio();
         $obj->nome = $request->nome;
-        $obj->series = $request->series;
-        $obj->repeticoes = $request->repeticoes;
+        $obj->series = null;
+        $obj->repeticoes = null;
         $obj->id_categoria = $request->id_categoria;
         $obj->save();
 
@@ -44,25 +43,26 @@ class ExercicioController extends Controller
         $Exercicio = Exercicio::findOrFail($id);
         return view('Exercicio.edit', ['exercicio' => $Exercicio]);
     }
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $Exercicio = Exercicio::findOrFail($id);
 
         $Exercicio->nome = $request->nome;
-        $Exercicio->series = $request->series;
-        $Exercicio->repeticoes = $request->repeticoes;
         $Exercicio->id_categoria = $request->id_categoria;
         $Exercicio->save();
 
-       return redirect()->route('exercicio.index');
+        return redirect()->route('exercicio.create');
     }
-    public function delete(Request $request, $id){
-        $obj = Exercicio::findOrFail($id);
-        $obj->delete();
+    public function delete(Request $request, $id)
+    {
+        $exercicio = Exercicio::findOrFail($id);
+        $exercicio->forceDelete();
 
-        return redirect()->route('exercicio.index');
+        return redirect()->route('Exercicio.create')->with('success', 'Exercício excluído com sucesso!');
     }
 
-    public function teste(Request $request){
+    public function teste(Request $request)
+    {
         return view('exercicio.teste');
     }
 }

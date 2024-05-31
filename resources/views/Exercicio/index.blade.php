@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Exercícios</title>
     @include('scripts')
-
     <style>
         .categoria {
             border-radius: 10px;
@@ -20,7 +18,6 @@
             width: 25%;
         }
     </style>
-
     <script>
         function mostrarCampoAdicionar(categoriaId) {
             $('#campoAdicionar' + categoriaId).slideDown();
@@ -53,7 +50,6 @@
             }
         }
 
-
         function cancelarExercicio(categoriaId) {
             $('#campoAdicionar' + categoriaId).slideUp();
         }
@@ -63,7 +59,6 @@
             dropdown.slideToggle(300); // Tempo da animação em milissegundos
         }
     </script>
-
 </head>
 
 <body>
@@ -87,6 +82,7 @@
                                         id="dropdownCategoria{{ $categoria->id }}"
                                         style="display: none; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); padding: 10px;">
                                         <ul class="list-unstyled mb-0">
+
                                             @foreach ($categoria->exercicios as $exercicio)
                                                 <li>
                                                     <table class="table table-bordered mt-2">
@@ -100,44 +96,10 @@
                                                             <tr>
                                                                 <td>{{ $exercicio->nome }}</td>
                                                                 <td>
-                                                                    <button
-                                                                        class="btn btn-sm btn-primary">Editar</button>
-                                                                    <button class="btn btn-sm btn-danger delete-button"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#confirmModal{{ $exercicio->id }}">Excluir</button>
-
-                                                                    <!-- Modal -->
-                                                                    <div class="modal fade"
-                                                                        id="confirmModal{{ $exercicio->id }}"
-                                                                        tabindex="-1"
-                                                                        aria-labelledby="confirmModalLabel"
-                                                                        aria-hidden="true">
-                                                                        <div class="modal-dialog">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title"
-                                                                                        id="confirmModalLabel">Excluir
-                                                                                        exercício
-                                                                                    </h5>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    Tem certeza de que deseja deletar
-                                                                                    este exercício?
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button class="btn btn-secondary"
-                                                                                        data-bs-dismiss="modal">Cancelar</button>
-                                                                                    <form id="deleteForm"
-                                                                                        action="{{ route('Exercicio.delete', $exercicio->id) }}"
-                                                                                        method="GET">
-                                                                                        @csrf
-                                                                                        <button
-                                                                                            class="btn btn-danger">Excluir</button>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                    <button class="btn btn-sm btn-primary"
+                                                                        ({{ $exercicio->id }}) ">Editar</button>
+                                                                <button class="btn btn-sm btn-danger"
+                                                                    ({{ $exercicio->id }})">Excluir</button>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -170,14 +132,12 @@
                                     </div>
                                 </div>
                             @endforeach
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </x-app-layout>
-
 
 </body>
 

@@ -46,7 +46,7 @@
                                     <input type="hidden" name="id_user" value="{{ $user->id }}">
 
                                     <div class="d-flex justify-content-center">
-                                        <button type="submit" id="submitButton"
+                                        <button  id="submitButton"
                                             class="btn btn-success w-50">Enviar</button>
                                     </div>
                             </div>

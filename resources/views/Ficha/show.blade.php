@@ -1,4 +1,3 @@
-<!-- resources/views/ficha/show.blade.php -->
 
 
     <div class="card">

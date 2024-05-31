@@ -1,55 +1,31 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!DOCTYPE html>
+<html lang="pt-br">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Instrutores</title>
+    @include('scripts')
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-    body {
-        background: rgb(230, 229, 229);
-        font-family: 'Montserrat', sans-serif;
-    }
+</head>
 
-    .btn-secondary {
-        background-color: #5C636A !important
-    }
+<body>
 
-    .btn-secondary:hover {
-        background-color: #4a5157 !important
-    }
-
-    .btn-danger {
-        background-color: #BB2D3B !important
-    }
-
-    .btn-danger:hover {
-        background-color: #9b2430 !important
-    }
-</style>
-
-
-
-<x-app-layout>
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-header">
-                        <h1 class="text-center mb-1 display-6">Instrutores</h1>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('Instrutor.index') }}" method="GET">
-                            <input type="text" name="search" class="rounded-pill mb-1" placeholder="Buscar por nomes..">
-                            <input type="submit" value="Buscar">
-                        </form>
+    <x-app-layout>
+        <div class="container mt-3">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow p-3 mb-5 bg-white rounded">
+                        <div class="card-header">
+                            <h1 class="text-center mb-1 display-6">Instrutores</h1>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ route('Instrutor.index') }}" method="GET">
+                                <input type="text" name="search" class="rounded-pill mb-1"
+                                    placeholder="Buscar por nomes..">
+                                <input type="submit" value="Buscar">
+                            </form>
 
                             <table class="table" id="instrutorTable">
                                 <thead>
@@ -91,7 +67,8 @@
                                             <td>
                                                 <form method="GET">
                                                     @csrf
-                                                    <button type="button" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $instrutor->id }}"
+                                                    <button type="button" data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal{{ $instrutor->id }}"
                                                         style="display: flex; align-items: center; background: none; border: none; color: #BB2D3B; font-weight: 500">
                                                         <span>Desvincular</span>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -113,30 +90,36 @@
                                                         </svg>
                                                     </button>
                                                 </form>
-                                                
+
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="confirmModal{{ $instrutor->id }}" tabindex="-1" aria-labelledby="confirmModalLabel"
+                                                <div class="modal fade" id="confirmModal{{ $instrutor->id }}"
+                                                    tabindex="-1" aria-labelledby="confirmModalLabel"
                                                     aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="confirmModalLabel">Desvincular Instrutor</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                <h5 class="modal-title" id="confirmModalLabel">
+                                                                    Desvincular
+                                                                    Instrutor</h5>
+
                                                             </div>
                                                             <div class="modal-body">
                                                                 Tem certeza de que deseja desvincular este instrutor?
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                                                <form id="deleteForm" action="{{ route('Instrutor.delete', $instrutor->id) }}" method="GET">
+                                                                <button class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                                <form id="deleteForm"
+                                                                    action="{{ route('Instrutor.delete', $instrutor->id) }}"
+                                                                    method="GET">
                                                                     @csrf
-                                                                    <button type="submit" class="btn btn-danger">Desvincular</button>
+                                                                    <button class="btn btn-danger">Desvincular</button>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
 
                                         </tr>
                                     @endforeach
@@ -144,39 +127,17 @@
                             </table>
 
                             {{ $instrutores->links() }}
-                       
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    @if (session('success'))
-        <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert">
-            {{ session('success') }}
-        </div>
-    @endif
 
 
 
-    <!--Modal script -->
-    <script>
-        $(document).ready(function() {
-            $('#deleteForm').on('submit', function(event) {
-                event.preventDefault();
-                $('#confirmModal').modal('hide');
-                $(this).unbind('submit').submit();
-            });
-        });
-    </script>
-    
-    <script>
-        $(document).ready(function() {
-            $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-                $("#success-alert").slideUp(500);
-            });
-        });
-    </script>
+    </x-app-layout>
 
+</body>
 
-
-</x-app-layout>
+</html>

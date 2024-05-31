@@ -73,7 +73,7 @@ class InstrutorController extends Controller
         $instrutor->forceDelete();
 
         return redirect()->route('Instrutor.index')->with('success', 'Instrutor desvinculado com sucesso!');
-        ;
+        
     }
 
     public function assign()

@@ -113,8 +113,47 @@
                                 </x-slot>
                             </x-dropdown>
                         </div>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex mt-3">
+                            <x-dropdown align="right" width="60">
+                                <x-slot name="trigger">
+                                    <button type="button"
+                                        class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
+                                        {{ 'Exercícios' }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="icon icon-tabler icons-tabler-outline icon-tabler-category">
+                                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                            <path d="M4 4h6v6h-6z" />
+                                            <path d="M14 4h6v6h-6z" />
+                                            <path d="M4 14h6v6h-6z" />
+                                            <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+                                        </svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" class="ms-2 -me-0.5 h-4 w-4">
+                                            <path stroke="none" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                                                fill="none" />
+                                            <path d="M6 9l6 6l6 -6" />
+                                        </svg>
+                                    </button>
+                                </x-slot>
+                                <x-slot name="content">
+                                    <div class="w-60">
+                                        <div class="block px-4 py-2 text-xs text-gray-400">
+                                            {{ __('Opções') }}
+                                        </div>
+                                        <x-dropdown-link href="{{ route('Exercicio.create') }}">
+                                            {{ __('Exercícios') }}
+                                        </x-dropdown-link>
+                                        <x-dropdown-link href="{{ route('Categoria.index') }}">
+                                            {{ __('Categorias') }}
+                                        </x-dropdown-link>
+                                    </div>
+                                </x-slot>
+                            </x-dropdown>
+                        </div> 
                     @endif
-
 
 
                 </div>

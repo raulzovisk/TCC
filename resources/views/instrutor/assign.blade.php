@@ -1,46 +1,57 @@
-@include('scripts')
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-<x-app-layout>
-    <div class="container mt-3">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow p-3 mb-5 bg-white">
-                    <div class="card-header">
-                        <h1 class="text-center mb-1 display-6">Atribuir Instrutor</h1>
-                    </div>
-                    <div class="card-body">
-                        <input type="text" id="search" class="rounded-pill mb-1" onkeyup="search()"
-                            placeholder="Buscar por nomes..">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atribuir Instrutor</title>
+    @include('scripts')
+</head>
 
-                        @if ($users->count())
-                            <table class="table" id="usuariosTable">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nome</th>
-                                        <th>Atribuição</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
+<body>
+    <x-app-layout>
+        <div class="container mt-3">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card shadow p-3 mb-5 bg-white">
+                        <div class="card-header">
+                            <h1 class="text-center mb-1 display-6">Atribuir Instrutor</h1>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" id="search" class="rounded-pill mb-1" onkeyup="search()"
+                                placeholder="Buscar por nomes..">
+
+                            @if ($users->count())
+                                <table class="table" id="usuariosTable">
+                                    <thead>
                                         <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td><a style="color: rgb(16, 125, 161); font-weight: 500"
-                                                    href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir como
-                                                    Instrutor</a></td>
+                                            <th>ID</th>
+                                            <th>Nome</th>
+                                            <th>Atribuição</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @else
-                            <p>{{ __('Nenhum usuário encontrado.') }}</p>
-                        @endif
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            <tr>
+                                                <td>{{ $user->id }}</td>
+                                                <td>{{ $user->name }}</td>
+                                                <td><a style="color: rgb(16, 125, 161); font-weight: 500"
+                                                        href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir
+                                                        como
+                                                        Instrutor</a></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <p>{{ __('Nenhum usuário encontrado.') }}</p>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </x-app-layout>
 
     <script>
         function search() {
@@ -63,6 +74,6 @@
             }
         }
     </script>
+</body>
 
-
-</x-app-layout>
+</html>

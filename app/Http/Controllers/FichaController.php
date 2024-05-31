@@ -38,7 +38,7 @@ class FichaController extends Controller
             'objetivo' => 'required',
             'descricao' => 'required',
             'data' => 'required|date',
-            'id_instrutor' => 'required|integer',
+         //   'id_instrutor' => 'required|integer',
             'id_aluno' => 'required|integer',
             'exercicios' => 'required|array',
             'exercicios.*.id_exercicio' => 'required|exists:exercicio,id',
@@ -50,7 +50,7 @@ class FichaController extends Controller
             'objetivo' => $validatedData['objetivo'],
             'descricao' => $validatedData['descricao'],
             'data' => $validatedData['data'],
-            'id_instrutor' => $validatedData['id_instrutor'],
+          //  'id_instrutor' => $validatedData['id_instrutor'],
             'id_aluno' => $validatedData['id_aluno'],
         ]);
 
@@ -95,7 +95,6 @@ class FichaController extends Controller
 
         return redirect()->route('ficha.index');
     }
-
 
     public function show($id)
     {

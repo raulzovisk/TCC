@@ -16,9 +16,7 @@ return new class extends Migration
             $table->text('objetivo')->notNullable();
             $table->string('descricao', 255)->notNullable();
             $table->date('data')->notNullable();
-            $table->unsignedBigInteger('id_instrutor')->nullable(); 
             $table->unsignedBigInteger('id_aluno');
-            $table->foreign('id_instrutor')->references('id')->on('instrutor')->onDelete('set null');
             $table->foreign('id_aluno')->references('id')->on('aluno');
         });
         

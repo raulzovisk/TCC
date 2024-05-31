@@ -29,7 +29,7 @@ class CategoriaController extends Controller
         $obj->nome = $request->nome;
         $obj->save();
 
-        return redirect()->route('Categoria.index')->with('success', 'Dados do categoria atualizados com sucesso!');
+        return redirect()->route('Categoria.index')->with('success', 'Categoria criada com sucesso!');
     }
 
     public function edit(Request $request, $id)
@@ -43,14 +43,14 @@ class CategoriaController extends Controller
         $Categoria->nome = $request->nome;
         $Categoria->save();
 
-       return redirect()->route('categoria.index');
+        return redirect()->route('Categoria.index')->with('success', 'Dados do categoria atualizados com sucesso!');
     }
     public function delete(Request $request, $id)
     {
-        $categoria = Categoria::findOrFail($id);
-        $categoria->forceDelete();
+        $categorias = Categoria::findOrFail($id);
+        $categorias->forceDelete();
 
-        return view('categoria.index');
+        return redirect()->route('Categoria.index')->with('success', 'Categoria excluída com sucesso!');
         
     }
     

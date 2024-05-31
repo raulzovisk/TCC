@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('series')->nullable();
             $table->integer('repeticoes')->nullable();
             $table->unsignedBigInteger('id_categoria');
-            $table->foreign('id_categoria')->references('id')->on('categoria');
+            $table->foreign('id_categoria')->references('id')->on('categoria')->onDelete('cascade');
         });
     }
 
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('exercicio');
     }
 };

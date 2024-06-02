@@ -80,7 +80,7 @@
                                                                 categoria</h5>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Tem certeza de que deseja excluir esta categoria?
+                                                            <b>SE HOUVER 1 OU MAIS EXERCÍCIOS VINCULADO A ESTA CATEGORIA TAMBÉM SERÃO APAGADOS</b>
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button  class="btn btn-secondary"

@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('exercicio', function (Blueprint $table) {
             $table->id();
             $table->string('nome', 255)->notNullable();
-            $table->integer('series')->nullable();
-            $table->integer('repeticoes')->nullable();
             $table->unsignedBigInteger('id_categoria');
             $table->foreign('id_categoria')->references('id')->on('categoria')->onDelete('cascade');
         });
     }
+    
 
     /**
      * Reverse the migrations.

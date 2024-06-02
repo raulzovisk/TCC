@@ -36,11 +36,11 @@
     <main>
         <aside>
             <h2><span>Comece agora</span></h2>
-            <h2>na GYIN WORKOUTS</h2>
+            <h2>na GYN WORKOUTS</h2>
             <p>
-                Bem-vindo a GYIN WORKOUTS, sua plataforma completa para transformar sua jornada de fitness. Não importa
+                Bem-vindo a GYN WORKOUTS, sua plataforma completa para transformar sua jornada de fitness. Não importa
                 se você é um iniciante ou um veterano no mundo do fitness, nosso site oferece uma variedade de rotinas
-                de treino projetadas por especialistas da GYIN
+                de treino projetadas por especialistas da GYN
                 WORKOUTS para atender às suas necessidades e objetivos específicos.
             </p>
             <p>Junte-se a nossa comunidade e comece a alcançar seus objetivos de forma mais inteligente e eficaz.

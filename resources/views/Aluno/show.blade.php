@@ -10,7 +10,7 @@
 
 <body>
     <x-app-layout>
-        <div class="container-fluid mt-5">
+        <div class="container-fluid mt-3">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card shadow mb-5 bg-white rounded">

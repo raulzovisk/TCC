@@ -15,6 +15,7 @@ return Application::configure()
         $middleware->alias([
             'admin' => \App\Http\Middleware\AdminMiddleware::class,
             'instrutor' => \App\Http\Middleware\CheckInstructor::class,
+            'check.ficha.permission' => \App\Http\Middleware\CheckFichaPermission::class,
             
         ]);
     })

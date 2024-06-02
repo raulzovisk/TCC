@@ -30,8 +30,6 @@ class ExercicioController extends Controller
 
         $obj = new Exercicio();
         $obj->nome = $request->nome;
-        $obj->series = null;
-        $obj->repeticoes = null;
         $obj->id_categoria = $request->id_categoria;
         $obj->save();
 

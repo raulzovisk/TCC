@@ -70,9 +70,7 @@ Route::post('/Ficha/create', [FichaController::class, 'store'])->name('Ficha.sto
 Route::get('/Ficha/edit/{id}', [FichaController::class, 'edit'])->name('Ficha.edit')->middleware('auth');
 Route::post('/Ficha/update/{id}', [FichaController::class, 'update'])->name('Ficha.update')->middleware('auth');
 Route::get('/Ficha/delete/{id}', [FichaController::class, 'delete'])->name('Ficha.delete')->middleware('auth');
-Route::get('/Ficha/{id}', [FichaController::class, 'show'])->name('ficha.show');
-
-
+Route::get('/Ficha/{id}', [FichaController::class, 'show'])->name('ficha.show')->middleware('check.ficha.permission');
 
 
 

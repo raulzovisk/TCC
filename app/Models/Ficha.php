@@ -23,12 +23,9 @@ class Ficha extends Model
     {
         return $this->belongsTo(Aluno::class, 'id_aluno');
     }
-
     public function exercicios()
     {
-        return $this->belongsToMany(Exercicio::class, 'exercicio_ficha', 'id_ficha', 'id_exercicio');
+        return $this->belongsToMany(Exercicio::class, 'exercicio_ficha', 'id_ficha', 'id_exercicio')->withPivot('repeticoes', 'series');
     }
-    
-    
 
 }

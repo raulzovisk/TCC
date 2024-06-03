@@ -17,22 +17,6 @@ Route::get('/', function () {
 });
 
 
-
-
-Route::post('/register', function (\Illuminate\Http\Request $request) {
-    $user = \App\Models\User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => \Hash::make($request->password),
-    ]);
-
-    Auth::login($user);
-
-    return redirect('/dashboard');
-});
-
-
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

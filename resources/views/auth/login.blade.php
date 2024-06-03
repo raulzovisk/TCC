@@ -1,91 +1,47 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<x-guest-layout>
+    <x-authentication-card>
+        <x-slot name="logo">
+            <x-authentication-card-logo />
+        </x-slot>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('estilo.css') }}">
-    <title>Login/Registro</title>
-</head>
+        
+        <x-validation-errors class="mb-4" />
 
-<body>
-
-    <div class="container" id="container">
-        <div class="form-container sign-up" id="register-form">
-            <form  id="signupForm" method="POST" action="{{ route('register') }}">
-                @csrf
-                <h1>Criar Conta</h1>
-                <span></span>
-                <input id="name" type="text" placeholder="Nome" name="name" :value="old('name')" required
-                    autofocus autocomplete="name">
-
-                <input id="email" type="email" placeholder="Email" name="email" :value="old('email')" required
-                    autocomplete="username">
-
-                <input name="password" id="password" placeholder="Senha" type="password" required autocomplete="new-password">
-
-                <input id="password_confirmation" type="password" placeholder="Confirmar Senha"
-                    name="password_confirmation" required autocomplete="new-password">
-
-                <button type="submit">Registrar</button>
-                
-            </form>
-        </div>
-
-        <div class="form-container sign-in" id="login-form">
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <h1>Log In </h1>
-                <span></span>
-                <input type="email" name="email" placeholder="Email" required autofocus>
-                <input type="password" name="password" placeholder="Password" required>
-                <div class="block mt-4 flex">
-                    <label for="remember_me" class="checkbox-label">
-                        <x-checkbox id="remember_me" name="remember" />
-                        <span class="ms-2 text-sm text-gray-600">{{ __('Lembrar usuário') }}</span>
-                    </label>
-                    <div style='margin-right:20px;'></div>
-                    <button type='submit'>Logar</button>
-                </div>
-                <x-validation-errors class="mb-4" />
-            </form>
-        </div>
-
-
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Bem vindo de volta!</h1>
-                    <p>Se já tiver cadastro, apenas insira os dados para usar o site</p>
-                    <button class="hidden" id="login">Logar</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Olá, usuário!</h1>
-                    <p>Registe-se no site para poder acessá-lo</p>
-                    <button class="hidden" id="register">Registre-se</button>
-                </div>
+        @session('status')
+            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                {{ $value }}
             </div>
-        </div>
-    </div>
+        @endsession
 
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
 
-    <script>
-        const container = document.getElementById('container');
-        const registerBtn = document.getElementById('register');
-        const loginBtn = document.getElementById('login');
+            <div>
+                <x-label for="email" value="{{ __('Email') }}" />
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            </div>
 
-        registerBtn.addEventListener('click', () => {
-            container.classList.add("active");
-        });
+            <div class="mt-4">
+                <x-label for="password" value="{{ __('Senha') }}" />
+                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+            </div>
 
-        loginBtn.addEventListener('click', () => {
-            container.classList.remove("active");
-        });  
+            <div class="block mt-4">
+                <label for="remember_me" class="flex items-center">
+                    <x-checkbox id="remember_me" name="remember" />
+                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Lembrar sessão') }}</span>
+                </label>
+            </div>
 
-     
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 " href="{{ route('register') }}">
+                    {{ __('Registre-se') }}
+                </a>
 
-
-    </script>
-</body>
-
-</html>
+                <x-button class="ms-4" style="background-color: rgb(17, 138, 178)">
+                    {{ __('Log in') }}
+                </x-button>
+            </div>
+        </form>
+    </x-authentication-card>
+</x-guest-layout>

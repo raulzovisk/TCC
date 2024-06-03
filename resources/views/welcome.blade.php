@@ -17,20 +17,22 @@
             <img id="logo" src="/img/logo.png" alt="" style="width: 100px;">
         </div>
 
-        <ul>
-            <a href="#">
-                <li>Início</li>
-            </a>
-            <a href="#">
-                <li>Serviços</li>
-            </a>
-            <a href="#">
-                <li>Sobre</li>
-            </a>
-            <a href="#">
-                <li>Contato</li>
-            </a>
-        </ul>
+        <div>
+            <ul>
+                <a href="#">
+                    <li>Início</li>
+                </a>
+                <a href="#">
+                    <li>Serviços</li>
+                </a>
+                <a href="#">
+                    <li>Sobre</li>
+                </a>
+                <a href="#">
+                    <li>Contato</li>
+                </a>
+            </ul>
+        </div>
     </header>
 
     <main>
@@ -48,13 +50,13 @@
                 A transformação está ao seu alcance!
             </p>
             <form>
-               
+
                 <a id="abtn" href="{{ route('login') }}"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">
-                <div class="botao">
-                    Comece Agora >
-                </div>
-            </a>
+                    class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">
+                    <div class="botao">
+                        Comece Agora >
+                    </div>
+                </a>
 
             </form>
         </aside>

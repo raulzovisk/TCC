@@ -14,8 +14,11 @@ class Aluno extends Model
 
     protected $table = 'aluno';
 
-    protected $fillable = ['altura', 'peso', 'genero', 'gordura', 'musculo', 'idade', 'id_user'];
+    protected $fillable = ['altura', 'peso', 'genero', 'gordura', 'musculo', 'idade', 'id_user', 'historico',];
 
+    protected $casts = [
+        'historico' => 'array',
+    ];
     public $timestamps = false;
 
     public function user()

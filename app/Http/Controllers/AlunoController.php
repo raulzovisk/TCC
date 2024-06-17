@@ -62,7 +62,7 @@ class AlunoController extends Controller
         return redirect()->route('Aluno.index')->with('success', 'Aluno criado com sucesso!');
     }
 
-   
+
     public function edit(Request $request, $id)
     {
         $aluno = Aluno::findOrFail($id);
@@ -72,38 +72,48 @@ class AlunoController extends Controller
 
 
     public function show()
-{
-    $userId = Auth::id();
-    $aluno = Aluno::where('id_user', $userId)->first(); 
+    {
+        $userId = Auth::id();
+        $aluno = Aluno::where('id_user', $userId)->first();
 
-    return view('aluno.show', compact('aluno')); 
-}
+        $historico = $aluno ? $aluno->historico : [];
+        $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
+
+        return view('aluno.show', compact('aluno', 'historico', 'currentData'));
+    }
 
 
 
     public function update(Request $request, $id)
-    {
-        $userId = Auth::id();
-        $Aluno = Aluno::findOrFail($id);
+{
+    $Aluno = Aluno::findOrFail($id);
 
-        $Aluno->altura = $request->altura;
-        $Aluno->peso = $request->peso;
-        //$Aluno->genero = $request->genero;
-        $Aluno->gordura = $request->gordura;
-        $Aluno->musculo = $request->musculo;
-        $Aluno->idade = $request->idade;
-        $Aluno->save();
+    // Adicionar dados antigos ao histórico
+    $historico = $Aluno->historico ?? [];
+    $historico[] = $Aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']);
 
-        return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
-    }
+    // Atualizar dados atuais
+    $Aluno->altura = $request->altura;
+    $Aluno->peso = $request->peso;
+    $Aluno->gordura = $request->gordura;
+    $Aluno->musculo = $request->musculo;
+    $Aluno->idade = $request->idade;
+    $Aluno->historico = $historico; // Salvar histórico atualizado
+    $Aluno->save();
+
+    return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
+}
+
+
+
 
     public function delete(Request $request, $id)
     {
         $aluno = Aluno::findOrFail($id);
         $aluno->forceDelete();
 
-        return redirect()->route('Aluno.index')->with('success', 'Instrutor desvinculado com sucesso!');
-        
+        return redirect()->route('Aluno.index')->with('success', 'Aluno desvinculado com sucesso!');
+
     }
 
 }

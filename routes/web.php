@@ -30,7 +30,7 @@ Route::middleware([
 
 
 Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
-
+Route::get('/Aluno/chart/{id}', [AlunoController::class, 'showChart'])->name('Aluno.chart');
 
 Route::get('/Categoria', [CategoriaController::class, 'index'])->name('Categoria.index')->middleware('auth');
 Route::get('/Categoria/create', [CategoriaController::class, 'create'])->name('Categoria.create')->middleware('auth');

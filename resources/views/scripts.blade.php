@@ -11,14 +11,17 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-
+@php
+    use Carbon\Carbon;
+@endphp
 <style>
     body {
         background: rgb(230, 229, 229);
         font-family: 'Montserrat', sans-serif;
     }
-
 </style>
+
+
 
 @if (session('success'))
     <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert">

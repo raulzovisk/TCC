@@ -1,23 +1,24 @@
 <?php
 
+// app/Models/Instrutor.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Instrutor extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
 
     protected $table = 'instrutor';
     protected $fillable = ['status'];
 
-    public function user()
+    public $timestamps = false;
+
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'id_user');
     }
-
 }
+

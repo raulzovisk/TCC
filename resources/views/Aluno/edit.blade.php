@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar dados Aluno</title>
+    <title>Alterar Dados: {{ $aluno->user->name }}</title>
     @include('scripts')
 </head>
 
@@ -15,7 +15,7 @@
                 <div class="col-md-8">
                     <div class="shadow p-3 mb-5 bg-white rounded">
                         <div class="card-body ">
-                            <h1 class="text-center mb-4 display-6">Alterar Dados</h1>
+                            <h1 class="text-center mb-4 display-6">Alterar Dados : {{ $aluno->user->name }}</h1>
                             <div class="p-3">
                                 <form method="POST" action="{{ route('Aluno.update', $aluno->id) }}">
                                     @csrf
@@ -52,7 +52,7 @@
                                     </div>
                             </div>
                             <div class="text-center">
-                                <button class="btn btn-success">Salvar Alterações</button>
+                                <button class="btn btn-primary">Salvar Alterações</button>
                             </div>
                         </div>
                     </div>

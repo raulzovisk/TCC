@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Ficha;
 use Illuminate\Http\Request;
 use App\Models\Exercicio;
 use App\Models\Aluno;
 use Illuminate\Support\Facades\Log;
-
+use Carbon\Carbon;
 class FichaController extends Controller
 {
     public function index()
@@ -24,13 +25,14 @@ class FichaController extends Controller
     }
 
     public function create()
-    {
-        $alunos = Aluno::all();
-        $exercicios = Exercicio::all();
-        return view('ficha.create', ['alunos' => $alunos], ['exercicios' => $exercicios]);
-    }
+{
+    $alunos = Aluno::all();
+    $categorias = Categoria::all();
+    $exercicios = Exercicio::all();
 
-    
+    return view('ficha.create', compact('alunos', 'categorias', 'exercicios'));
+}
+
 
     public function store(Request $request)
     {
@@ -70,32 +72,45 @@ class FichaController extends Controller
     }
 
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
-        $Ficha = Ficha::findOrFail($id);
-        return view('Ficha.edit', ['ficha' => $Ficha]);
+        $ficha = Ficha::findOrFail($id);
+        $exercicios = Exercicio::all();
+        $alunos = Aluno::all();
+        return view('ficha.edit', compact('ficha', 'exercicios', 'alunos'));
     }
+
     public function update(Request $request, $id)
     {
-        $Ficha = Ficha::findOrFail($id);
-
-        $Ficha->objetivo = $request->objetivo;
-        $Ficha->descricao = $request->descricao;
-        $Ficha->data = $request->data;
-        $Ficha->id_instrutor = $request->id_instrutor;
-        $Ficha->id_aluno = $request->id_aluno;
-        $Ficha->save();
-
-        $Ficha->exercicios()->sync($request->exercicios);
-
-        return redirect()->route('ficha.index');
+        $ficha = Ficha::findOrFail($id);
+        $alunoId = $ficha->id_aluno; 
+    
+        $ficha->descricao = $request->input('descricao');
+        $ficha->objetivo = $request->input('objetivo');
+        $ficha->save();
+    
+        $exercicios = $request->input('exercicios', []);
+        $detalhes = $request->input('detalhes', []);
+    
+        $ficha->exercicios()->detach();
+    
+        foreach ($exercicios as $exercicioId) {
+            $ficha->exercicios()->attach($exercicioId, [
+                'series' => $detalhes[$exercicioId]['series'] ?? 0,
+                'repeticoes' => $detalhes[$exercicioId]['repeticoes'] ?? 0,
+            ]);
+        }
+    
+        return redirect()->route('instrutor.ver_fichas_aluno', ['alunoId' => $alunoId])->with('success', 'Ficha atualizada com sucesso!');
     }
-    public function delete(Request $request, $id)
-    {
-        $obj = Ficha::findOrFail($id);
-        $obj->delete();
+    
 
-        return redirect()->route('ficha.index');
+    public function delete($id)
+    {
+        $ficha = Ficha::findOrFail($id);
+        $ficha->delete();
+
+        return redirect()->back()->with('success', 'Ficha deletada com sucesso!');
     }
 
     public function show($id)

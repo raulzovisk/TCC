@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Dados</title>
+    <title>Histórico Completo</title>
     @include('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -16,36 +16,34 @@
                 <div class="col-md-8">
                     <div class="card shadow mb-5 bg-white rounded">
                         <div class="card-body">
-                            <h1 class="text-center mb-4 display-6">Meus Dados</h1>
+                            <h1 class="text-center mb-4 display-6">Histórico Completo</h1>
                             <div class="p-4">
                                 @if ($aluno)
-                                    <p><strong>Altura:</strong> {{ $aluno->altura }} cm</p>
-                                    <p><strong>Peso:</strong> {{ $aluno->peso }} kg</p>
-                                    <p><strong>Gênero:</strong> {{ $aluno->genero }}</p>
-                                    <p><strong>Percentual de Gordura:</strong> {{ $aluno->gordura }} %</p>
-                                    <p><strong>Massa Muscular:</strong> {{ $aluno->musculo }} kg</p>
-                                    <p><strong>Idade:</strong> {{ $aluno->idade }} anos</p>
-
-                                    <h3 class="text-center mb-4 display-6">Comparação de Dados</h3>
-                                    <canvas id="dataChart"></canvas>
+                                    <canvas id="fullDataChart"></canvas>
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function() {
                                             const historico = @json($historico);
                                             const currentData = @json($currentData);
+                                            
+                                            const labels = historico.map((entry, index) => `Histórico ${index + 1}`);
+                                            labels.push('Atual');
 
-                                            // Filtrar os dois últimos registros, incluindo o atual
-                                            const recentHistory = historico.slice(-1);
-                                            recentHistory.push(currentData);
+                                            const alturaData = historico.map(entry => entry.altura);
+                                            alturaData.push(currentData.altura);
 
-                                            const labels = recentHistory.map((entry, index) => index === 0 ? 'Histórico' : 'Atual');
+                                            const pesoData = historico.map(entry => entry.peso);
+                                            pesoData.push(currentData.peso);
 
-                                            const alturaData = recentHistory.map(entry => entry.altura);
-                                            const pesoData = recentHistory.map(entry => entry.peso);
-                                            const gorduraData = recentHistory.map(entry => entry.gordura);
-                                            const musculoData = recentHistory.map(entry => entry.musculo);
-                                            const idadeData = recentHistory.map(entry => entry.idade);
+                                            const gorduraData = historico.map(entry => entry.gordura);
+                                            gorduraData.push(currentData.gordura);
 
-                                            const ctx = document.getElementById('dataChart').getContext('2d');
+                                            const musculoData = historico.map(entry => entry.musculo);
+                                            musculoData.push(currentData.musculo);
+
+                                            const idadeData = historico.map(entry => entry.idade);
+                                            idadeData.push(currentData.idade);
+
+                                            const ctx = document.getElementById('fullDataChart').getContext('2d');
                                             const chart = new Chart(ctx, {
                                                 type: 'bar',
                                                 data: {
@@ -98,9 +96,6 @@
                                             });
                                         });
                                     </script>
-                                    <div class="text-center mt-4">
-                                        <a href="{{ route('Aluno.showAll') }}" class="btn btn-primary">Ver Todos os Dados</a>
-                                    </div>
                                 @else
                                     <p class="text-center">Você não tem dados ainda. Aguarde o instrutor preenche-los.</p>
                                 @endif

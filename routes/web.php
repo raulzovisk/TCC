@@ -45,18 +45,20 @@ Route::get('/Exercicio', [ExercicioController::class, 'store'])->name('Exercicio
 Route::get('/Exercicio/create', [ExercicioController::class, 'create'])->name('Exercicio.create')->middleware('auth');
 Route::post('/Exercicio/create', [ExercicioController::class, 'store'])->name('Exercicio.store')->middleware('auth');
 Route::get('/Exercicio/edit/{id}', [ExercicioController::class, 'edit'])->name('Exercicio.edit')->middleware('auth');
-Route::put('/Exercicio/update/{id}', [ExercicioController::class, 'update'])->name('Exercicio.update')->middleware('auth');
+Route::post('/Exercicio/update/{id}', [ExercicioController::class, 'update'])->name('Exercicio.update')->middleware('auth');
 Route::get('/Exercicio/delete/{id}', [ExercicioController::class, 'delete'])->name('Exercicio.delete')->middleware('auth');
 
 Route::get('/Ficha', [FichaController::class, 'index'])->name('Ficha.index')->middleware('auth');
-Route::get('/Ficha/create', [FichaController::class, 'create'])->name('Ficha.create')->middleware('auth');
-Route::post('/Ficha/create', [FichaController::class, 'store'])->name('Ficha.store')->middleware('auth');
-Route::get('/Ficha/edit/{id}', [FichaController::class, 'edit'])->name('Ficha.edit')->middleware('auth');
-Route::post('/Ficha/update/{id}', [FichaController::class, 'update'])->name('Ficha.update')->middleware('auth');
-Route::get('/Ficha/delete/{id}', [FichaController::class, 'delete'])->name('Ficha.delete')->middleware('auth');
+Route::get('/Ficha/create', [FichaController::class, 'create'])->name('Ficha.create')->middleware('instrutor');
+Route::post('/Ficha/create', [FichaController::class, 'store'])->name('Ficha.store')->middleware('instrutor');
+Route::get('/Ficha/edit/{id}', [FichaController::class, 'edit'])->name('Ficha.edit')->middleware('instrutor');
+Route::put('/Ficha/update/{id}', [FichaController::class, 'update'])->name('Ficha.update')->middleware('instrutor');
+Route::get('/Ficha/delete/{id}', [FichaController::class, 'delete'])->name('Ficha.delete')->middleware('instrutor');
 Route::get('/Ficha/{id}', [FichaController::class, 'show'])->name('ficha.show')->middleware('check.ficha.permission');
 
 
+
+Route::get('Aluno/showAll', [AlunoController::class, 'showAll'])->name('Aluno.showAll')->middleware('auth');
 
 
 
@@ -80,14 +82,15 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/Aluno/edit/{id}', [AlunoController::class, 'edit'])->name('Aluno.edit')->middleware('auth');
         Route::put('/Aluno/update/{id}', [AlunoController::class, 'update'])->name('Aluno.update')->middleware('auth');
         Route::get('/Aluno/delete/{id}', [AlunoController::class, 'delete'])->name('Aluno.delete')->middleware('auth');
-        
+        Route::get('/Instrutor/Aluno/{alunoId}/Fichas', [InstrutorController::class, 'verFichasAluno'])->name('instrutor.ver_fichas_aluno');
+
+    
+
+
 
 
     });
 });
-
-
-
 
 
 

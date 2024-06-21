@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('gordura')->nullable();
             $table->integer('musculo')->nullable();
             $table->integer('idade')->notNullable();
+            $table->json('historico')->nullable();
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });

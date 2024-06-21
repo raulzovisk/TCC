@@ -24,10 +24,11 @@
 
 
 @if (session('success'))
-    <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert">
+    <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert" style="z-index: 9999;">
         {{ session('success') }}
     </div>
 @endif
+
 
 <!--Modal script -->
 <script>

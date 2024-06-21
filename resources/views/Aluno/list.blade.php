@@ -61,19 +61,6 @@
         </div>
     </x-app-layout>
 
-    @if (session('success'))
-        <div class="alert alert-success w-25 position-fixed bottom-0 end-0 m-3" role="alert" id="success-alert">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <script>
-        $(document).ready(function() {
-            $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-                $("#success-alert").slideUp(500);
-            });
-        });
-    </script>
 </body>
 
 </html>

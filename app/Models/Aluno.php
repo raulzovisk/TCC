@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Aluno extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $table = 'aluno';
 
@@ -26,6 +25,9 @@ class Aluno extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
-  
+    public function fichas()
+    {
+        return $this->hasMany(Ficha::class, 'id_aluno');
+    }
 
 }

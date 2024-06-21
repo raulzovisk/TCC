@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class ExercicioFicha extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
     protected $table = 'exercicio_ficha';
 

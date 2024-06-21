@@ -72,15 +72,24 @@ class AlunoController extends Controller
 
 
     public function show()
-    {
-        $userId = Auth::id();
-        $aluno = Aluno::where('id_user', $userId)->first();
+{
+    $userId = Auth::id();
+    $aluno = Aluno::where('id_user', $userId)->first();
 
-        $historico = $aluno ? $aluno->historico : [];
-        $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
+    $historico = $aluno ? $aluno->historico : [];
+    $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
 
-        return view('aluno.show', compact('aluno', 'historico', 'currentData'));
-    }
+    return view('aluno.show', compact('aluno', 'historico', 'currentData'));
+}
+public function showAll()
+{
+    $userId = Auth::id();
+    $aluno = Aluno::where('id_user', $userId)->first();
+
+    $historico = $aluno ? $aluno->historico : [];
+    $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
+    return view('aluno.showAll', compact('aluno', 'historico','currentData'));
+}
 
 
 

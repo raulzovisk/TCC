@@ -12,7 +12,7 @@ class Exercicio extends Model
     public $timestamps = false;
     protected $table = 'exercicio';
 
-    protected $fillable = ['nome', 'series', 'repeticoes', 'descricao', 'id_categoria'];
+    protected $fillable = ['nome', 'id_categoria'];
 
     public function categoria()
     {
@@ -21,7 +21,8 @@ class Exercicio extends Model
 
     public function fichas()
     {
-        return $this->belongsToMany(Ficha::class, 'exercicio_ficha', 'id_exercicio', 'id_ficha');
+        return $this->belongsToMany(Ficha::class, 'exercicio_ficha', 'id_exercicio', 'id_ficha')
+                    ->withPivot('repeticoes', 'series');
     }
 
 }

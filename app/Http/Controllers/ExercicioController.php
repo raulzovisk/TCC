@@ -46,7 +46,7 @@ class ExercicioController extends Controller
         $Exercicio = Exercicio::findOrFail($id);
 
         $Exercicio->nome = $request->nome;
-        $Exercicio->id_categoria = $request->id_categoria;
+        $Exercicio->id_categoria = $request->id_categoria; 
         $Exercicio->save();
 
         return redirect()->route('exercicio.create');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluno;
 use App\Models\Instrutor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -104,4 +105,10 @@ class InstrutorController extends Controller
         return redirect()->route('Instrutor.index')->with('success', 'Instrutor atribuído com sucesso');
     }
 
+
+    public function verFichasAluno($alunoId)
+    {
+        $aluno = Aluno::with('fichas.instrutor')->findOrFail($alunoId);
+        return view('Instrutor.ver_fichas_aluno', compact('aluno'));
+    }
 }

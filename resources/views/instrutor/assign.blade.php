@@ -35,7 +35,7 @@
                                             <tr>
                                                 <td>{{ $user->id }}</td>
                                                 <td>{{ $user->name }}</td>
-                                                <td><a style="color: rgb(16, 125, 161); font-weight: 500"
+                                                <td><a  class="btn btn-primary" role="button" style="margin-right: 0%"
                                                         href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir
                                                         como
                                                         Instrutor</a></td>

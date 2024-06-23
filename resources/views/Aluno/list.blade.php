@@ -19,9 +19,8 @@
                         </div>
                         <div class="card-body">
                             <form action="{{ route('Aluno.list') }}" method="GET">
-                                <input type="text" name="search" class="rounded-pill mb-1"
-                                    placeholder="Buscar por nomes..">
-                                <input type="submit" value="Buscar">
+                                <input type="text" name="search" class="rounded-pill mb-1" placeholder="Buscar por nomes..">
+                                <input type="submit" value="Buscar" >
                             </form>
 
                             @if ($users->count())
@@ -41,10 +40,9 @@
                                                 <td>{{ $user->name }}</td>
                                                 <td>{{ $user->email }}</td>
                                                 <td>
-                                                    <a style="color: rgb(16, 125, 161); font-weight: 500"
-                                                        href="{{ route('Aluno.create', ['id' => $user->id]) }}">Cadastrar
-                                                        como
-                                                        Aluno</a>
+                                                    <a href="{{ route('Aluno.create', ['id' => $user->id]) }}" class="btn btn-primary" role="button">
+                                                        Cadastrar Aluno
+                                                    </a>
                                                 </td>
                                             </tr>
                                         @endforeach

@@ -25,9 +25,9 @@
                                         <label for="status" class="form-label">Status</label>
                                         <select class="w-100 rounded form-control" id="status" name="status"
                                             required>
-                                            <option value="Ativo 🟢"
+                                            <option value="🟢"
                                                 {{ $instrutor->status == 'ativo' ? 'selected' : '' }}>Ativo</option>
-                                            <option value="Ausente 🟠"
+                                            <option value="🟠"
                                                 {{ $instrutor->status == 'ausente' ? 'selected' : '' }}>Ausente</option>
                                         </select>
                                     </div>

@@ -336,12 +336,107 @@
             <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="{{ route('Aluno.list') }}" :active="request()->routeIs('Aluno.create')">
-                {{ __('Cadastro Aluno') }}
-                </x-nav-link>
+            
+            @if (!Auth::user() || (Auth::user() && !Auth::user()->is_admin && Auth::user()->isNotAluno()))
+              <!-- Silenciar  <x-responsive-nav-link href="{{ route('Aluno.list') }}" :active="request()->routeIs('Aluno.create')">
+                    {{ __('Cadastro Aluno') }}
+               </x-responsive-nav-link> -->
+            @endif
+            
+            @if (Auth::user() && !Auth::user()->is_admin)
                 <x-responsive-nav-link href="{{ route('Aluno.show') }}" :active="request()->routeIs('Aluno.show')">
                     {{ __('Dados Aluno') }}
-                    </x-nav-link>
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('Ficha.index') }}" :active="request()->routeIs('Fichas.index')">
+                    {{ __('Fichas') }}
+                </x-responsive-nav-link>
+            @endif
+            
+            @if (Auth::user() && Auth::user()->is_admin)
+                <x-dropdown align="right" width="60">
+                    <x-slot name="trigger">
+                        <x-responsive-nav-link href="#">
+                            {{ __('Instrutores') }}
+                        </x-responsive-nav-link>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="w-60">
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Opções') }}
+                            </div>
+                            <x-dropdown-link href="{{ route('Instrutor.assign') }}">
+                                {{ __('Atribuir Instrutor') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('Instrutor.index') }}">
+                                {{ __('Listar Instrutores') }}
+                            </x-dropdown-link>
+                        </div>
+                    </x-slot>
+                </x-dropdown>
+            @endif
+            
+            @if (Auth::user() && (Auth::user()->instrutor || Auth::user()->is_admin))
+                <x-dropdown align="right" width="60">
+                    <x-slot name="trigger">
+                        <x-responsive-nav-link href="#">
+                            {{ __('Alunos') }}
+                        </x-responsive-nav-link>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="w-60">
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Opções') }}
+                            </div>
+                            <x-dropdown-link href="{{ route('Aluno.list') }}">
+                                {{ __('Cadastrar Aluno') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('Aluno.index') }}">
+                                {{ __('Listar Alunos') }}
+                            </x-dropdown-link>
+                        </div>
+                    </x-slot>
+                </x-dropdown>
+            
+                <x-dropdown align="right" width="60">
+                    <x-slot name="trigger">
+                        <x-responsive-nav-link href="#">
+                            {{ __('Exercícios') }}
+                        </x-responsive-nav-link>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="w-60">
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Opções') }}
+                            </div>
+                            <x-dropdown-link href="{{ route('Exercicio.create') }}">
+                                {{ __('Exercícios') }}
+                            </x-dropdown-link>
+                            <x-dropdown-link href="{{ route('Categoria.index') }}">
+                                {{ __('Categorias') }}
+                            </x-dropdown-link>
+                        </div>
+                    </x-slot>
+                </x-dropdown>
+            
+                <x-dropdown align="right" width="60">
+                    <x-slot name="trigger">
+                        <x-responsive-nav-link href="#">
+                            {{ __('Fichas') }}
+                        </x-responsive-nav-link>
+                    </x-slot>
+                    <x-slot name="content">
+                        <div class="w-60">
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Opções') }}
+                            </div>
+                            <x-dropdown-link href="{{ route('Ficha.create') }}">
+                                {{ __('Criar Fichas') }}
+                            </x-dropdown-link>
+                        </div>
+                    </x-slot>
+                </x-dropdown>
+            @endif
+            
         </div>
 
         <!-- Responsive Settings Options -->

@@ -98,7 +98,7 @@ class InstrutorController extends Controller
 
         $instrutor = new Instrutor();
         $instrutor->id_user = $user->id;
-        $instrutor->status = 'Ativo 🟢' ; 
+        $instrutor->status = '🟢' ; 
         
         $instrutor->save();
 

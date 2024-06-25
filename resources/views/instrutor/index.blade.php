@@ -44,10 +44,10 @@
                                     @foreach ($instrutores as $instrutor)
                                         <tr>
                                             <td>{{ $instrutor->id }}</td>
-                                            <td>{{ $instrutor->user->name }}</td>
+                                            <td>{{ $instrutor->user->name }}<span class="badge badge-secondary">{{ $instrutor->status }}</span></td>
                                             <td>
                                                 <div class="action-buttons">
-                                                    <span class="badge badge-secondary">{{ $instrutor->status }}</span>
+                                                    
                                                     <a href="{{ route('Instrutor.edit', $instrutor->id) }}" class="btn btn-warning">
                                                         Editar
                                                     </a>

@@ -6,7 +6,7 @@
     @include('scripts')
     <style>
         .select2-container {
-            width: 150px !important;
+            width: 100% !important;
         }
 
         .select2-container .select2-selection--single {
@@ -40,7 +40,7 @@
 
                                     <div class="mr-6">
                                         <label for="id_aluno">Aluno:</label>
-                                        <select name="id_aluno" id="id_aluno" class="rounded mb-3" required>
+                                        <select name="id_aluno" id="id_aluno" class="form-control select2 rounded mb-3" required>
                                             @foreach ($alunos as $aluno)
                                                 <option value="{{ $aluno->id }}">{{ $aluno->user->name }}</option>
                                             @endforeach
@@ -48,19 +48,16 @@
                                     </div>
                                     <div>
                                         <label for="data">Data:</label>
-                                        <input type="date" class="form rounded mb-3" name="data" id="data"
-                                            required>
+                                        <input type="date" class="form-control rounded mb-3" name="data" id="data" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="descricao">Nome da Ficha:</label>
-                                    <input type="text" name="descricao" id="descricao"
-                                        class="form-control rounded mb-3" required>
+                                    <input type="text" name="descricao" id="descricao" class="form-control rounded mb-3" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="objetivo">Objetivo:</label>
-                                    <input type="text" class="form-control rounded mb-3" name="objetivo"
-                                        id="objetivo" required>
+                                    <input type="text" class="form-control rounded mb-3" name="objetivo" id="objetivo" required>
                                 </div>
 
                                 <div id="containerExercicios" class="form-group"></div>
@@ -81,12 +78,11 @@
 
         function adicionarExercicio() {
             let novoCampoExercicio = `
-        <div class="exercicio form-control rounded mb-3 border border-primary" id="exercicio_${contadorExercicios}" style="display: none;">
-            <label for="exercicio_${contadorExercicios}">Exercício:</label>
-            <select name="exercicios[${contadorExercicios}][id_exercicio]" id="exercicio_${contadorExercicios}" class="form-control rounded mb-3" required>
-    `;
+                <div class="exercicio form-control rounded mb-3 border border-primary" id="exercicio_${contadorExercicios}" style="display: none;">
+                    <label for="exercicio_${contadorExercicios}">Exercício:</label>
+                    <select name="exercicios[${contadorExercicios}][id_exercicio]" id="select_exercicio_${contadorExercicios}" class="form-control select2-exercicio rounded mb-3" required>
+            `;
 
-            // Ordenar exercícios alfabeticamente pelo nome
             let exerciciosOrdenados = @json($exercicios->sortBy('nome')->values());
 
             exerciciosOrdenados.forEach(exercicio => {
@@ -94,18 +90,21 @@
             });
 
             novoCampoExercicio += `
-            </select>
-            <label for="exercicio_${contadorExercicios}_repeticoes">Repetições:</label>
-            <input type="number" name="exercicios[${contadorExercicios}][repeticoes]" id="exercicio_${contadorExercicios}_repeticoes" class="form-control rounded mb-3" required>
-            <label for="exercicio_${contadorExercicios}_series">Séries:</label>
-            <input type="number" name="exercicios[${contadorExercicios}][series]" id="exercicio_${contadorExercicios}_series" class="form-control rounded mb-3" required>
-            <button  class="btn btn-danger btnRemoverExercicio" data-id="${contadorExercicios}">Remover</button>
-        </div>
-    `;
+                    </select>
+                    <label for="exercicio_${contadorExercicios}_repeticoes">Repetições:</label>
+                    <input type="number" name="exercicios[${contadorExercicios}][repeticoes]" id="exercicio_${contadorExercicios}_repeticoes" class="form-control rounded mb-3" required>
+                    <label for="exercicio_${contadorExercicios}_series">Séries:</label>
+                    <input type="number" name="exercicios[${contadorExercicios}][series]" id="exercicio_${contadorExercicios}_series" class="form-control rounded mb-3" required>
+                    <button class="btn btn-danger btnRemoverExercicio" data-id="${contadorExercicios}">Remover</button>
+                </div>
+            `;
 
             let $novoCampo = $(novoCampoExercicio);
             $('#containerExercicios').append($novoCampo);
             $novoCampo.slideDown();
+
+            $(`#select_exercicio_${contadorExercicios}`).select2();
+
             contadorExercicios++;
         }
 
@@ -114,17 +113,14 @@
             adicionarExercicio();
         });
 
-        $(document).on('click', '.btnRemoverExercicio', function() {
+        $(document).on('click', '.btnRemoverExercicio', function(event) {
             let idExercicio = $(this).data('id');
             event.preventDefault();
             $(`#exercicio_${idExercicio}`).slideUp(function() {
                 $(this).remove();
             });
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
+
         $('#id_aluno').select2();
     });
 </script>

@@ -26,10 +26,11 @@
                             <h1 class="text-center mb-1 display-6">Alunos</h1>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('Aluno.index') }}" method="GET">
-                                <input type="text" name="search" class="rounded-pill mb-1"
-                                    placeholder="Buscar por nomes..">
-                                <input type="submit" value="Buscar">
+                            <form action="{{ route('Aluno.index') }}" method="GET" class="mb-3">
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control rounded-pill" placeholder="Buscar por nomes...">
+                                    <button style="margin-left: 10px">Buscar</button>
+                                </div>
                             </form>
 
                             @if ($alunos->count())

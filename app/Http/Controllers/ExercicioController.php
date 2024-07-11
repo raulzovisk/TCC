@@ -44,12 +44,17 @@ class ExercicioController extends Controller
     public function update(Request $request, $id)
     {
         $Exercicio = Exercicio::findOrFail($id);
-
+    
         $Exercicio->nome = $request->nome;
-        $Exercicio->id_categoria = $request->id_categoria; 
+    
+        // Verificar se a categoria no request é nula
+        if ($request->filled('id_categoria')) {
+            $Exercicio->id_categoria = $request->id_categoria;
+        }
+    
         $Exercicio->save();
-
-        return redirect()->route('exercicio.create');
+    
+        return redirect()->route('Exercicio.create');
     }
     public function delete(Request $request, $id)
     {

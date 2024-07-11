@@ -100,8 +100,9 @@
                                                             <tr>
                                                                 <td>{{ $exercicio->nome }}</td>
                                                                 <td>
-                                                                    <button
-                                                                        class="btn btn-sm btn-primary">Editar</button>
+                                                                  <a href="{{ route('Exercicio.edit', $exercicio->id) }}" class="btn btn-sm btn-primary">
+                                                                        Editar
+                                                                    </a>
                                                                     <button class="btn btn-sm btn-danger delete-button"
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#confirmModal{{ $exercicio->id }}">Excluir</button>

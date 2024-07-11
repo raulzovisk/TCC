@@ -30,7 +30,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-header">
+                        <div class="card-header" style="background-color: white">
                             <h1 class="text-center mb-1 display-6">Ficha de Exercícios</h1>
                         </div>
                         <div class="card-body">

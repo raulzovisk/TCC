@@ -23,8 +23,8 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-header">
-                            <h1 class="text-center mb-1 display-6">Instrutores</h1>
+                        <div class="card-header" style="background-color: white">
+                            <h1 class="text-center mb-1 display-6 ">Instrutores</h1>
                         </div>
                         <div class="card-body">
                             <form action="{{ route('Instrutor.index') }}" method="GET" class="mb-3">
@@ -37,15 +37,13 @@
                             <table class="table" id="instrutorTable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Nome</th>
-                                        <th class="text-end">Ações</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($instrutores as $instrutor)
                                         <tr>
-                                            <td>{{ $instrutor->id }}</td>
                                             <td>{{ $instrutor->user->name }}<span class="badge badge-secondary">{{ $instrutor->status }}</span></td>
                                             <td>
                                                 <div class="action-buttons">

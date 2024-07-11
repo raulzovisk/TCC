@@ -16,7 +16,7 @@
 <body>
     <x-app-layout>
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" style="background-color: white">
                 Detalhes da Ficha
             </div>
             <div class="card-body">

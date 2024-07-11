@@ -14,8 +14,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
+        //php artisan db:seed --class=DatabaseSeeder
         User::factory(20)->create();
-
+        $this->call([
+            CategorySeeder::class,
+            ExerciseSeeder::class,
+            AdminUserSeeder::class,
+        ]);
 
     }
 }

@@ -43,7 +43,7 @@ class CategoriaController extends Controller
         $Categoria->nome = $request->nome;
         $Categoria->save();
 
-        return redirect()->route('Categoria.index')->with('success', 'Dados do categoria atualizados com sucesso!');
+        return redirect()->route('Categoria.index')->with('success', 'Dados da categoria atualizados com sucesso!');
     }
     public function delete(Request $request, $id)
     {

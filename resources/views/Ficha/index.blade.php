@@ -17,7 +17,6 @@
             padding: 10px;
             text-align: center;
             font-size: 1.25rem;
-            /* Aumenta o tamanho da fonte */
         }
 
         .ficha-body {
@@ -27,20 +26,15 @@
         .ficha-card {
             border-radius: 10px;
             overflow: hidden;
-            /* Garante que os cantos arredondados fiquem visíveis */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
-            /* Adiciona transição suave para o efeito de zoom */
             width: 200px;
-            /* Largura fixa */
             height: 200px;
-            /* Altura fixa */
             cursor: pointer;
         }
 
         .ficha-card:hover {
             transform: scale(1.05);
-            /* Efeito de zoom */
         }
 
         .fichas-container {
@@ -58,7 +52,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-header">
+                        <div class="card-header" style="background-color: white">
                             <h1 class="text-center mb-1 display-6">Fichas</h1>
                         </div>
                         <div class="card-body">

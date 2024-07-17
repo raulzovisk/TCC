@@ -18,14 +18,12 @@
                             <h1 class="text-center mb-1 display-6">Atribuir Instrutor</h1>
                         </div>
                         <div class="card-body">
-                            <input type="text" id="search" class="rounded-pill mb-1" onkeyup="search()"
-                                placeholder="Buscar por nomes..">
-
+                            <input type="text" id="search" class="form-control rounded"onkeyup="search()"
+                            placeholder="Buscar por nomes...">
                             @if ($users->count())
                                 <table class="table" id="usuariosTable">
                                     <thead>
                                         <tr>
-                                            <th>ID</th>
                                             <th>Nome</th>
                                             <th>Atribuição</th>
                                         </tr>
@@ -33,7 +31,6 @@
                                     <tbody>
                                         @foreach ($users as $user)
                                             <tr>
-                                                <td>{{ $user->id }}</td>
                                                 <td>{{ $user->name }}</td>
                                                 <td><a  class="btn btn-primary" role="button" style="margin-right: 0%"
                                                         href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir

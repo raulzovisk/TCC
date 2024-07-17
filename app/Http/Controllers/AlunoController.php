@@ -72,48 +72,46 @@ class AlunoController extends Controller
 
 
     public function show()
-{
-    $userId = Auth::id();
-    $aluno = Aluno::where('id_user', $userId)->first();
+    {
+        $userId = Auth::id();
+        $aluno = Aluno::where('id_user', $userId)->first();
 
-    $historico = $aluno ? $aluno->historico : [];
-    $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
+        $historico = $aluno ? $aluno->historico : [];
+        $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
 
-    return view('aluno.show', compact('aluno', 'historico', 'currentData'));
-}
-public function showAll()
-{
-    $userId = Auth::id();
-    $aluno = Aluno::where('id_user', $userId)->first();
+        return view('aluno.show', compact('aluno', 'historico', 'currentData'));
+    }
+    public function showAll()
+    {
+        $userId = Auth::id();
+        $aluno = Aluno::where('id_user', $userId)->first();
 
-    $historico = $aluno ? $aluno->historico : [];
-    $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
-    return view('aluno.showAll', compact('aluno', 'historico','currentData'));
-}
+        $historico = $aluno ? $aluno->historico : [];
+        $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
+        return view('aluno.showAll', compact('aluno', 'historico', 'currentData'));
+    }
 
 
 
     public function update(Request $request, $id)
-{
-    $Aluno = Aluno::findOrFail($id);
+    {
+        $Aluno = Aluno::findOrFail($id);
 
-    // Adicionar dados antigos ao histórico
-    $historico = $Aluno->historico ?? [];
-    $historico[] = $Aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']);
+        // Adicionar dados antigos ao histórico
+        $historico = $Aluno->historico ?? [];
+        $historico[] = $Aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']);
 
-    // Atualizar dados atuais
-    $Aluno->altura = $request->altura;
-    $Aluno->peso = $request->peso;
-    $Aluno->gordura = $request->gordura;
-    $Aluno->musculo = $request->musculo;
-    $Aluno->idade = $request->idade;
-    $Aluno->historico = $historico; // Salvar histórico atualizado
-    $Aluno->save();
+        // Atualizar dados atuais
+        $Aluno->altura = $request->altura;
+        $Aluno->peso = $request->peso;
+        $Aluno->gordura = $request->gordura;
+        $Aluno->musculo = $request->musculo;
+        $Aluno->idade = $request->idade;
+        $Aluno->historico = $historico;
+        $Aluno->save();
 
-    return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
-}
-
-
+        return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
+    }
 
 
     public function delete(Request $request, $id)

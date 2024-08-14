@@ -16,8 +16,8 @@ return new class extends Migration
             $table->double('altura')->notNullable();
             $table->double('peso')->notNullable();
             $table->char('genero')->notNullable();
-            $table->integer('gordura')->nullable();
-            $table->integer('musculo')->nullable();
+            $table->integer('gordura')->notNullable();
+            $table->integer('musculo')->notNullable();
             $table->integer('idade')->notNullable();
             $table->json('historico')->nullable();
             $table->unsignedBigInteger('id_user');

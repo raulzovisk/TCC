@@ -23,6 +23,7 @@
                             <h1 class="text-center mb-1 display-6">Fichas de: {{ $aluno->user->name }}</h1>
                         </div>
                         <div class="card-body">
+                            
                             @foreach ($aluno->fichas as $ficha)
                                 <div class="card mb-4">
                                     <div class="card-header" style="background-color: rgb(16, 125, 161); border-color: rgb(16, 125, 161); color: white">

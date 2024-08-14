@@ -51,16 +51,20 @@ class AlunoController extends Controller
     public function store(Request $request)
     {
         $aluno = new Aluno();
+
         $aluno->id_user = $request->input('id_user');
-        $aluno->altura = $request->input('altura');
-        $aluno->peso = $request->input('peso');
+        $aluno->altura = str_replace(',', '.', $request->input('altura'));
+        $aluno->peso = str_replace(',', '.', $request->input('peso'));
         $aluno->genero = $request->input('genero');
-        $aluno->gordura = $request->input('gordura');
-        $aluno->musculo = $request->input('musculo');
+        $aluno->gordura = str_replace(',', '.', $request->input('gordura'));
+        $aluno->musculo = str_replace(',', '.', $request->input('musculo'));
         $aluno->idade = $request->input('idade');
+
         $aluno->save();
+
         return redirect()->route('Aluno.index')->with('success', 'Aluno criado com sucesso!');
     }
+
 
 
     public function edit(Request $request, $id)

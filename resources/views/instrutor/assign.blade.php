@@ -25,6 +25,7 @@
                                     <thead>
                                         <tr>
                                             <th>Nome</th>
+                                            <th>Email</th>
                                             <th>Atribuição</th>
                                         </tr>
                                     </thead>
@@ -32,6 +33,7 @@
                                         @foreach ($users as $user)
                                             <tr>
                                                 <td>{{ $user->name }}</td>
+                                                <td>{{ $user->email }}</td>
                                                 <td><a  class="btn btn-primary" role="button" style="margin-right: 0%"
                                                         href="{{ route('Instrutor.assignUser', $user->id) }}">Atribuir
                                                         como

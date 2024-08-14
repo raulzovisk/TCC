@@ -10,12 +10,13 @@
 
 <body>
     <x-app-layout>
-        <div class="container-fluid mt-3 w-75">
+        <div class="container mt-3">
             <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-body">
-                            <h1 class="text-center mb-4 display-6">Alterar Dados : {{ $aluno->user->name }}</h1>
+                <div class="col-md-7">
+                    <div class="card shadow p-3 mb-5 bg-white rounded">
+                        <div class="card-header" style="background-color: white">
+                            <h1 class="text-center mb-1 display-6">Alterar Dados : {{ $aluno->user->name }}</h1>
+                        </div>
                             <div class="p-3">
                                 <form method="POST" action="{{ route('Aluno.update', $aluno->id) }}" id="alunoForm">
                                     @csrf
@@ -45,7 +46,7 @@
                                             value="{{ $aluno->musculo }}" oninput="validateNumberInput(this)">
                                     </div>
 
-                                    <div class="mb-2">
+                                    <div class="mb-4">
                                         <label for="idade" class="form-label">Idade</label>
                                         <input type="text" class="form-control rounded" id="idade" name="idade"
                                             value="{{ $aluno->idade }}" required oninput="validateIntegerInput(this)">

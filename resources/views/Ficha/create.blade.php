@@ -62,7 +62,7 @@
 
                                 <div id="containerExercicios" class="form-group"></div>
                                 <button id="btnAdicionarExercicio" class="btn btn-primary">Adicionar Exercício</button>
-                                <button class="btn btn-success">Enviar</button>
+                                <button  class="btn btn-success">Enviar</button>
                             </form>
                         </div>
                     </div>
@@ -75,6 +75,10 @@
 <script>
     $(document).ready(function() {
         let contadorExercicios = 1;
+
+        function validateIntegerInput(value) {
+            return /^[0-9]+$/.test(value); 
+        }
 
         function adicionarExercicio() {
             let novoCampoExercicio = `
@@ -119,6 +123,30 @@
             $(`#exercicio_${idExercicio}`).slideUp(function() {
                 $(this).remove();
             });
+        });
+
+        $('#formFicha').on('submit', function(event) {
+            event.preventDefault(); 
+
+            let exerciciosSelecionados = [];
+            let valid = true;
+
+            $('.exercicio').each(function() {
+                let select = $(this).find('select');
+
+                let exercicioId = select.val();
+                if (exerciciosSelecionados.includes(exercicioId)) {
+                    alert('Você não pode selecionar o mesmo exercício mais de uma vez.');
+                    valid = false;
+                    return false;
+                }
+
+                exerciciosSelecionados.push(exercicioId);
+            });
+
+            if (valid) {
+                this.submit(); 
+            }
         });
 
         $('#id_aluno').select2();

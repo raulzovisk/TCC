@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Aluno</title>
     @include('scripts')
 </head>
-<style></style>
+
 <body>
     <x-app-layout>
         <div class="container mt-3">
@@ -20,21 +17,8 @@
                         <div class="card-body">
                             <form id="alunoForm" action="{{ route('Aluno.store') }}" method="POST" class="form">
                                 @csrf
-
-                                <div class="form-floating mb-2">
-                                    <input type="text" id="altura" name="altura" class="form-control rounded"
-                                        placeholder="Altura (cm)" required oninput="validateIntegerInput(this)">
-                                    <label for="altura">Altura (cm)</label>
-                                </div>
-
-                                <div class="form-floating mb-2">
-                                    <input type="text" id="peso" name="peso" class="form-control rounded"
-                                        placeholder="Peso (Kg)" required oninput="validateNumberInput(this)">
-                                    <label for="peso">Peso (Kg)</label>
-                                </div>
-
-                                <label for="genero">Gênero:</label><br>
-                                <div class="form-check-inline mb-2">
+                                <label required for="genero">Gênero:</label><br>
+                                <div class="form-check-inline mb-2" >
                                     <x-checkbox id="generoM" name="genero" value="M"
                                         onchange="onlyOneCheckbox(this)" />
                                     <span>Masculino</span>
@@ -44,28 +28,26 @@
                                     <span>Feminino</span>
                                 </div><br>
 
-                                <div class="form-floating mb-2">
-                                    <input type="text" id="gordura" name="gordura" class="form-control rounded"
-                                        placeholder="Percentual de Gordura %" oninput="validateNumberInput(this)">
-                                    <label for="gordura">Percentual de Gordura %</label>
-                                </div>
+                                <input type="text" id="altura" name="altura" class="form-control rounded mb-2"
+                                    placeholder="Altura (cm)" required oninput="validateIntegerInput(this)">
 
-                                <div class="form-floating mb-2">
-                                    <input type="text" id="musculo" name="musculo" class="form-control rounded"
-                                        placeholder="Massa Muscular (Kg)" oninput="validateNumberInput(this)">
-                                    <label for="musculo">Massa Muscular (Kg)</label>
-                                </div>
+                                <input type="text" id="peso" name="peso" class="form-control rounded mb-2"
+                                    placeholder="Peso (KG)" required oninput="validateNumberInput(this)">
 
-                                <div class="form-floating mb-4">
-                                    <input type="text" id="idade" name="idade" class="form-control rounded"
-                                        placeholder="Idade" required oninput="validateIntegerInput(this)">
-                                    <label for="idade">Idade</label>
-                                </div>
+                                <input type="text" id="gordura" name="gordura" class="form-control rounded mb-2"
+                                    placeholder="% Gordura" oninput="validateNumberInput(this)">
+
+                                <input type="text" id="musculo" name="musculo" class="form-control rounded mb-2"
+                                    placeholder="Massa Muscular" oninput="validateNumberInput(this)">
+
+                                <input type="text" id="idade" name="idade" class="form-control rounded mb-4"
+                                    placeholder="Idade" required oninput="validateIntegerInput(this)">
 
                                 <input type="hidden" name="id_user" value="{{ $user->id }}">
 
-                                <div class="text-center">
+                                <div>
                                     <button class="btn btn-primary">Cadastrar</button>
+                                    <a href="{{ route('Aluno.list') }}" class="btn btn-secondary">Cancelar </a>
                                 </div>
                             </form>
                         </div>
@@ -77,18 +59,18 @@
         <script>
             function validateNumberInput(input) {
                 let value = input.value;
-                // Remove all non-numeric characters except for commas
+                
                 value = value.replace(/[^0-9,]/g, '');
-                // Allow only one comma
+                
                 if ((value.match(/,/g) || []).length > 1) {
-                    value = value.replace(/,+$/, ''); // Remove the last comma if more than one
+                    value = value.replace(/,+$/, ''); 
                 }
                 input.value = value;
             }
 
             function validateIntegerInput(input) {
                 let value = input.value;
-                input.value = value.replace(/[^0-9]/g, ''); // Allow only integer numbers
+                input.value = value.replace(/[^0-9]/g, '');
             }
 
             function onlyOneCheckbox(checkbox) {

@@ -40,8 +40,8 @@
                                     @foreach ($ficha->exercicios as $exercicio)
                                         <div class="exercicio-detalhe" data-exercicio-id="{{ $exercicio->id }}">
                                             <h5>{{ $exercicio->nome }}</h5>
-                                            <input type="number" class="form-control rounded mb-2" name="detalhes[{{ $exercicio->id }}][series]" placeholder="Séries" value="{{ $exercicio->pivot->series ?? '' }}" required>
-                                            <input type="number" class="form-control rounded mb-2" name="detalhes[{{ $exercicio->id }}][repeticoes]" placeholder="Repetições" value="{{ $exercicio->pivot->repeticoes ?? '' }}" required>
+                                            <input type="text" class="form-control rounded mb-2" name="detalhes[{{ $exercicio->id }}][series]" placeholder="Séries" value="{{ $exercicio->pivot->series ?? '' }}" required>
+                                            <input type="text" class="form-control rounded mb-2" name="detalhes[{{ $exercicio->id }}][repeticoes]" placeholder="Repetições" value="{{ $exercicio->pivot->repeticoes ?? '' }}" required>
                                         </div>
                                     @endforeach
                                 </div>
@@ -54,6 +54,11 @@
         </div>
     </x-app-layout>
     <script>
+        function validateIntegerInput(input) {
+            let value = input.value;
+            input.value = value.replace(/[^0-9]/g, ''); 
+        }
+
         $(document).ready(function() {
             $('#exercicios').select2();
 
@@ -69,8 +74,8 @@
                     var detalheHtml = `
                         <div class="exercicio-detalhe" data-exercicio-id="${exercicio.id}">
                             <h5>${exercicio.nome}</h5>
-                            <input type="number" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][series]" placeholder="Séries" value="${series}" required>
-                            <input type="number" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][repeticoes]" placeholder="Repetições" value="${repeticoes}" required>
+                            <input type="text" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][series]" placeholder="Séries" value="${series}" required oninput="validateIntegerInput(this)">
+                            <input type="text" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][repeticoes]" placeholder="Repetições" value="${repeticoes}" required oninput="validateIntegerInput(this)">
                         </div>
                     `;
 

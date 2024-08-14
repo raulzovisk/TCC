@@ -25,17 +25,18 @@ class FichaController extends Controller
     }
 
     public function create()
-{
-    $alunos = Aluno::all();
-    $categorias = Categoria::all();
-    $exercicios = Exercicio::all();
+    {
+        $alunos = Aluno::all();
+        $categorias = Categoria::all();
+        $exercicios = Exercicio::all();
 
-    return view('ficha.create', compact('alunos', 'categorias', 'exercicios'));
-}
+        return view('ficha.create', compact('alunos', 'categorias', 'exercicios'));
+    }
 
 
     public function store(Request $request)
     {
+        // Validação dos dados da requisição
         $validatedData = $request->validate([
             'objetivo' => 'required',
             'descricao' => 'required',
@@ -46,30 +47,25 @@ class FichaController extends Controller
             'exercicios.*.repeticoes' => 'required|integer',
             'exercicios.*.series' => 'required|integer',
         ]);
-    
-        try {
-            $ficha = Ficha::create([
-                'objetivo' => $validatedData['objetivo'],
-                'descricao' => $validatedData['descricao'],
-                'data' => $validatedData['data'],
-                'id_aluno' => $validatedData['id_aluno'],
+
+        $ficha = Ficha::create([
+            'objetivo' => $validatedData['objetivo'],
+            'descricao' => $validatedData['descricao'],
+            'data' => $validatedData['data'],
+            'id_aluno' => $validatedData['id_aluno'],
+        ]);
+
+        foreach ($validatedData['exercicios'] as $exercicio) {
+            $ficha->exercicios()->attach($exercicio['id_exercicio'], [
+                'repeticoes' => $exercicio['repeticoes'],
+                'series' => $exercicio['series'],
             ]);
-    
-            foreach ($validatedData['exercicios'] as $exercicio) {
-                $ficha->exercicios()->attach($exercicio['id_exercicio'], [
-                    'repeticoes' => $exercicio['repeticoes'],
-                    'series' => $exercicio['series'],
-                ]);
-            }
-    
-            Log::info('Ficha criada com sucesso', ['ficha_id' => $ficha->id]);
-        } catch (\Exception $e) {
-            Log::error('Erro ao criar a ficha', ['exception' => $e]);
-            return back()->with('error', 'Erro ao criar a ficha. Por favor, tente novamente.');
         }
-    
+
+
         return redirect('/dashboard')->with('success', 'Ficha criada com sucesso!');
     }
+
 
 
     public function edit($id)
@@ -83,27 +79,27 @@ class FichaController extends Controller
     public function update(Request $request, $id)
     {
         $ficha = Ficha::findOrFail($id);
-        $alunoId = $ficha->id_aluno; 
-    
+        $alunoId = $ficha->id_aluno;
+
         $ficha->descricao = $request->input('descricao');
         $ficha->objetivo = $request->input('objetivo');
         $ficha->save();
-    
+
         $exercicios = $request->input('exercicios', []);
         $detalhes = $request->input('detalhes', []);
-    
+
         $ficha->exercicios()->detach();
-    
+
         foreach ($exercicios as $exercicioId) {
             $ficha->exercicios()->attach($exercicioId, [
                 'series' => $detalhes[$exercicioId]['series'] ?? 0,
                 'repeticoes' => $detalhes[$exercicioId]['repeticoes'] ?? 0,
             ]);
         }
-    
+
         return redirect()->route('instrutor.ver_fichas_aluno', ['alunoId' => $alunoId])->with('success', 'Ficha atualizada com sucesso!');
     }
-    
+
 
     public function delete($id)
     {

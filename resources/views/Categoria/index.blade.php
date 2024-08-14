@@ -17,7 +17,7 @@
 <x-app-layout>
     <div class="container mt-3">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <div class="card shadow p-3 mb-5 bg-white rounded">
                     <div class="card-header" style="background-color: white">
                         <h1 class="text-center mb-1 display-6">Categorias</h1>

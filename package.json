@@ -19,7 +19,8 @@
         "vite": "^5.4.0"
     },
     "dependencies": {
-        "@tabler/core": "^1.0.0-beta20"
+        "@tabler/core": "^1.0.0-beta20",
+        "bootstrap-icons": "^1.11.3"
     },
     "name": "tcc",
     "version": "1.0.0",

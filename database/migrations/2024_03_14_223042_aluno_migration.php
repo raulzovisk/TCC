@@ -13,13 +13,7 @@ return new class extends Migration
     {
         Schema::create('aluno', function (Blueprint $table) {
             $table->id();
-            $table->double('altura')->notNullable();
-            $table->double('peso')->notNullable();
-            $table->char('genero')->notNullable();
-            $table->integer('gordura')->notNullable();
-            $table->integer('musculo')->notNullable();
             $table->integer('idade')->notNullable();
-            $table->json('historico')->nullable();
             $table->unsignedBigInteger('id_user');
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });

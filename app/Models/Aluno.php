@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Aluno extends Model
 {
@@ -13,11 +10,8 @@ class Aluno extends Model
 
     protected $table = 'aluno';
 
-    protected $fillable = ['altura', 'peso', 'genero', 'gordura', 'musculo', 'idade', 'id_user', 'historico',];
+    protected $fillable = ['id_user', 'idade'];
 
-    protected $casts = [
-        'historico' => 'array',
-    ];
     public $timestamps = false;
 
     public function user()
@@ -25,9 +19,13 @@ class Aluno extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
+    public function medidasCorporais()
+    {
+        return $this->hasMany(MedidaCorporal::class, 'id_aluno');
+    }
+
     public function fichas()
     {
         return $this->hasMany(Ficha::class, 'id_aluno');
     }
-
 }

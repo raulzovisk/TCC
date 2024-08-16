@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+use App\Models\MedidaCorporal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -49,23 +50,32 @@ class AlunoController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $aluno = new Aluno();
+{
+    $aluno = new Aluno();
+    $aluno->id_user = $request->input('id_user');
+    $aluno->idade = $request->input('idade');
 
-        $aluno->id_user = $request->input('id_user');
-        $aluno->altura = str_replace(',', '.', $request->input('altura'));
-        $aluno->peso = str_replace(',', '.', $request->input('peso'));
-        $aluno->genero = $request->input('genero');
-        $aluno->gordura = str_replace(',', '.', $request->input('gordura'));
-        $aluno->musculo = str_replace(',', '.', $request->input('musculo'));
-        $aluno->idade = $request->input('idade');
+    $aluno->save();
 
-        $aluno->save();
+    $medidaCorporal = new MedidaCorporal();
+    $medidaCorporal->id_aluno = $aluno->id;
+    $medidaCorporal->data_medida = now(); 
+    $medidaCorporal->peso = str_replace(',', '.', $request->input('peso'));
+    $medidaCorporal->altura = str_replace(',', '.', $request->input('altura'));
+    $medidaCorporal->gordura = str_replace(',', '.', $request->input('gordura'));
+    $medidaCorporal->genero = $request->input('genero');
+    $medidaCorporal->cintura = str_replace(',', '.', $request->input('cintura'));
+    $medidaCorporal->quadril = str_replace(',', '.', $request->input('quadril'));
+    $medidaCorporal->peito = str_replace(',', '.', $request->input('peito'));
+    $medidaCorporal->braco_direito = str_replace(',', '.', $request->input('braco_direito'));
+    $medidaCorporal->braco_esquerdo = str_replace(',', '.', $request->input('braco_esquerdo'));
+    $medidaCorporal->coxa_direita = str_replace(',', '.', $request->input('coxa_direita'));
+    $medidaCorporal->coxa_esquerda = str_replace(',', '.', $request->input('coxa_esquerda'));
 
-        return redirect()->route('Aluno.index')->with('success', 'Aluno criado com sucesso!');
-    }
+    $medidaCorporal->save();
 
-
+    return redirect()->route('Aluno.index')->with('success', 'Aluno criado com sucesso!');
+}
 
     public function edit(Request $request, $id)
     {
@@ -74,17 +84,14 @@ class AlunoController extends Controller
 
     }
 
-
-    public function show()
+    public function show($id)
     {
-        $userId = Auth::id();
-        $aluno = Aluno::where('id_user', $userId)->first();
+        $aluno = Aluno::findOrFail($id);
+        $medidaCorporal = $aluno->medidasCorporais()->latest()->first(); // Obtém a medida mais recente
 
-        $historico = $aluno ? $aluno->historico : [];
-        $currentData = $aluno ? $aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']) : [];
-
-        return view('aluno.show', compact('aluno', 'historico', 'currentData'));
+        return view('Aluno.show', compact('aluno', 'medidaCorporal'));
     }
+
     public function showAll()
     {
         $userId = Auth::id();
@@ -95,27 +102,50 @@ class AlunoController extends Controller
         return view('aluno.showAll', compact('aluno', 'historico', 'currentData'));
     }
 
-
-
     public function update(Request $request, $id)
-    {
-        $Aluno = Aluno::findOrFail($id);
+{
+    // Encontra o aluno
+    $aluno = Aluno::findOrFail($id);
 
-        // Adicionar dados antigos ao histórico
-        $historico = $Aluno->historico ?? [];
-        $historico[] = $Aluno->only(['altura', 'peso', 'gordura', 'musculo', 'idade']);
+    // Recupera a última entrada de medidas corporais ou cria uma nova instância
+    $medidaCorporal = $aluno->medidasCorporais()->latest()->first() ?? new MedidaCorporal(['id_aluno' => $aluno->id]);
 
-        // Atualizar dados atuais
-        $Aluno->altura = $request->altura;
-        $Aluno->peso = $request->peso;
-        $Aluno->gordura = $request->gordura;
-        $Aluno->musculo = $request->musculo;
-        $Aluno->idade = $request->idade;
-        $Aluno->historico = $historico;
-        $Aluno->save();
+    // Adicionar dados antigos ao histórico
+    $historico = $medidaCorporal->historico_medidas ?? [];
+    $historico[] = [
+        'data_medida' => $medidaCorporal->data_medida ?? now(),
+        'altura' => $medidaCorporal->altura,
+        'peso' => $medidaCorporal->peso,
+        'gordura' => $medidaCorporal->gordura,
+        'cintura' => $medidaCorporal->cintura,
+        'quadril' => $medidaCorporal->quadril,
+        'peito' => $medidaCorporal->peito,
+        'braco_direito' => $medidaCorporal->braco_direito,
+        'braco_esquerdo' => $medidaCorporal->braco_esquerdo,
+        'coxa_direita' => $medidaCorporal->coxa_direita,
+        'coxa_esquerda' => $medidaCorporal->coxa_esquerda,
+    ];
 
-        return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
-    }
+    // Atualizar dados com os novos valores do request
+    $medidaCorporal->data_medida = now();
+    $medidaCorporal->altura = str_replace(',', '.', $request->input('altura'));
+    $medidaCorporal->peso = str_replace(',', '.', $request->input('peso'));
+    $medidaCorporal->gordura = str_replace(',', '.', $request->input('gordura'));
+    $medidaCorporal->cintura = str_replace(',', '.', $request->input('cintura'));
+    $medidaCorporal->quadril = str_replace(',', '.', $request->input('quadril'));
+    $medidaCorporal->peito = str_replace(',', '.', $request->input('peito'));
+    $medidaCorporal->braco_direito = str_replace(',', '.', $request->input('braco_direito'));
+    $medidaCorporal->braco_esquerdo = str_replace(',', '.', $request->input('braco_esquerdo'));
+    $medidaCorporal->coxa_direita = str_replace(',', '.', $request->input('coxa_direita'));
+    $medidaCorporal->coxa_esquerda = str_replace(',', '.', $request->input('coxa_esquerda'));
+    $medidaCorporal->historico_medidas = $historico;
+
+    // Salvar as alterações
+    $medidaCorporal->save();
+
+    return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
+}
+
 
 
     public function delete(Request $request, $id)

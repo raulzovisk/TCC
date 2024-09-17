@@ -12,7 +12,6 @@ class Instrutor extends Model
 {
 
     protected $table = 'instrutor';
-    protected $fillable = ['status'];
 
     public $timestamps = false;
 

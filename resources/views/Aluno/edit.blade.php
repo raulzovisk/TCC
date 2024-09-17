@@ -1,126 +1,137 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+@extends('layout')
+@section('content')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar Dados: {{ $aluno->user->name }}</title>
-    @include('scripts')
-</head>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Editanto Dados</h6>
+        </div>
+        <div class="card-body">
 
-<body>
-    <x-app-layout>
-        <div class="container mt-3">
-            <div class="row justify-content-center">
-                <div class="col-md-7">
-                    <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-header" style="background-color: white">
-                            <h1 class="text-center mb-1 display-6">Alterar Dados: {{ $aluno->user->name }}</h1>
-                        </div>
-                        <div class="p-3">
-                            <form method="POST" action="{{ route('Aluno.update', $aluno->id) }}" id="alunoForm">
-                                @csrf
-                                @method('PUT')
-
-                                @php
-                                    // Recupera a última medida corporal do aluno
-                                    $ultimaMedida = $aluno->medidasCorporais->last();
-                                @endphp
-
-                                <div class="mb-2">
-                                    <label for="altura" class="form-label">Altura (cm)</label>
-                                    <input type="text" class="form-control rounded" id="altura" name="altura"
-                                        value="{{ $ultimaMedida->altura ?? '' }}" required oninput="validateNumberInput(this)">
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="peso" class="form-label">Peso (KG)</label>
-                                    <input type="text" class="form-control rounded" id="peso" name="peso"
-                                        value="{{ $ultimaMedida->peso ?? '' }}" required oninput="validateNumberInput(this)">
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="gordura" class="form-label">% Gordura</label>
-                                    <input type="text" class="form-control rounded" id="gordura" name="gordura"
-                                        value="{{ $ultimaMedida->gordura ?? '' }}" oninput="validateNumberInput(this)">
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="cintura" class="form-label">Cintura (cm)</label>
-                                    <input type="text" class="form-control rounded" id="cintura" name="cintura"
-                                        value="{{ $ultimaMedida->cintura ?? '' }}" required oninput="validateNumberInput(this)">
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="quadril" class="form-label">Quadril (cm)</label>
-                                    <input type="text" class="form-control rounded" id="quadril" name="quadril"
-                                        value="{{ $ultimaMedida->quadril ?? '' }}" required oninput="validateNumberInput(this)">
-                                </div>
-
-                                <div class="mb-2">
-                                    <label for="peito" class="form-label">Peito (cm)</label>
-                                    <input type="text" class="form-control rounded" id="peito" name="peito"
-                                        value="{{ $ultimaMedida->peito ?? '' }}" required oninput="validateNumberInput(this)">
-                                </div>
-
-                                <div class="d-flex">
-                                    <div class="flex-grow-1 mr-2">
-                                        <label for="braco_direito" class="form-label">Braço Direito (cm)</label>
-                                        <input type="text" class="form-control rounded" id="braco_direito" name="braco_direito"
-                                            value="{{ $ultimaMedida->braco_direito ?? '' }}" required oninput="validateNumberInput(this)">
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label for="braco_esquerdo" class="form-label">Braço Esquerdo (cm)</label>
-                                        <input type="text" class="form-control rounded" id="braco_esquerdo" name="braco_esquerdo"
-                                            value="{{ $ultimaMedida->braco_esquerdo ?? '' }}" required oninput="validateNumberInput(this)">
-                                    </div>
-                                </div>
-
-                                <div class="d-flex">
-                                    <div class="flex-grow-1 mr-2">
-                                        <label for="coxa_direita" class="form-label">Coxa Direita (cm)</label>
-                                        <input type="text" class="form-control rounded" id="coxa_direita" name="coxa_direita"
-                                            value="{{ $ultimaMedida->coxa_direita ?? '' }}" required oninput="validateNumberInput(this)">
-                                    </div>
-                                    <div class="flex-grow-1 mb-2">
-                                        <label for="coxa_esquerda" class="form-label">Coxa Esquerda (cm)</label>
-                                        <input type="text" class="form-control rounded" id="coxa_esquerda" name="coxa_esquerda"
-                                            value="{{ $ultimaMedida->coxa_esquerda ?? '' }}" required oninput="validateNumberInput(this)">
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <button class="btn btn-primary">Salvar</button>
-                                    <a href="{{ route('Aluno.index') }}" class="btn btn-secondary">Cancelar</a>
-                                </div>
-                            </form>
-                        </div>
+            <div class="row">
+                <div class="col-lg-12 margin-tb">
+                    <div class="pull-left">
+                        <h2>Editando Dados</h2>
                     </div>
                 </div>
             </div>
-        </div>
-    </x-app-layout>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <form method="POST" action="{{ route('Aluno.update', $aluno->id) }}" id="alunoForm">
+                @csrf
+                @method('PUT')
 
+                @php
+                    // Recupera a última medida corporal do aluno
+                    $ultimaMedida = $aluno->medidasCorporais->last();
+                @endphp
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Altura:</strong>
+                            <input type="text" class="form-control" id="altura" name="altura"
+                                value="{{ $ultimaMedida->altura ?? '' }}" required oninput="validateNumberInput(this)">
+                        </div>
+                    </div>
+
+                    <div class="form-row col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group col-md-6">
+                            <strong>Peso:</strong>
+                            <input type="text" class="form-control" id="peso" name="peso"
+                                value="{{ $ultimaMedida->peso ?? '' }}" required oninput="validateNumberInput(this)">
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <strong>Gordura: </strong>
+                            <input type="text" class="form-control" id="gordura" name="gordura"
+                                value="{{ $ultimaMedida->gordura ?? '' }}" oninput="validateNumberInput(this)">
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group  ">
+                            <strong>Peito: </strong>
+                            <input type="text" class="form-control " id="peito" name="peito"
+                                value="{{ $ultimaMedida->peito ?? '' }}" required oninput="validateIntegerInput(this)">
+                        </div>
+                    </div>
+
+                    <div class="form-row col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group col-md-6">
+                            <strong>Cintura: </strong>
+                            <input type="text" class="form-control" id="cintura" name="cintura"
+                                value="{{ $ultimaMedida->cintura ?? '' }}" required oninput="validateIntegerInput(this)">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <strong>Quadril: </strong>
+                            <input type="text" class="form-control" id="quadril" name="quadril"
+                                value="{{ $ultimaMedida->quadril ?? '' }}" required oninput="validateIntegerInput(this)">
+                        </div>
+                    </div>
+
+
+                    <div class="form-row col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group col-md-6">
+                            <strong>Braço Direito: </strong>
+                            <input type="text" class="form-control" id="braco_direito" name="braco_direito"
+                                value="{{ $ultimaMedida->braco_direito ?? '' }}" required
+                                oninput="validateIntegerInput(this)">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <strong>Braço Esquedo</strong>
+                            <input type="text" class="form-control" id="braco_esquerdo" name="braco_esquerdo"
+                                value="{{ $ultimaMedida->braco_esquerdo ?? '' }}" required
+                                oninput="validateIntegerInput(this)">
+                        </div>
+                    </div>
+
+                    <div class="form-row col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group col-md-6">
+                            <strong>Perna Direita: </strong>
+                            <input type="text" class="form-control" id="coxa_direita" name="coxa_direita"
+                                value="{{ $ultimaMedida->coxa_direita ?? '' }}" required
+                                oninput="validateIntegerInput(this)">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <strong>Perna Esquerda</strong>
+                            <input type="text" class="form-control" id="coxa_esquerda" name="coxa_esquerda"
+                                value="{{ $ultimaMedida->coxa_esquerda ?? '' }}" required
+                                oninput="validateIntegerInput(this)">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-primary">Salvar</button>
+                        <a href="{{ route('Aluno.index') }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         function validateNumberInput(input) {
             let value = input.value;
-            value = value.replace(/[^0-9,]/g, '');
-            if ((value.match(/,/g) || []).length > 1) {
-                value = value.replace(/,+$/, '');
+            value = value.replace(/[^0-9,.]/g, '');
+            value = value.replace(',', '.');
+            if ((value.match(/\./g) || []).length > 1) {
+                value = value.replace(/\.(?=.*\.)/, '');
             }
             input.value = value;
         }
 
-        document.getElementById('alunoForm').addEventListener('submit', function(event) {
-            const numberFields = ['peso', 'gordura', 'cintura', 'quadril', 'peito', 'braco_direito', 'braco_esquerdo', 'coxa_direita', 'coxa_esquerda'];
-            numberFields.forEach(function(fieldId) {
-                let field = document.getElementById(fieldId);
-                if (field && field.value.includes(',')) {
-                    field.value = field.value.replace(',', '.');
-                }
-            });
-        });
+        function validateIntegerInput(input) {
+            let value = input.value;
+            input.value = value.replace(/[^0-9]/g, '');
+        }
     </script>
-</body>
-
-</html>
+@endsection

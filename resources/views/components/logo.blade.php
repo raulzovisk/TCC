@@ -1,0 +1,1 @@
+<img src="{{asset('/logo/branco.png')}}" alt="" style="width: 100px">

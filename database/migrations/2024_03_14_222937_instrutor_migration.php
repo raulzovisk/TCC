@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('instrutor', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_user');
-            $table->char('status');
             $table->foreign('id_user')->references('id')->on('users');
         });  
     }

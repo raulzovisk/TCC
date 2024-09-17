@@ -1,41 +1,65 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+@extends('layout')
+@section('content')
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Minhas Medidas</h6>
+        </div>
+        <div class="card-body">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meus Dados</title>
-    @include('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-
-<body>
-    <x-app-layout>
-        <div class="container-fluid mt-3">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card shadow mb-5 bg-white rounded">
-                        <div class="card-body">
-                            <h1 class="text-center mb-4 display-6">Meus Dados</h1>
-                            <div class="p-4">
-                                @if ($aluno)
-                                    <p><strong>Altura:</strong> {{ $aluno->altura }} cm</p>
-                                    <p><strong>Peso:</strong> {{ $aluno->peso }} kg</p>
-                                    <p><strong>Gênero:</strong> {{ $aluno->genero }}</p>
-                                    <p><strong>Percentual de Gordura:</strong> {{ $aluno->gordura }} %</p>
-                                    <p><strong>Massa Muscular:</strong> {{ $aluno->musculo }} kg</p>
-                                    <p><strong>Idade:</strong> {{ $aluno->idade }} anos</p>
-
-                                    
-                                @else
-                                    <p class="text-center">Você não tem dados ainda. Aguarde o instrutor preenche-los.</p>
-                                @endif
-                            </div>
-                        </div>
+            <div class="row" style="margin-top: 1rem;">
+                <div class="col-lg-12 margin-tb">
+                    <div class="pull-left">
+                        <h2>Medidas</h2>
                     </div>
                 </div>
             </div>
+
+            @if ($aluno)
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Peso</th>
+                        <td>{{ $medidaCorporal->peso }} kg</td>
+                    </tr>
+                    <tr>
+                        <th>Percentual de Gordura</th>
+                        <td>{{ $medidaCorporal->gordura }} %</td>
+                    </tr>
+                    <tr>
+                        <th>Cintura</th>
+                        <td>{{ $medidaCorporal->cintura }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Quadril</th>
+                        <td>{{ $medidaCorporal->quadril }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Peito</th>
+                        <td>{{ $medidaCorporal->peito }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Braço Direito</th>
+                        <td>{{ $medidaCorporal->braco_direito }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Braço Esquerdo</th>
+                        <td>{{ $medidaCorporal->braco_esquerdo }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Coxa Direita</th>
+                        <td>{{ $medidaCorporal->coxa_direita }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Coxa Esquerda</th>
+                        <td>{{ $medidaCorporal->coxa_esquerda }} cm</td>
+                    </tr>
+                    <tr>
+                        <th>Idade</th>
+                        <td>{{ $aluno->idade }} anos</td>
+                    </tr>
+                </table>
+            @else
+                <p class="text-center">Você não tem dados ainda. Aguarde o instrutor preenche-los.</p>
+            @endif
         </div>
-    </x-app-layout>
-</body>
-</html>
+    </div>
+@endsection

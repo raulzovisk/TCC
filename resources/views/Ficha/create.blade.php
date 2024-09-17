@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <title>Criar Ficha</title>
+@extends('layout')
+@section('content')
     @include('scripts')
+
     <style>
         .select2-container {
             width: 100% !important;
@@ -21,136 +19,149 @@
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 34px;
         }
+
+        
     </style>
-</head>
 
-<body>
-    <x-app-layout>
-        <div class="container mt-3">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-header" style="background-color: white">
-                            <h1 class="text-center mb-1 display-6">Ficha de Exercícios</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Criação de ficha</h6>
+        </div>
+
+        <div class="card-body">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form id="formFicha" action="{{ route('Ficha.store') }}" method="POST" class="was-validated">
+                @csrf
+
+                <div class="row">
+                    <div class="form-row col-md-12 d-flex">
+                        <div class="form-group col-md-6" id="select">
+                            <strong for="id_aluno">Aluno:</strong>
+                            <select name="id_aluno" id="id_aluno" class="form-control select2" required>
+                                @foreach ($alunos as $aluno)
+                                    <option value="{{ $aluno->id }}">{{ $aluno->user->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="card-body">
-                            <form id="formFicha" action="{{ route('Ficha.store') }}" method="POST">
-                                @csrf
-                                <div class="form d-flex flex-wrap justify-content-between mt-3">
-
-                                    <div class="mr-6">
-                                        <label for="id_aluno">Aluno:</label>
-                                        <select name="id_aluno" id="id_aluno" class="form-control select2 rounded mb-3" required>
-                                            @foreach ($alunos as $aluno)
-                                                <option value="{{ $aluno->id }}">{{ $aluno->user->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label for="data">Data:</label>
-                                        <input type="date" class="form-control rounded mb-3" name="data" id="data" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="descricao">Nome da Ficha:</label>
-                                    <input type="text" name="descricao" id="descricao" class="form-control rounded mb-3" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="objetivo">Objetivo:</label>
-                                    <input type="text" class="form-control rounded mb-3" name="objetivo" id="objetivo" required>
-                                </div>
-
-                                <div id="containerExercicios" class="form-group"></div>
-                                <button id="btnAdicionarExercicio" class="btn btn-primary">Adicionar Exercício</button>
-                                <button  class="btn btn-success">Enviar</button>
-                            </form>
+                        <div class="form-group col-md-6">
+                            <strong for="data">Data:</strong>
+                            <input type="date" class="form-control" name="data" id="data" required>
                         </div>
                     </div>
+
+                    <div class="form-row col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group col-md-6">
+                            <strong for="descricao">Nome da Ficha:</strong>
+                            <input type="text" name="descricao" id="descricao" class="form-control rounded mb-3"
+                                required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <strong for="objetivo">Objetivo:</strong>
+                            <input type="text" class="form-control rounded mb-3" name="objetivo" id="objetivo" required>
+                        </div>
+                    </div>
+
+                    <div id="containerExercicios" class="form-row col-xs-12 col-sm-12 col-md-12"></div>
                 </div>
-            </div>
+
+                <div>
+                    <button id="btnAdicionarExercicio" class="btn btn-primary">Adicionar Exercício</button>
+                    <button class="btn btn-success">Enviar</button>
+                </div>
+            </form>
         </div>
-    </x-app-layout>
-</body>
+    </div>
 
-<script>
-    $(document).ready(function() {
-        let contadorExercicios = 1;
+    <script>
+        $(document).ready(function() {
+            let contadorExercicios = 1;
 
-        function validateIntegerInput(value) {
-            return /^[0-9]+$/.test(value); 
-        }
+            function validateIntegerInput(value) {
+                return /^[0-9]+$/.test(value);
+            }
 
-        function adicionarExercicio() {
-            let novoCampoExercicio = `
-                <div class="exercicio form-control rounded mb-3 border border-primary" id="exercicio_${contadorExercicios}" style="display: none;">
-                    <label for="exercicio_${contadorExercicios}">Exercício:</label>
-                    <select name="exercicios[${contadorExercicios}][id_exercicio]" id="select_exercicio_${contadorExercicios}" class="form-control select2-exercicio rounded mb-3" required>
+            function adicionarExercicio() {
+                let novoCampoExercicio = `
+                <div class="exercicio form-row col-xs-12 col-sm-12 col-md-12" id="exercicio_${contadorExercicios}">
+                    <div class="form-group col-md-3">
+                        <select name="exercicios[${contadorExercicios}][id_exercicio]" id="select_exercicio_${contadorExercicios}" class="form-control select2-exercicio" required>
             `;
 
-            let exerciciosOrdenados = @json($exercicios->sortBy('nome')->values());
+                let exerciciosOrdenados = @json($exercicios->sortBy('nome')->values());
 
-            exerciciosOrdenados.forEach(exercicio => {
-                novoCampoExercicio += `<option value="${exercicio.id}">${exercicio.nome}</option>`;
-            });
+                exerciciosOrdenados.forEach(exercicio => {
+                    novoCampoExercicio += `<option value="${exercicio.id}">${exercicio.nome}</option>`;
+                });
 
-            novoCampoExercicio += `
-                    </select>
-                    <label for="exercicio_${contadorExercicios}_repeticoes">Repetições:</label>
-                    <input type="number" name="exercicios[${contadorExercicios}][repeticoes]" id="exercicio_${contadorExercicios}_repeticoes" class="form-control rounded mb-3" required>
-                    <label for="exercicio_${contadorExercicios}_series">Séries:</label>
-                    <input type="number" name="exercicios[${contadorExercicios}][series]" id="exercicio_${contadorExercicios}_series" class="form-control rounded mb-3" required>
-                    <button class="btn btn-danger btnRemoverExercicio" data-id="${contadorExercicios}">Remover</button>
+                novoCampoExercicio += `
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="number" name="exercicios[${contadorExercicios}][repeticoes]" placeholder="Repetições" class="form-control repeticoes" min="1" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="number" name="exercicios[${contadorExercicios}][series]" placeholder="Séries" class="form-control series" min="1" required>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button class="btn btn-danger btnRemoverExercicio" data-id="${contadorExercicios}">Remover</button>
+                    </div>
                 </div>
             `;
 
-            let $novoCampo = $(novoCampoExercicio);
-            $('#containerExercicios').append($novoCampo);
-            $novoCampo.slideDown();
+                $('#containerExercicios').append(novoCampoExercicio);
 
-            $(`#select_exercicio_${contadorExercicios}`).select2();
-
-            contadorExercicios++;
-        }
-
-        $('#btnAdicionarExercicio').on('click', function(event) {
-            event.preventDefault();
-            adicionarExercicio();
-        });
-
-        $(document).on('click', '.btnRemoverExercicio', function(event) {
-            let idExercicio = $(this).data('id');
-            event.preventDefault();
-            $(`#exercicio_${idExercicio}`).slideUp(function() {
-                $(this).remove();
-            });
-        });
-
-        $('#formFicha').on('submit', function(event) {
-            event.preventDefault(); 
-
-            let exerciciosSelecionados = [];
-            let valid = true;
-
-            $('.exercicio').each(function() {
-                let select = $(this).find('select');
-
-                let exercicioId = select.val();
-                if (exerciciosSelecionados.includes(exercicioId)) {
-                    alert('Você não pode selecionar o mesmo exercício mais de uma vez.');
-                    valid = false;
-                    return false;
-                }
-
-                exerciciosSelecionados.push(exercicioId);
-            });
-
-            if (valid) {
-                this.submit(); 
+                $(`#select_exercicio_${contadorExercicios}`).select2();
+                contadorExercicios++;
             }
+
+            $('#btnAdicionarExercicio').on('click', function(event) {
+                event.preventDefault();
+                adicionarExercicio();
+            });
+
+            $(document).on('click', '.btnRemoverExercicio', function(event) {
+                event.preventDefault();
+                let idExercicio = $(this).data('id');
+                $(`#exercicio_${idExercicio}`).remove();
+            });
+
+            $('#formFicha').on('submit', function(event) {
+                let exerciciosSelecionados = [];
+                let duplicado = false;
+
+                $('select[name^="exercicios"]').each(function() {
+                    let exercicioId = $(this).val();
+
+                    if (exerciciosSelecionados.includes(exercicioId)) {
+                        alert('Você não pode selecionar o mesmo exercício mais de uma vez.');
+                        duplicado = true;
+                        return false;
+                    }
+
+                    exerciciosSelecionados.push(exercicioId);
+                });
+
+                if (duplicado) {
+                    event.preventDefault();
+                }
+            });
+
+            $(document).on('input', '.repeticoes, .series', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+
+            $('#id_aluno').select2();
         });
+    </script>
 
-        $('#id_aluno').select2();
-    });
-</script>
-
-</html>
+@endsection

@@ -4,8 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedidasCorporaisTable extends Migration
-{
+return new class extends Migration {
+    /**
+     * Run the migrations.
+     */
     public function up()
     {
         Schema::create('medidas_corporais', function (Blueprint $table) {
@@ -23,13 +25,16 @@ class CreateMedidasCorporaisTable extends Migration
             $table->float('coxa_direita');
             $table->float('coxa_esquerda');
             $table->float('gordura');
-            $table->string('genero'); 
+            $table->string('genero');
             $table->json('historico_medidas')->nullable();
         });
     }
 
+    /**
+     * Reverse the migrations.
+     */
     public function down()
     {
         Schema::dropIfExists('medidas_corporais');
     }
-}
+};

@@ -64,8 +64,4 @@ class ExercicioController extends Controller
         return redirect()->route('Exercicio.create')->with('success', 'Exercício excluído com sucesso!');
     }
 
-    public function teste(Request $request)
-    {
-        return view('exercicio.teste');
-    }
 }

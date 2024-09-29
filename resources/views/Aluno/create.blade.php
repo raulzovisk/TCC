@@ -3,7 +3,7 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Cadastrar Aluno</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Cadastrar Aluno: {{ $user->name }}</h6>
         </div>
 
         <div class="card-body">
@@ -29,8 +29,8 @@
 
                         <div class="form-group col-md-4">
                             <strong>Idade:</strong>
-                            <input type="text" class="form-control" id="idade" name="idade"
-                                placeholder="Idade" required>
+                            <input type="text" class="form-control" id="idade" name="idade" placeholder="Idade"
+                                required>
                         </div>
                         <div class="form-group col-md-4">
                             <strong>Genero:</strong>
@@ -111,10 +111,10 @@
                         </div>
                     </div>
 
-                    <div class="">
-                        <button class="btn btn-primary">Cadastrar</button>
-                        <a href="{{ route('Aluno.list') }}" class="btn btn-secondary">Cancelar</a>
-                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-primary">Cadastrar</button>
+                    <a href="{{ route('Aluno.list') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

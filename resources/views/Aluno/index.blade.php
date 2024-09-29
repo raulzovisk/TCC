@@ -1,21 +1,12 @@
 @extends('layout')
 @section('content')
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Cadastro de Alunos</h6>
+        <div class="card-header py-3 d-flex">
+            <h6 class="m-2 font-weight-bold text-primary">Alunos</h6>
+            <a href="{{ route('Aluno.list') }}" class="btn btn-success ml-auto">Cadastrar Alunos</a>
         </div>
         <div class="card-body">
 
-            <div class="row" style="margin-top: 1rem;">
-                <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Listagem de Alunos</h2>
-                    </div>
-                </div>
-            </div>
-
-            <a href="{{ route('Aluno.list') }}" class="btn btn-primary mb-2">Cadastrar Alunos</a>
-            
             <form action="{{ route('Aluno.index') }}" method="GET" class="mb-3">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control rounded" placeholder="Buscar por nomes...">
@@ -35,7 +26,7 @@
             @endif
 
             @if ($alunos->count())
-                <table class="table table-bordered">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -65,6 +56,7 @@
                                             Deletar
                                         </button>
                                     </div>
+
                                     <!-- Modal -->
                                     <form action="{{ route('Aluno.delete', $aluno->id) }}" method="GET">
                                         @csrf

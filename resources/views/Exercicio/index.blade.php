@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layout')
+@section( 'content')
     <title>Exercícios</title>
-    @include('scripts')
     <style>
         .categoria {
             border-radius: 10px;
@@ -18,52 +13,9 @@
             width: 25%;
         }
     </style>
-    <script>
-        function mostrarCampoAdicionar(categoriaId) {
-            $('#campoAdicionar' + categoriaId).slideDown();
-            $('#dropdownCategoria' + categoriaId).show();
-        }
+  
 
-        function confirmarExercicio(categoriaId) {
-            let nomeExercicio = $('#nomeExercicio' + categoriaId).val();
-            if (nomeExercicio !== "") {
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('Exercicio.store') }}",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        nome: nomeExercicio,
-                        series: null,
-                        repeticoes: null,
-                        id_categoria: categoriaId
-                    },
-                    success: function(response) {
-                        alert("Dados inseridos com sucesso!");
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                alert("Nome do exercício não pode ficar em branco.");
-            }
-        }
 
-        function cancelarExercicio(categoriaId) {
-            $('#campoAdicionar' + categoriaId).slideUp();
-        }
-
-        function toggleDropdown(id) {
-            let dropdown = $('#' + id);
-            dropdown.slideToggle(300); // Tempo da animação em milissegundos
-        }
-    </script>
-</head>
-
-<body>
-
-    <x-app-layout>
         <div class="container mt-3">
             <div class="row justify-content-center">
                 <div class="col-md-8">
@@ -137,8 +89,45 @@
                 </div>
             </div>
         </div>
-    </x-app-layout>
+  <script>
+        function mostrarCampoAdicionar(categoriaId) {
+            $('#campoAdicionar' + categoriaId).slideDown();
+            $('#dropdownCategoria' + categoriaId).show();
+        }
 
-</body>
+        function confirmarExercicio(categoriaId) {
+            let nomeExercicio = $('#nomeExercicio' + categoriaId).val();
+            if (nomeExercicio !== "") {
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('Exercicio.store') }}",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        nome: nomeExercicio,
+                        series: null,
+                        repeticoes: null,
+                        id_categoria: categoriaId
+                    },
+                    success: function(response) {
+                        alert("Dados inseridos com sucesso!");
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                alert("Nome do exercício não pode ficar em branco.");
+            }
+        }
 
-</html>
+        function cancelarExercicio(categoriaId) {
+            $('#campoAdicionar' + categoriaId).slideUp();
+        }
+
+        function toggleDropdown(id) {
+            let dropdown = $('#' + id);
+            dropdown.slideToggle(300); // Tempo da animação em milissegundos
+        }
+    </script>
+@endsection

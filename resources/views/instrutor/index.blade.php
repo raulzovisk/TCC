@@ -1,20 +1,12 @@
 @extends('layout')
 @section('content')
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Cadastro de instrutors</h6>
+        <div class="card-header py-3 d-flex">
+            <h6 class="m-2 font-weight-bold text-primary">Instrutores</h6>
+            <a href="{{ route('Instrutor.create') }}" class="btn btn-success ml-auto">Cadastrar Instrutor</a>
         </div>
         <div class="card-body">
 
-            <div class="row" style="margin-top: 1rem;">
-                <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Listagem de Instrutores</h2>
-                    </div>
-                </div>
-            </div>
-
-            <a href="{{ route('Instrutor.create') }}" class="btn btn-primary mb-2">Cadastrar Instrutor</a>
 
             <form action="{{ route('Instrutor.index') }}" method="GET" class="mb-3">
                 <div class="input-group">
@@ -35,7 +27,7 @@
             @endif
 
             @if ($instrutores->count())
-                <table class="table table-bordered">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -92,6 +84,7 @@
                 {{ $instrutores->links() }}
             @else
                 <p>{{ __('Nenhum instrutor encontrado.') }}</p>
+                <a href="{{route('Instrutor.index')}}" class="btn btn-secondary">Voltar</a>
             @endif
         </div>
     </div>

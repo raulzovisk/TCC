@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Aluno;
+
 use App\Models\MedidaCorporal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,7 @@ class AlunoController extends Controller
 
     public function store(Request $request)
     {
-        // Criação do Aluno
+        // Criação de um novo aluno
         $aluno = new Aluno();
         $aluno->id_user = $request->input('id_user');
         $aluno->idade = $request->input('idade');
@@ -60,11 +61,11 @@ class AlunoController extends Controller
         // Criação da Medida Corporal associada ao Aluno
         $medidaCorporal = new MedidaCorporal();
         $medidaCorporal->id_aluno = $aluno->id;
-        $medidaCorporal->data_medida = now();
+        $medidaCorporal->data_medida = now(); // Data da medida
         $medidaCorporal->peso = $request->input('peso');
+        $medidaCorporal->genero = $request->input('genero');
         $medidaCorporal->altura = $request->input('altura');
         $medidaCorporal->gordura = $request->input('gordura');
-        $medidaCorporal->genero = $request->input('genero');
         $medidaCorporal->cintura = $request->input('cintura');
         $medidaCorporal->quadril = $request->input('quadril');
         $medidaCorporal->peito = $request->input('peito');
@@ -73,7 +74,7 @@ class AlunoController extends Controller
         $medidaCorporal->coxa_direita = $request->input('coxa_direita');
         $medidaCorporal->coxa_esquerda = $request->input('coxa_esquerda');
 
-        // Inicializa o campo historico_medidas com o primeiro conjunto de dados
+        // Inicializa o histórico com os dados atuais
         $medidaCorporal->historico_medidas = [
             [
                 'data_medida' => $medidaCorporal->data_medida,
@@ -90,12 +91,11 @@ class AlunoController extends Controller
             ]
         ];
 
-        // Salva os dados das medidas corporais
+        // Salva as medidas corporais
         $medidaCorporal->save();
 
-        return redirect()->route('Aluno.index')->with('success', 'Aluno criado com sucesso!');
+        return redirect()->route('Aluno.index')->with('success', 'Aluno e medidas corporais criados com sucesso!');
     }
-
 
     public function edit(Request $request, $id)
     {
@@ -113,25 +113,33 @@ class AlunoController extends Controller
         $aluno = Aluno::where('id_user', $user->id)->firstOrFail();
 
         // Recupera a última entrada de medidas corporais
-        $medidaCorporal = $aluno->medidasCorporais()->latest()->first();
+        $medidaCorporal = $aluno->medidasCorporais()->orderBy('data_medida', 'desc')->first();
 
-        return view('Aluno.show', compact('aluno', 'medidaCorporal'));
+
+        // Recupera o histórico completo de medidas
+        $historicoMedidas = $medidaCorporal ? $medidaCorporal->historico_medidas : [];
+
+        // Verifica se há medidas anteriores para comparação
+        $ultimaMedida = $historicoMedidas ? end($historicoMedidas) : null;
+
+        return view('Aluno.show', compact('aluno', 'medidaCorporal', 'historicoMedidas', 'ultimaMedida'));
     }
+
 
     public function update(Request $request, $id)
     {
-        // Encontra o aluno
+        // Encontra o aluno pelo ID
         $aluno = Aluno::findOrFail($id);
 
-        // Recupera a última entrada de medidas corporais ou cria uma nova instância
-        $medidaCorporal = $aluno->medidasCorporais()->latest()->first() ?? new MedidaCorporal(['id_aluno' => $aluno->id]);
+        // Recupera a última medida corporal
+        $medidaCorporal = $aluno->medidasCorporais()->orderBy('data_medida', 'desc')->first();
 
-        // Adicionar dados antigos ao histórico
+        // Adicionar a medida atual ao histórico antes de atualizar
         $historico = $medidaCorporal->historico_medidas ?? [];
         $historico[] = [
-            'data_medida' => $medidaCorporal->data_medida ?? now(),
-            'altura' => $medidaCorporal->altura,
+            'data_medida' => $medidaCorporal->data_medida,
             'peso' => $medidaCorporal->peso,
+            'altura' => $medidaCorporal->altura,
             'gordura' => $medidaCorporal->gordura,
             'cintura' => $medidaCorporal->cintura,
             'quadril' => $medidaCorporal->quadril,
@@ -142,10 +150,10 @@ class AlunoController extends Controller
             'coxa_esquerda' => $medidaCorporal->coxa_esquerda,
         ];
 
-        // Atualizar dados com os novos valores do request
+        // Atualizar os dados da medida corporal com os novos valores do request
         $medidaCorporal->data_medida = now();
-        $medidaCorporal->altura = $request->input('altura');
         $medidaCorporal->peso = $request->input('peso');
+        $medidaCorporal->altura = $request->input('altura');
         $medidaCorporal->gordura = $request->input('gordura');
         $medidaCorporal->cintura = $request->input('cintura');
         $medidaCorporal->quadril = $request->input('quadril');
@@ -154,6 +162,8 @@ class AlunoController extends Controller
         $medidaCorporal->braco_esquerdo = $request->input('braco_esquerdo');
         $medidaCorporal->coxa_direita = $request->input('coxa_direita');
         $medidaCorporal->coxa_esquerda = $request->input('coxa_esquerda');
+
+        // Atualizar o histórico de medidas
         $medidaCorporal->historico_medidas = $historico;
 
         // Salvar as alterações
@@ -161,8 +171,6 @@ class AlunoController extends Controller
 
         return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
     }
-
-
 
     public function delete(Request $request, $id)
     {

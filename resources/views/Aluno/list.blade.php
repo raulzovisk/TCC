@@ -1,19 +1,13 @@
 @extends('layout')
 @section('content')
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Cadastro de Alunos</h6>
+        <div class="card-header py-3 d-flex">
+            <h6 class="m-2 font-weight-bold text-primary">Cadastrar Aluno</h6>
+            <a href="{{ route('Aluno.index') }}" class="btn btn-secondary ml-auto">Voltar</a>
         </div>
         <div class="card-body">
             
-            <div class="row" style="margin-top: 1rem;">
-                <div class="col-lg-12 margin-tb">
-                    <div class="pull-left">
-                        <h2>Usuários</h2>
-                    </div>
-                </div>
-            </div>
-            <a href="{{ route('Aluno.index') }}" class="btn btn-primary mb-2">Voltar</a>
+            
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <strong>Whoops!</strong> There are some problems with your input. <br><br>
@@ -32,7 +26,7 @@
             </form>
 
             @if ($users->count())
-                <table class="table table-bordered">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Nome</th>

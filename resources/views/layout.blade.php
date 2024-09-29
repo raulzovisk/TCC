@@ -20,10 +20,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @stack('scripts')
 
-    <!--
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
-    -->
-    <!-- Importação da biblioteca de css-->
     <link href="{{ asset('tema/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -38,7 +34,8 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav  sidebar sidebar-dark accordion" style="background-color: rgb(17, 143, 185)"
+            id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
@@ -62,12 +59,14 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+
 
             <!-- Nav Item - Utilities Collapse Menu -->
             @if (Auth::user() && Auth::user()->aluno)
+                <div class="sidebar-heading">
+                    Interface
+                </div>
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                         aria-expanded="true" aria-controls="collapseUtilities">
@@ -87,6 +86,10 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             @if ((Auth::user() && Auth::user()->instrutor) || (Auth::user() && Auth::user()->is_admin))
+                <div class="sidebar-heading">
+                    Interface
+                </div>
+                
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
@@ -101,7 +104,7 @@
                             @if (Auth::user() && Auth::user()->is_admin)
                                 <a class="collapse-item" href="{{ route('Instrutor.index') }}">Cad. Instrutores</a>
                             @endif
-                            <a class="collapse-item" href="">Cad. Clientes</a>
+                            <a class="collapse-item" href="{{ route('Exercicio.create') }}">Cad. Exercícios</a>
                             <a class="collapse-item" href="usuarios">Cad. Clientes</a>
                         </div>
                     </div>
@@ -175,18 +178,6 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Buscar por..." aria-label="Buscar" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">

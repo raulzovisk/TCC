@@ -107,10 +107,10 @@
                         </select>
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="number" name="exercicios[${contadorExercicios}][repeticoes]" placeholder="Repetições" class="form-control repeticoes" min="1" required>
+                        <input type="text" name="exercicios[${contadorExercicios}][repeticoes]" placeholder="Repetições" class="form-control repeticoes" min="1" required>
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="number" name="exercicios[${contadorExercicios}][series]" placeholder="Séries" class="form-control series" min="1" required>
+                        <input type="text" name="exercicios[${contadorExercicios}][series]" placeholder="Séries" class="form-control series" min="1" required>
                     </div>
                     <div class="form-group col-md-3">
                         <button class="btn btn-danger btnRemoverExercicio" data-id="${contadorExercicios}">Remover</button>

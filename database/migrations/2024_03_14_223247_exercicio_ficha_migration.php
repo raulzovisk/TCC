@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('exercicio_ficha', function (Blueprint $table) {
             $table->unsignedBigInteger('id_exercicio');
             $table->unsignedBigInteger('id_ficha');
-            $table->unsignedInteger('repeticoes');
-            $table->unsignedInteger('series');
+            $table->string('repeticoes');
+            $table->string('series');
+            $table->string('observacoes',255);
+
             
             $table->foreign('id_exercicio')->references('id')->on('exercicio')->onDelete('cascade');
             $table->foreign('id_ficha')->references('id')->on('ficha')->onDelete('cascade');

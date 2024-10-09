@@ -1,3 +1,4 @@
-@extends('layout')
-@section('content')
-@endsection
+    @extends('layout')
+    @section('content')
+    
+    @endsection

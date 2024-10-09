@@ -14,9 +14,9 @@
     </style>
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex">
+        <div class="card-header  d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Exercícios</h6>
-            <a href="{{ route('Categoria.create') }}" class="btn btn-success ml-auto">Criar Categoria</a>
+            <a href="{{ route('Categoria.index') }}" class="btn btn-success ml-auto">Criar Categoria</a>
         </div>
 
         <div class="card-body">
@@ -36,7 +36,7 @@
                                 <ul class="list-unstyled mb-0">
                                     @foreach ($categoria->exercicios as $exercicio)
                                         <li>
-                                            <table class="table table-bordered mt-2">
+                                            <table style="background-color: white" class="table table-bordered mt-2">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 75%;">Nome

@@ -19,10 +19,8 @@
         @livewireStyles
     </head>
     <body>
-        <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
 
             <!-- Page Heading -->
             @if (isset($header))

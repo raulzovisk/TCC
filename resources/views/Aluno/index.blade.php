@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
     <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex">
+        <div class="card-header d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Alunos</h6>
             <a href="{{ route('Aluno.list') }}" class="btn btn-success ml-auto">Cadastrar Alunos</a>
         </div>

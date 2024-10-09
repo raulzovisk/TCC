@@ -44,8 +44,9 @@ class FichaController extends Controller
             'id_aluno' => 'required|integer',
             'exercicios' => 'required|array',
             'exercicios.*.id_exercicio' => 'required|exists:exercicio,id',
-            'exercicios.*.repeticoes' => 'required|integer',
-            'exercicios.*.series' => 'required|integer',
+            'exercicios.*.repeticoes' => 'required|string',
+            'exercicios.*.series' => 'required|string',
+            'exercicios.*.observacoes' => 'nullable|string|max:255',
         ]);
 
         $ficha = Ficha::create([
@@ -59,12 +60,13 @@ class FichaController extends Controller
             $ficha->exercicios()->attach($exercicio['id_exercicio'], [
                 'repeticoes' => $exercicio['repeticoes'],
                 'series' => $exercicio['series'],
+                'observacoes' => $exercicio['observacoes'] ?? null,
             ]);
         }
 
-
         return redirect('/dashboard')->with('success', 'Ficha criada com sucesso!');
     }
+
 
 
 
@@ -92,13 +94,15 @@ class FichaController extends Controller
 
         foreach ($exercicios as $exercicioId) {
             $ficha->exercicios()->attach($exercicioId, [
-                'series' => $detalhes[$exercicioId]['series'] ?? 0,
-                'repeticoes' => $detalhes[$exercicioId]['repeticoes'] ?? 0,
+                'series' => $detalhes[$exercicioId]['series'] ?? '',
+                'repeticoes' => $detalhes[$exercicioId]['repeticoes'] ?? '',
+                'observacoes' => $detalhes[$exercicioId]['observacoes'] ?? null,
             ]);
         }
 
         return redirect()->route('instrutor.ver_fichas_aluno', ['alunoId' => $alunoId])->with('success', 'Ficha atualizada com sucesso!');
     }
+
 
 
     public function delete($id)

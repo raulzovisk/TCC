@@ -28,6 +28,6 @@ class Ficha extends Model
 
     public function exercicios()
     {
-        return $this->belongsToMany(Exercicio::class, 'exercicio_ficha', 'id_ficha', 'id_exercicio')->withPivot('repeticoes', 'series');
+        return $this->belongsToMany(Exercicio::class, 'exercicio_ficha', 'id_ficha', 'id_exercicio')->withPivot('repeticoes', 'series','observacoes');
     }
 }

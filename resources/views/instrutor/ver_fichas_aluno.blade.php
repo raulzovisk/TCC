@@ -5,13 +5,13 @@
     @endphp
 
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Fichas de: {{ $aluno->user->name }}</h6>
+        <div class="card-header  d-flex">
+            <h6 class="m-2 font-weight-bold text-primary">Fichas de: {{ $aluno->user->name }}</h6>
+            <a href="{{ route('Aluno.index') }}" class="btn btn-primary ml-auto">Voltar</a>
         </div>
 
         <div class="col-md-12">
             <div class="card-body">
-                <a href="{{route('Aluno.index')}}" class="btn btn-primary mb-1">Voltar</a>
                 @if ($aluno->fichas->isEmpty())
                     <p class="text-center">Nenhuma ficha disponível para este aluno.</p>
                 @else
@@ -34,14 +34,16 @@
                                     <table class="table table-bordered mt-2">
                                         <thead>
                                             <tr>
-                                                <th style="width: 75%;">Nome</th>
-                                                <th style="width: 25%;">Séries</th>
-                                                <th style="width: 25%;">Repetições</th>
+                                                <th style="width: 50%;">Nome</th>
+                                                <th style="width: 10%">Observações</th>
+                                                <th style="width: 10%;">Séries</th>
+                                                <th style="width: 10%;">Repetições</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>{{ $exercicio->nome }}</td>
+                                                <td>{{ $exercicio->pivot->observacoes ?? 'N/A'}}</td>
                                                 <td>{{ $exercicio->pivot->series ?? 'N/A' }}</td>
                                                 <td>{{ $exercicio->pivot->repeticoes ?? 'N/A' }}</td>
                                             </tr>

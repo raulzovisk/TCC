@@ -85,83 +85,80 @@
     <script>
         $(document).ready(function() {
             let contadorExercicios = 1;
-
-            function validateIntegerInput(value) {
-                return /^[0-9]+$/.test(value);
-            }
-
+    
             function adicionarExercicio() {
                 let novoCampoExercicio = `
                 <div class="exercicio form-row col-xs-12 col-sm-12 col-md-12" id="exercicio_${contadorExercicios}">
                     <div class="form-group col-md-3">
                         <select name="exercicios[${contadorExercicios}][id_exercicio]" id="select_exercicio_${contadorExercicios}" class="form-control select2-exercicio" required>
             `;
-
+    
                 let exerciciosOrdenados = @json($exercicios->sortBy('nome')->values());
-
+    
                 exerciciosOrdenados.forEach(exercicio => {
                     novoCampoExercicio += `<option value="${exercicio.id}">${exercicio.nome}</option>`;
                 });
-
+    
                 novoCampoExercicio += `
                         </select>
                     </div>
-                    <div class="form-group col-md-3">
-                        <input type="text" name="exercicios[${contadorExercicios}][repeticoes]" placeholder="Repetições" class="form-control repeticoes" min="1" required>
+                    <div class="form-group col-md-2">
+                        <input type="text" name="exercicios[${contadorExercicios}][repeticoes]" placeholder="Repetições" class="form-control repeticoes" required>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input type="text" name="exercicios[${contadorExercicios}][series]" placeholder="Séries" class="form-control series" required>
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" name="exercicios[${contadorExercicios}][series]" placeholder="Séries" class="form-control series" min="1" required>
+                        <textarea name="exercicios[${contadorExercicios}][observacoes]" placeholder="Observações" required class="form-control"></textarea>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <button class="btn btn-danger btnRemoverExercicio" data-id="${contadorExercicios}">Remover</button>
                     </div>
                 </div>
             `;
-
+    
                 $('#containerExercicios').append(novoCampoExercicio);
-
+    
                 $(`#select_exercicio_${contadorExercicios}`).select2();
                 contadorExercicios++;
             }
-
+    
             $('#btnAdicionarExercicio').on('click', function(event) {
                 event.preventDefault();
                 adicionarExercicio();
             });
-
+    
             $(document).on('click', '.btnRemoverExercicio', function(event) {
                 event.preventDefault();
                 let idExercicio = $(this).data('id');
                 $(`#exercicio_${idExercicio}`).remove();
             });
-
+    
             $('#formFicha').on('submit', function(event) {
                 let exerciciosSelecionados = [];
                 let duplicado = false;
-
+    
                 $('select[name^="exercicios"]').each(function() {
                     let exercicioId = $(this).val();
-
+    
                     if (exerciciosSelecionados.includes(exercicioId)) {
                         alert('Você não pode selecionar o mesmo exercício mais de uma vez.');
                         duplicado = true;
                         return false;
                     }
-
+    
                     exerciciosSelecionados.push(exercicioId);
                 });
-
+    
                 if (duplicado) {
                     event.preventDefault();
                 }
             });
-
-            $(document).on('input', '.repeticoes, .series', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-            });
-
+    
+    
             $('#id_aluno').select2();
         });
     </script>
+    
 
 @endsection

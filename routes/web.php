@@ -30,8 +30,6 @@ Route::middleware([
 
 //rotas que os alunos podem ver
 Route::get('/Aluno/show', [AlunoController::class, 'show'])->name('Aluno.show')->middleware('auth');
-Route::get('/Aluno/chart/{id}', [AlunoController::class, 'showChart'])->name('Aluno.chart');
-Route::get('Aluno/showAll', [AlunoController::class, 'showAll'])->name('Aluno.showAll')->middleware('auth');
 Route::get('/Ficha', [FichaController::class, 'index'])->name('Ficha.index')->middleware('auth');
 
 //rotas ja protegidas pelo middleware instrutor 

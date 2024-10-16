@@ -38,7 +38,7 @@ class FichaController extends Controller
     {
         // Validação dos dados da requisição
         $validatedData = $request->validate([
-            'objetivo' => 'required',
+            'nome' => 'required',
             'descricao' => 'required',
             'data' => 'required|date',
             'id_aluno' => 'required|integer',
@@ -50,7 +50,7 @@ class FichaController extends Controller
         ]);
 
         $ficha = Ficha::create([
-            'objetivo' => $validatedData['objetivo'],
+            'nome' => $validatedData['nome'],
             'descricao' => $validatedData['descricao'],
             'data' => $validatedData['data'],
             'id_aluno' => $validatedData['id_aluno'],
@@ -80,28 +80,34 @@ class FichaController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Encontrar a ficha pelo ID
         $ficha = Ficha::findOrFail($id);
         $alunoId = $ficha->id_aluno;
 
+        // Atualizar nome e descrição
         $ficha->descricao = $request->input('descricao');
-        $ficha->objetivo = $request->input('objetivo');
+        $ficha->nome = $request->input('nome');
         $ficha->save();
 
+        // Obter exercícios e detalhes
         $exercicios = $request->input('exercicios', []);
         $detalhes = $request->input('detalhes', []);
 
+        // Desanexar os exercícios antigos
         $ficha->exercicios()->detach();
 
+        // Anexar os novos exercícios com os detalhes
         foreach ($exercicios as $exercicioId) {
             $ficha->exercicios()->attach($exercicioId, [
                 'series' => $detalhes[$exercicioId]['series'] ?? '',
                 'repeticoes' => $detalhes[$exercicioId]['repeticoes'] ?? '',
-                'observacoes' => $detalhes[$exercicioId]['observacoes'] ?? null,
+                'observacoes' => $detalhes[$exercicioId]['observacoes'] ?? '', 
             ]);
         }
 
         return redirect()->route('instrutor.ver_fichas_aluno', ['alunoId' => $alunoId])->with('success', 'Ficha atualizada com sucesso!');
     }
+
 
 
 

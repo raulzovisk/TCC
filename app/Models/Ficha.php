@@ -14,7 +14,7 @@ class Ficha extends Model
     public $timestamps = false;
     protected $table = 'ficha';
 
-    protected $fillable = ['objetivo', 'descricao', 'data', 'id_instrutor', 'id_aluno'];
+    protected $fillable = ['nome', 'descricao', 'data', 'id_instrutor', 'id_aluno'];
 
     public function instrutor(): BelongsTo
     {

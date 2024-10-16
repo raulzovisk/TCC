@@ -3,7 +3,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Cadastrar Aluno</h6>
-            <a href="{{ route('Aluno.index') }}" class="btn btn-secondary ml-auto">Voltar</a>
+            <button onclick="history.back()" class="btn btn-secondary ml-auto">Voltar</button>
         </div>
         <div class="card-body">
             

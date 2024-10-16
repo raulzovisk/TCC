@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('ficha', function (Blueprint $table) {
             $table->id();
-            $table->text('objetivo')->notNullable();
+            $table->text('nome')->notNullable();
             $table->string('descricao', 255)->notNullable();
             $table->date('data')->notNullable();
             $table->unsignedBigInteger('id_aluno');

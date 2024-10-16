@@ -27,6 +27,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('tema/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+
 </head>
 
 <body id="page-top">
@@ -89,7 +90,7 @@
                 <div class="sidebar-heading">
                     Interface
                 </div>
-                
+
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
@@ -105,22 +106,22 @@
                                 <a class="collapse-item" href="{{ route('Instrutor.index') }}">Cad. Instrutores</a>
                             @endif
                             <a class="collapse-item" href="{{ route('Exercicio.create') }}">Cad. Exercícios</a>
-                            <a class="collapse-item" href="usuarios">Cad. Clientes</a>
+                            <a class="collapse-item" href="{{ route('Ficha.create') }}">Criar Ficha</a>
                         </div>
                     </div>
                 </li>
             @endif
 
-
-            <!-- Divider -->
+            <!--
+            Divider 
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
+            Heading 
             <div class="sidebar-heading">
                 Adicionais
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
+            Nav Item - Pages Collapse Menu
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
@@ -141,13 +142,13 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Charts -->
+
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Gráficos</span></a>
             </li>
-
+            -->
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -295,8 +296,8 @@
                     </div>
                     <div class="modal-body">Para sair da sessão clique em Logout.</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary"  data-dismiss="modal">Cancel</button>
-                        <button class="btn btn-primary" >Logout</button>
+                        <button class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary">Logout</button>
                     </div>
                 </div>
             </div>

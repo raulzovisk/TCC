@@ -28,7 +28,7 @@
 
                 <div>
                     <button class="btn btn-primary">Salvar </button>
-                    <a href="{{ route('Categoria.index') }}" class="btn btn-secondary">Cancelar </a>
+                    <button onclick="history.back()" class="btn btn-secondary ">Cancelar</button>
                 </div>
 
             </form>

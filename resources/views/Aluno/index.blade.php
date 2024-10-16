@@ -24,6 +24,12 @@
                     </ul>
                 </div>
             @endif
+            
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success" id="success-alert">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
 
             @if ($alunos->count())
                 <table class="table table-striped">

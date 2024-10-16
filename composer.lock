@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ea103a8181a10ef30404dfee9996bbb2",
+    "content-hash": "7284fd142ba225c33c0c0edc1d32bef6",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -1420,16 +1420,16 @@
         },
         {
             "name": "laravel/jetstream",
-            "version": "v5.0.0",
+            "version": "v5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/jetstream.git",
-                "reference": "852e28aae80174dc839ffb91d402e853cede9c19"
+                "reference": "c9c23e14ac6c9cef7daf4f2754382de1ba5d567e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/jetstream/zipball/852e28aae80174dc839ffb91d402e853cede9c19",
-                "reference": "852e28aae80174dc839ffb91d402e853cede9c19",
+                "url": "https://api.github.com/repos/laravel/jetstream/zipball/c9c23e14ac6c9cef7daf4f2754382de1ba5d567e",
+                "reference": "c9c23e14ac6c9cef7daf4f2754382de1ba5d567e",
                 "shasum": ""
             },
             "require": {
@@ -1438,7 +1438,8 @@
                 "illuminate/support": "^11.0",
                 "laravel/fortify": "^1.20",
                 "mobiledetect/mobiledetectlib": "^4.8",
-                "php": "^8.2.0"
+                "php": "^8.2.0",
+                "symfony/console": "^7.0"
             },
             "require-dev": {
                 "inertiajs/inertia-laravel": "^1.0",
@@ -1482,7 +1483,7 @@
                 "issues": "https://github.com/laravel/jetstream/issues",
                 "source": "https://github.com/laravel/jetstream"
             },
-            "time": "2024-03-12T14:03:48+00:00"
+            "time": "2024-10-12T16:23:32+00:00"
         },
         {
             "name": "laravel/prompts",

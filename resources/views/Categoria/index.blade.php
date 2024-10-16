@@ -7,9 +7,6 @@
         </div>
         <div class="card-body">
 
-
-
-
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <strong>Whoops!</strong> There are some problems with your input. <br><br>
@@ -18,6 +15,12 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                </div>
+            @endif
+
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success" id="success-alert">
+                    <p>{{ $message }}</p>
                 </div>
             @endif
 

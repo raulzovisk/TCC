@@ -11,14 +11,14 @@
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
-                    <label for="descricao" class="form-label">Nome</label>
-                    <input type="text" class="form-control rounded" id="descricao" name="descricao"
-                        value="{{ $ficha->descricao }}" required>
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control rounded" id="nome" name="nome"
+                        value="{{ $ficha->nome }}" required>
                 </div>
                 <div class="mb-3">
-                    <label for="objetivo" class="form-label">Objetivo</label>
-                    <input type="text" class="form-control rounded" id="objetivo" name="objetivo"
-                        value="{{ $ficha->objetivo }}" required>
+                    <label for="descricao" class="form-label">Descrição </label>
+                    <input type="text" class="form-control rounded" id="descricao" name="descricao"
+                        value="{{ $ficha->descricao }}" required>
                 </div>
                 <div class="mb-3">
                     <label for="exercicios" class="form-label">Exercícios</label>
@@ -40,11 +40,14 @@
                             <input type="text" class="form-control rounded mb-2"
                                 name="detalhes[{{ $exercicio->id }}][repeticoes]" placeholder="Repetições"
                                 value="{{ $exercicio->pivot->repeticoes ?? '' }}" required>
+                            <input type="text" class="form-control rounded mb-2"
+                                name="detalhes[{{ $exercicio->id }}][observacoes]" placeholder="Repetições"
+                                value="{{ $exercicio->pivot->observacoes ?? '' }}" required>
                         </div>
                     @endforeach
                 </div>
                 <button class="btn btn-primary">Salvar</button>
-                <a href="{{ route('Aluno.index') }}" class="btn btn-secondary ">Cancelar</a>
+                <button onclick="history.back()" class="btn btn-secondary ">Cancelar</button>
             </form>
         </div>
     </div>
@@ -53,34 +56,35 @@
             let value = input.value;
             input.value = value.replace(/[^0-9]/g, '');
         }
-
+    
         $(document).ready(function() {
             $('#exercicios').select2();
-
+    
             $('#exercicios').on('change', function() {
                 var exercicios = $(this).val();
                 $('#exercicios-detalhes').empty();
-
+    
                 exercicios.forEach(function(exercicioId) {
                     var exercicio = @json($exercicios).find(e => e.id == exercicioId);
-                    var series = @json($ficha->exercicios).find(e => e.id == exercicioId)?.pivot
-                        ?.series || '';
-                    var repeticoes = @json($ficha->exercicios).find(e => e.id == exercicioId)
-                        ?.pivot?.repeticoes || '';
-
+                    var series = @json($ficha->exercicios).find(e => e.id == exercicioId)?.pivot?.series || '';
+                    var repeticoes = @json($ficha->exercicios).find(e => e.id == exercicioId)?.pivot?.repeticoes || '';
+                    var observacoes = @json($ficha->exercicios).find(e => e.id == exercicioId)?.pivot?.observacoes || ''; // Adicionando observações
+    
                     var detalheHtml = `
                         <div class="exercicio-detalhe" data-exercicio-id="${exercicio.id}">
                             <h5>${exercicio.nome}</h5>
                             <input type="text" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][series]" placeholder="Séries" value="${series}" required oninput="validateIntegerInput(this)">
                             <input type="text" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][repeticoes]" placeholder="Repetições" value="${repeticoes}" required oninput="validateIntegerInput(this)">
+                            <input type="text" class="form-control rounded mb-1" name="detalhes[${exercicio.id}][observacoes]" placeholder="Observações" value="${observacoes}">
                         </div>
                     `;
-
+    
                     $('#exercicios-detalhes').append(detalheHtml);
                 });
             });
-
+    
             $('#exercicios').trigger('change');
         });
     </script>
+    
 @endsection

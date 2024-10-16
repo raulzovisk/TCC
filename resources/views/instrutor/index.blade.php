@@ -26,6 +26,12 @@
                 </div>
             @endif
 
+            @if ($message = Session::get('success'))
+                <div class="alert alert-success" id="success-alert">
+                    <p>{{ $message }}</p>
+                </div>
+            @endif
+
             @if ($instrutores->count())
                 <table class="table table-striped">
                     <thead>
@@ -84,7 +90,7 @@
                 {{ $instrutores->links() }}
             @else
                 <p>{{ __('Nenhum instrutor encontrado.') }}</p>
-                <a href="{{route('Instrutor.index')}}" class="btn btn-secondary">Voltar</a>
+                
             @endif
         </div>
     </div>

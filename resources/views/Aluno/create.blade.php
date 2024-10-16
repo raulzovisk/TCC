@@ -114,7 +114,7 @@
                 </div>
                 <div>
                     <button class="btn btn-primary">Cadastrar</button>
-                    <a href="{{ route('Aluno.list') }}" class="btn btn-secondary">Cancelar</a>
+                    <button onclick="history.back()" class="btn btn-secondary ">Cancelar</button>
                 </div>
             </form>
         </div>

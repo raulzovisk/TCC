@@ -11,7 +11,7 @@
     <title>Bem Vindo</title>
 </head>
 
-<body>
+<body style="width: 100%">
     <header>
         <div id="title">
             <img id="logo" src="/img/logo.png" alt="" style="width: 100px;">

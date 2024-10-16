@@ -7,7 +7,7 @@
     <div class="card shadow mb-4">
         <div class="card-header  d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Fichas de: {{ $aluno->user->name }}</h6>
-            <a href="{{ route('Aluno.index') }}" class="btn btn-primary ml-auto">Voltar</a>
+            <button onclick="history.back()" class="btn btn-primary ml-auto">Voltar</button>
         </div>
 
         <div class="col-md-12">

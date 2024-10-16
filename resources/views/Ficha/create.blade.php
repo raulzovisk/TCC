@@ -2,6 +2,8 @@
 @section('content')
     @include('scripts')
 
+    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
     <style>
         .select2-container {
             width: 100% !important;
@@ -19,9 +21,10 @@
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 34px;
         }
-
         
     </style>
+
+    
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -54,20 +57,29 @@
                             </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <strong for="data">Data:</strong>
-                            <input type="date" class="form-control" name="data" id="data" required>
+                            <strong>Data da Ficha:</strong>
+                            <input type="text" name="data"  id="datepicker" class="form-control date wd is-valid"
+                                required placeholder="dd/mm/aaaa" autocomplete="off" />
+                            <script>
+                                $('#datepicker').datepicker({
+                                    format: 'yyyy-mm-dd',
+                                    uiLibrary: 'bootstrap4'
+                                    
+                                });
+
+                            </script>
                         </div>
                     </div>
 
                     <div class="form-row col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group col-md-6">
-                            <strong for="descricao">Nome da Ficha:</strong>
-                            <input type="text" name="descricao" id="descricao" class="form-control rounded mb-3"
+                            <strong for="nome">Nome da Ficha:</strong>
+                            <input type="text" name="nome" id="nome" class="form-control rounded mb-3"
                                 required>
                         </div>
                         <div class="form-group col-md-6">
-                            <strong for="objetivo">Objetivo:</strong>
-                            <input type="text" class="form-control rounded mb-3" name="objetivo" id="objetivo" required>
+                            <strong for="descricao">Descrição:</strong>
+                            <input type="text" class="form-control rounded mb-3" name="descricao" id="descricao" required>
                         </div>
                     </div>
 

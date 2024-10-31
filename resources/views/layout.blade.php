@@ -72,7 +72,7 @@
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                         aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-user"></i>
-                        <span>Medidas</span>
+                        <span>Dados</span>
                     </a>
                     <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
@@ -80,8 +80,12 @@
                             <h6 class="collapse-header">Opções</h6>
                             <a class="collapse-item" href="{{ route('Aluno.show', Auth::user()->aluno->id) }}">Meus
                                 Dados</a>
+                            <a class="collapse-item" href="{{ route('Ficha.index') }}">Minhas
+                                Fichas</a>
                         </div>
+
                     </div>
+
                 </li>
             @endif
 
@@ -113,10 +117,10 @@
             @endif
 
             <!--
-            Divider 
+            Divider
             <hr class="sidebar-divider">
 
-            Heading 
+            Heading
             <div class="sidebar-heading">
                 Adicionais
             </div>

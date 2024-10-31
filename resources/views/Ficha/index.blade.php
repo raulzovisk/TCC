@@ -1,15 +1,8 @@
 @php
     use Carbon\Carbon;
 @endphp
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Fichas</title>
-    @include('scripts')
+@extends('layout')
+@section('content')
     <style>
         .ficha-header {
             background-color: rgb(17, 138, 178);
@@ -43,45 +36,44 @@
             justify-content: center;
             gap: 20px;
         }
-    </style>
-</head>
 
-<body>
-    <x-app-layout>
-        <div class="container mt-3">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card shadow p-3 mb-5 bg-white rounded">
-                        <div class="card-header" style="background-color: white">
-                            <h1 class="text-center mb-1 display-6">Fichas</h1>
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }   
+    </style>
+
+    <div class="card shadow mb-4">
+        <div class="card-header d-flex">
+            <h6 class="m-2 font-weight-bold text-primary">Fichas</h6>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-body">
+                    @if ($fichas && $fichas->isEmpty())
+                        <p>Você não tem fichas disponíveis.</p>
+                    @elseif ($fichas)
+                        <div class="fichas-container">
+                            @foreach ($fichas as $ficha)
+                                <a href="{{ route('ficha.show', ['id' => $ficha->id]) }}" class="card ficha-card">
+                                    <div class="ficha-header">
+                                        {{ $ficha->nome }}
+                                    </div>
+                                    <div class="ficha-body">
+                                        <strong>Descrição: {{ $ficha->descricao }}</strong><br>
+                                        <strong>Data: {{ Carbon::parse($ficha->data)->format('d/m/Y') }}</strong>
+                                    </div>
+                                </a>
+                            @endforeach
                         </div>
-                        <div class="card-body">
-                            @if ($fichas && $fichas->isEmpty())
-                                <p>Você não tem fichas disponíveis.</p>
-                            @elseif ($fichas)
-                                <div class="fichas-container">
-                                    @foreach ($fichas as $ficha)
-                                        <a href="{{ route('ficha.show', ['id' => $ficha->id]) }}"
-                                            class="card ficha-card">
-                                            <div class="ficha-header">
-                                                {{ $ficha->descricao }}
-                                            </div>
-                                            <div class="ficha-body">
-                                                <p>Objetivo: {{ $ficha->objetivo }}</p>
-                                                <p>Data: {{ Carbon::parse($ficha->data)->format('d/m/Y') }}</p>
-                                            </div>
-                                        </a>
-                                    @endforeach
-                                </div>
-                            @else
-                                <p>Não foi possível carregar suas fichas.</p>
-                            @endif
-                        </div>
-                    </div>
+                    @else
+                        <p>Não foi possível carregar suas fichas.</p>
+                    @endif
                 </div>
             </div>
         </div>
-    </x-app-layout>
-</body>
-
-</html>
+    </div>
+@endsection

@@ -1,11 +1,11 @@
 @extends('layout')
 @section('content')
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 ">
         <div class="card-header d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Alunos</h6>
-            <a href="{{ route('Aluno.list') }}" class="btn btn-success ml-auto">Cadastrar Alunos</a>
+            <a href="{{ route('Aluno.list') }}" class="btn btn-success btn-sm ml-auto">Cadastrar Alunos</a>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
 
             <form action="{{ route('Aluno.index') }}" method="GET" class="mb-3">
                 <div class="input-group">
@@ -43,21 +43,21 @@
                     </thead>
                     <tbody>
                         @foreach ($alunos as $aluno)
-                            <tr>
+                             <tr>
                                 <td>{{ $aluno->id }}</td>
                                 <td>{{ $aluno->user->name }}</td>
                                 <td>{{ $aluno->user->email }}</td>
                                 <td>
                                     <div class="action-buttons">
                                         <a href="{{ route('instrutor.ver_fichas_aluno', $aluno->id) }}"
-                                            class="btn btn-primary" role="button">
+                                            class="btn btn-primary btn-sm" role="button">
                                             Fichas
                                         </a>
-                                        <a href="{{ route('Aluno.edit', $aluno->id) }}" class="btn btn-warning"
+                                        <a href="{{ route('Aluno.edit', $aluno->id) }}" class="btn btn-warning btn-sm"
                                             role="button">
                                             Editar
                                         </a>
-                                        <button class="btn btn-danger" data-toggle="modal"
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal"
                                             data-target="#deleteModal{{ $aluno->id }}">
                                             Deletar
                                         </button>
@@ -69,7 +69,7 @@
                                         <div class="modal fade" id="deleteModal{{ $aluno->id }}" tabindex="-1"
                                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
+                                                <div class="modal-content"> 
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Certeza em deletar?
                                                         </h5>

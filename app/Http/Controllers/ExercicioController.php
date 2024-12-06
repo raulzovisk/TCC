@@ -23,18 +23,41 @@ class ExercicioController extends Controller
 
     public function store(Request $request)
     {
+        // Validando os campos necessários
         $validated = $request->validate([
             'nome' => 'required|max:255',
             'id_categoria' => 'required|integer',
+            'img_itens' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Lógica de upload de imagem
+        if ($request->hasFile('img_itens')) {
+            // Obtendo o nome completo do arquivo com a extensão
+            $filenameWithExt = $request->file('img_itens')->getClientOriginalName();
+            // Extraindo o nome do arquivo
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Extraindo a extensão do arquivo
+            $extension = $request->file('img_itens')->getClientOriginalExtension();
+            // Gerando um nome único para o arquivo
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Fazendo o upload da imagem
+            $path = $request->file('img_itens')->storeAs('public/img_itens', $fileNameToStore);
+        } else {
+            $fileNameToStore = 'noimage.png';
+        }
+
+        // Criando o objeto e salvando os dados no banco
         $obj = new Exercicio();
         $obj->nome = $request->nome;
         $obj->id_categoria = $request->id_categoria;
+        $obj->img_itens = $fileNameToStore; // Armazenando o nome do arquivo no banco
         $obj->save();
 
-        return view('/dashboard');
+        // Redirecionando para o dashboard com uma mensagem de sucesso
+        $categorias = Categoria::all();
+        return view('exercicio.create', ['categorias' => $categorias])->with('success', 'Exercício criado com sucesso.');
     }
+
 
     public function edit(Request $request, $id)
     {
@@ -44,16 +67,16 @@ class ExercicioController extends Controller
     public function update(Request $request, $id)
     {
         $Exercicio = Exercicio::findOrFail($id);
-    
+
         $Exercicio->nome = $request->nome;
-    
+
         // Verificar se a categoria no request é nula
         if ($request->filled('id_categoria')) {
             $Exercicio->id_categoria = $request->id_categoria;
         }
-    
+
         $Exercicio->save();
-    
+
         return redirect()->route('Exercicio.create');
     }
     public function delete(Request $request, $id)

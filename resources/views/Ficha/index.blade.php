@@ -54,7 +54,7 @@
             <div class="col-md-8">
                 <div class="card-body">
                     @if ($fichas && $fichas->isEmpty())
-                        <p>Você não tem fichas disponíveis.</p>
+                        <p class="text-center">Você não tem fichas disponíveis.</p>
                     @elseif ($fichas)
                         <div class="fichas-container">
                             @foreach ($fichas as $ficha)

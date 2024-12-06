@@ -4,7 +4,7 @@
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Minhas Medidas</h6>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
             <div class="row" style="margin-top: 1rem;">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-left">

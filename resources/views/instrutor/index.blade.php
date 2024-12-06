@@ -1,11 +1,11 @@
 @extends('layout')
 @section('content')
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 table-responsive">
         <div class="card-header d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Instrutores</h6>
             <a href="{{ route('Instrutor.create') }}" class="btn btn-success ml-auto">Cadastrar Instrutor</a>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
 
 
             <form action="{{ route('Instrutor.index') }}" method="GET" class="mb-3">
@@ -50,7 +50,7 @@
                                 <td>{{ $instrutor->user->email }}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <button class="btn btn-danger" data-toggle="modal"
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal"
                                             data-target="#deleteModal{{ $instrutor->id }}">
                                             Deletar
                                         </button>

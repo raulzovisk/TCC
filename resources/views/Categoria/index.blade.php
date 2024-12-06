@@ -3,9 +3,9 @@
     <div class="card shadow mb-4">
         <div class="card-header  d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Categorias</h6>
-            <a href="{{ route('Categoria.create') }}" class="btn btn-success ml-auto">Criar Categoria</a>
+            <a href="{{ route('Categoria.create') }}" class="btn btn-success btn-sm ml-auto">Criar Categoria</a>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsice">
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -40,11 +40,11 @@
                                 <td>{{ $categoria->nome }}</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="{{ route('Categoria.edit', $categoria->id) }}" class="btn btn-warning"
+                                        <a href="{{ route('Categoria.edit', $categoria->id) }}" class="btn btn-warning btn-sm"
                                             role="button">
                                             Editar
                                         </a>
-                                        <button class="btn btn-danger" data-toggle="modal"
+                                        <button class="btn btn-danger btn-sm" data-toggle="modal"
                                             data-target="#deleteModal{{ $categoria->id }}">
                                             Deletar
                                         </button>

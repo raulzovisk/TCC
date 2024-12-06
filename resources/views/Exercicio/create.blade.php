@@ -11,16 +11,41 @@
         .table th {
             width: 25%;
         }
+
+        .exercicio-img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
     </style>
 
     <div class="card shadow mb-4">
-        <div class="card-header  d-flex">
+        <div class="card-header d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Exercícios</h6>
-            <a href="{{ route('Categoria.index') }}" class="btn btn-success ml-auto">Criar Categoria</a>
+            <a href="{{ route('Categoria.index') }}" class="btn btn-success btn-sm ml-auto">Criar Categoria</a>
         </div>
 
-        <div class="card-body">
+        <div class="card-body table-responsive">
+
             <div class="card-body">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There are some problems with your input. <br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if ($message = Session::get('success'))
+                    <div class="alert alert-success" id="success-alert">
+                        <p>{{ $message }}</p>
+                    </div>
+                @endif
                 @if ($categorias->isEmpty())
                     <p class="text-center">Nenhuma categoria disponível.</p>
                 @else
@@ -47,7 +72,11 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td>{{ $exercicio->nome }}</td>
+                                                        <td>
+                                                            <img src="{{ asset('storage/img_itens/' . $exercicio->img_itens) }}"
+                                                                alt="Imagem do exercício" class="exercicio-img">
+                                                            {{ $exercicio->nome }}
+                                                        </td>
                                                         <td>
                                                             <a href="{{ route('Exercicio.edit', $exercicio->id) }}"
                                                                 class="btn btn-sm btn-primary">
@@ -61,9 +90,10 @@
                                                             <form action="{{ route('Exercicio.delete', $exercicio->id) }}"
                                                                 method="GET">
                                                                 @csrf
-                                                                <div class="modal fade" id="deleteModal{{ $exercicio->id }}"
-                                                                    tabindex="-1" role="dialog"
-                                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal fade"
+                                                                    id="deleteModal{{ $exercicio->id }}" tabindex="-1"
+                                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                                    aria-hidden="true">
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
@@ -99,17 +129,31 @@
                                     @endforeach
                                     <li id="campoAdicionar{{ $categoria->id }}" style="display: none;">
                                         <div class="input-group mb-3 align-items-center">
-                                            <input type="text" class="form-control"
-                                                id="nomeExercicio{{ $categoria->id }}"
-                                                placeholder="Digite o nome do exercício">
-                                            <div class="input-group-append">
-                                                <button style="margin-left: 5px" class="btn btn-outline-secondary"
-                                                    onclick="confirmarExercicio({{ $categoria->id }})">Confirmar</button>
-                                                <button class="btn btn-outline-secondary"
-                                                    onclick="cancelarExercicio({{ $categoria->id }})">Cancelar</button>
-                                            </div>
+                                            <form action="{{ route('Exercicio.store') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+                                                <div>
+                                                    <input type="text" name="nome" class="form-control mb-2"
+                                                        id="nomeExercicio{{ $categoria->id }}" placeholder="Digite o nome do exercício" required>
+                                                    <div class="custom-file">
+                                                        <input type="file" name="img_itens" id="img_itens{{ $categoria->id }}" 
+                                                            class="custom-file-input" required>
+                                                        <label class="custom-file-label" for="img_itens{{ $categoria->id }}">
+                                                            Escolher arquivo
+                                                        </label>
+                                                    </div>
+                                                    <input type="hidden" name="id_categoria" value="{{ $categoria->id }}">
+                                                    <div class="input-group-append mt-2">
+                                                        <button style="margin-left: 5px" type="submit" class="btn btn-outline-secondary">
+                                                            Confirmar
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            onclick="cancelarExercicio({{ $categoria->id }})">Cancelar</button>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
                                     </li>
+                                    
 
                                     <li>
                                         <button onclick="mostrarCampoAdicionar('{{ $categoria->id }}')"
@@ -130,32 +174,6 @@
         function mostrarCampoAdicionar(categoriaId) {
             $('#campoAdicionar' + categoriaId).slideDown();
             $('#dropdownCategoria' + categoriaId).show();
-        }
-
-        function confirmarExercicio(categoriaId) {
-            let nomeExercicio = $('#nomeExercicio' + categoriaId).val();
-            if (nomeExercicio !== "") {
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('Exercicio.store') }}",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        nome: nomeExercicio,
-                        series: null,
-                        repeticoes: null,
-                        id_categoria: categoriaId
-                    },
-                    success: function(response) {
-                        alert("Dados inseridos com sucesso!");
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                alert("Nome do exercício não pode ficar em branco.");
-            }
         }
 
         function cancelarExercicio(categoriaId) {

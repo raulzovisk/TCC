@@ -31,7 +31,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Criação de ficha</h6>
         </div>
 
-        <div class="card-body">
+        <div class="card-body table-responsive">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <strong>Whoops!</strong> There were some problems with your input.<br><br>

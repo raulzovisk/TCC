@@ -1,11 +1,11 @@
 @extends('layout')
 @section('content')
-    <div class="card shadow mb-4">
+    <div class="card shadow mb-4 ">
         <div class="card-header py-3 d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Cadastrar Instrutor</h6>
             <button onclick="history.back()" class="btn btn-secondary ml-auto">Voltar</button>
         </div>
-        <div class="card-body">
+        <div class="card-body table-responsive">
             
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -39,9 +39,8 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>
-                                    <a class="btn btn-primary" role="button"
-                                        href="{{ route('Instrutor.store', $user->id) }}">Atribuir como
-                                        Instrutor</a>
+                                    <a class="btn btn-primary btn-sm" role="button"
+                                        href="{{ route('Instrutor.store', $user->id) }}">Atribuir</a>
                                 </td>
                             </tr>
                         @endforeach

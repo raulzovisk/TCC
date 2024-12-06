@@ -31,7 +31,7 @@
 
                                 <h4>Exercícios:</h4>
                                 @foreach ($ficha->exercicios as $exercicio)
-                                    <table class="table table-bordered mt-2">
+                                    <table class="table table-responsive table-bordered mt-2">
                                         <thead>
                                             <tr>
                                                 <th style="width: 50%;">Nome</th>

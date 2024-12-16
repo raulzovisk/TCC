@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\FichaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckUser;
@@ -14,27 +17,17 @@ Route::get('/', function () {
     //
 })->middleware(CheckUser::class);
 
-Route::post('/login', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+Route::post('/login', [UserController::class, 'login']);
 
-    if (!Auth::attempt($request->only('email', 'password'))) {
-        return response()->json([
-            'message' => 'Credenciais inválidas'
-        ], 401);
-    }
-
-    $user = User::where('email', $request->email)->firstOrFail();
-
-    $token = $user->createToken('auth_token')->plainTextToken;
-
-    return response()->json([
-        'access_token' => $token,
-        'token_type' => 'Bearer',
-    ]);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return response()->json($request->user());
+    });
 });
+
+Route::middleware('auth:sanctum')->get('/fichas', [FichaController::class, 'getFichas']);
+Route::middleware('auth:sanctum')->get('/dados', [AlunoController::class, 'getMedidas']);
+
 
 Route::fallback(function () {
     return redirect('/dashboard');

@@ -33,6 +33,12 @@ class FichaController extends Controller
         return view('ficha.create', compact('alunos', 'categorias', 'exercicios'));
     }
 
+    public function show($id)
+    {
+        $ficha = Ficha::with('exercicios')->findOrFail($id);
+
+        return view('ficha.show', ['ficha' => $ficha]);
+    }
 
     public function store(Request $request)
     {
@@ -68,8 +74,6 @@ class FichaController extends Controller
     }
 
 
-
-
     public function edit($id)
     {
         $ficha = Ficha::findOrFail($id);
@@ -101,15 +105,12 @@ class FichaController extends Controller
             $ficha->exercicios()->attach($exercicioId, [
                 'series' => $detalhes[$exercicioId]['series'] ?? '',
                 'repeticoes' => $detalhes[$exercicioId]['repeticoes'] ?? '',
-                'observacoes' => $detalhes[$exercicioId]['observacoes'] ?? '', 
+                'observacoes' => $detalhes[$exercicioId]['observacoes'] ?? '',
             ]);
         }
 
         return redirect()->route('instrutor.ver_fichas_aluno', ['alunoId' => $alunoId])->with('success', 'Ficha atualizada com sucesso!');
     }
-
-
-
 
     public function delete($id)
     {
@@ -119,11 +120,30 @@ class FichaController extends Controller
         return redirect()->back()->with('success', 'Ficha deletada com sucesso!');
     }
 
-    public function show($id)
-    {
-        $ficha = Ficha::with('exercicios')->findOrFail($id);
+    
 
-        return view('ficha.show', ['ficha' => $ficha]);
+    public function getFichas(Request $request)
+    {
+        // Obtém o usuário autenticado
+        $user = $request->user();
+        
+        // Encontrar o aluno relacionado ao usuário autenticado
+        $aluno = $user->aluno;  // Presume-se que o usuário tenha um relacionamento 'aluno'
+
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado.'], 404);
+        }
+
+        // Buscar as fichas relacionadas ao aluno, incluindo os exercícios
+        $fichas = Ficha::with('exercicios') // Inclui os exercícios relacionados à ficha
+                        ->where('id_aluno', $aluno->id)
+                        ->get();
+
+        if ($fichas->isEmpty()) {
+            return response()->json(['message' => 'Nenhuma ficha encontrada.'], 404);
+        }
+
+        return response()->json($fichas, 200);
     }
 
 }

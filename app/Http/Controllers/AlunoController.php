@@ -106,15 +106,11 @@ class AlunoController extends Controller
 
     public function show()
     {
-        // Obtém o usuário autenticado
         $user = Auth::user();
-
-        // Encontra o aluno relacionado ao usuário autenticado
         $aluno = Aluno::where('id_user', $user->id)->firstOrFail();
 
         // Recupera a última entrada de medidas corporais
         $medidaCorporal = $aluno->medidasCorporais()->orderBy('data_medida', 'desc')->first();
-
 
         // Recupera o histórico completo de medidas
         $historicoMedidas = $medidaCorporal ? $medidaCorporal->historico_medidas : [];
@@ -128,7 +124,6 @@ class AlunoController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Encontra o aluno pelo ID
         $aluno = Aluno::findOrFail($id);
 
         // Recupera a última medida corporal
@@ -181,4 +176,25 @@ class AlunoController extends Controller
 
     }
 
+    public function getMedidas(Request $request)
+    {
+        // Obtém o usuário autenticado
+        $user = $request->user();
+
+        // Encontrar o aluno relacionado ao usuário autenticado
+        $aluno = $user->aluno;
+
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado.'], 404);
+        }
+
+        // Buscar as medidas corporais relacionadas ao aluno
+        $medidas = $aluno->medidasCorporais; // Usando o relacionamento
+
+        if ($medidas->isEmpty()) {
+            return response()->json(['message' => 'Nenhuma medida corporal encontrada.'], 404);
+        }
+
+        return response()->json($medidas, 200);
+    }
 }

@@ -30,7 +30,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('tema/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
-
 </head>
 
 <body id="page-top">
@@ -222,7 +221,11 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                                <strong>{{ Auth::user()->name }}</strong>
+                                <div class="d-flex align-items-center">
+                                    <!-- Verifica se o usuário tem uma foto de perfil -->
+                                    <img src="{{ Auth::user()->profile_photo_url }}" alt="Foto de Perfil"
+                                        class="rounded-circle" style="width: 40px; height: 40px; object-fit: cover;">
+                                </div>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -256,7 +259,6 @@
                     <div class="row">
                         <div class="container">
                             @yield('content')
-
                         </div>
                     </div>
 

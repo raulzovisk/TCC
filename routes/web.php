@@ -13,7 +13,7 @@ use App\Http\Middleware\AdminMiddleware;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 

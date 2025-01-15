@@ -1,47 +1,68 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html lang="pt-br">
 
-        
-        <x-validation-errors class="mb-4" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="imagex/png" href="{{ asset('img/academia.ico') }}">
+    <link rel="stylesheet" href="{{ asset('login.css') }}">
+    <title>GYN WORKOUTS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-        @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-                {{ $value }}
-            </div>
-        @endsession
+</head>
+<body>
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div>
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="password" value="{{ __('Senha') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+    <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="row border rounded-5 p-3 bg-white shadow box-area">
+            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column left-box"
+                style="background: rgb(17, 143, 185)">
+                <div class="featured-image mb-3">
+                    <img src="/img/branco.png" class="img-fluid" style="width: 300px; margin-right: 15px">
+                </div>
             </div>
 
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-checkbox id="remember_me" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Lembrar sessão') }}</span>
-                </label>
-            </div>
+            <div class="col-md-6 right-box">
+                <x-validation-errors class="mb-4" />
 
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 " href="{{ route('register') }}">
-                    {{ __('Registre-se') }}
-                </a>
+                @session('status')
+                    <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
+                        {{ $value }}
+                    </div>
+                @endsession
 
-                <x-button class="ms-4" style="background-color: rgb(17, 138, 178)">
-                    {{ __('Log in') }}
-                </x-button>
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="header-text mb-4">
+                        <h2>Bem Vindo!</h2>
+                        <p>Estamos felizes que você está de volta.</p>
+                    </div>
+                    <div class="input-group mb-3">
+                        <x-input id="email" class="form-control form-control-lg bg-light fs-6" type="email"
+                            name="email" :value="old('email')" required autofocus placeholder="Email address" />
+                    </div>
+                    <div class="input-group mb-1">
+                        <x-input id="password" class="form-control form-control-lg bg-light fs-6" type="password"
+                            name="password" required placeholder="Password" />
+                    </div>
+                    <div class="input-group mb-5 d-flex justify-content-between">
+                        <div class="form-check">
+                            <x-checkbox id="remember_me" name="remember" class="form-check-input" />
+                            <label for="remember_me" class="form-check-label text-secondary">
+                                <small>Lembrar de mim</small>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <button class="btn btn-lg btn-primary w-100 fs-6">{{ __('Log in') }}</button>
+                    </div>
+                    <div class="row">
+                        <small>Não tem conta? <a href="{{ route('register') }}">Registrar</a></small>
+                    </div>
+                </form>
             </div>
-        </form>
-    </x-authentication-card>
-</x-guest-layout>
+        </div>
+    </div>
+</body>
+
+</html>

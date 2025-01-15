@@ -18,20 +18,6 @@
         </div>
 
         <div>
-            <ul>
-                <a href="#">
-                    <li>Início</li>
-                </a>
-                <a href="#">
-                    <li>Serviços</li>
-                </a>
-                <a href="#">
-                    <li>Sobre</li>
-                </a>
-                <a href="#">
-                    <li>Contato</li>
-                </a>
-            </ul>
         </div>
     </header>
 

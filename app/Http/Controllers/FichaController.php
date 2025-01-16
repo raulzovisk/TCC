@@ -70,7 +70,8 @@ class FichaController extends Controller
             ]);
         }
 
-        return redirect('/dashboard')->with('success', 'Ficha criada com sucesso!');
+        return redirect()->route('instrutor.ver_fichas_aluno', ['alunoId' => $validatedData['id_aluno']])
+            ->with('success', 'Ficha criada com sucesso!');
     }
 
 
@@ -120,13 +121,13 @@ class FichaController extends Controller
         return redirect()->back()->with('success', 'Ficha deletada com sucesso!');
     }
 
-    
+
 
     public function getFichas(Request $request)
     {
         // Obtém o usuário autenticado
         $user = $request->user();
-        
+
         // Encontrar o aluno relacionado ao usuário autenticado
         $aluno = $user->aluno;  // Presume-se que o usuário tenha um relacionamento 'aluno'
 
@@ -135,9 +136,21 @@ class FichaController extends Controller
         }
 
         // Buscar as fichas relacionadas ao aluno, incluindo os exercícios
-        $fichas = Ficha::with('exercicios') // Inclui os exercícios relacionados à ficha
-                        ->where('id_aluno', $aluno->id)
-                        ->get();
+        $fichas = Ficha::with([
+            'exercicios' => function ($query) {
+                $query->select('id', 'nome', 'img_itens');
+            }
+        ])->where('id_aluno', $aluno->id)->get();
+
+        // Personalizar a estrutura de resposta para incluir as URLs completas das imagens
+        $fichas = $fichas->map(function ($ficha) {
+            $ficha->exercicios->each(function ($exercicio) {
+                $exercicio->img_url = $exercicio->img_itens
+                    ? asset("storage/img_itens/{$exercicio->img_itens}")
+                    : asset("storage/img_itens/noimage.png");
+            });
+            return $ficha;
+        });
 
         if ($fichas->isEmpty()) {
             return response()->json(['message' => 'Nenhuma ficha encontrada.'], 404);
@@ -145,5 +158,6 @@ class FichaController extends Controller
 
         return response()->json($fichas, 200);
     }
+
 
 }

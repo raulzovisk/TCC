@@ -18,6 +18,9 @@ Route::get('/', function () {
 })->middleware(CheckUser::class);
 
 Route::post('/login', [UserController::class, 'login']);
+Route::post('/register', [UserController::class, 'register']);
+Route::put('/users/{user}',[UserController::class, 'update']);
+Route::middleware('auth:sanctum')->delete('/logout', [UserController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
@@ -27,7 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::middleware('auth:sanctum')->get('/fichas', [FichaController::class, 'getFichas']);
 Route::middleware('auth:sanctum')->get('/dados', [AlunoController::class, 'getMedidas']);
-
+Route::middleware('auth:sanctum')->get('/imagens', [AlunoController::class, 'getMedidas']);
 
 Route::fallback(function () {
     return redirect('/dashboard');

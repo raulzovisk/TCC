@@ -11,13 +11,13 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias = Categoria::all();
-        return view('categoria.index', ['categorias' => $categorias]);
+        return view('Categoria.index', ['categorias' => $categorias]);
     }
     
 
     public function create(Request $request)
     {
-        return view('categoria.create');
+        return view('Categoria.create');
     }
 
     public function store(Request $request ){

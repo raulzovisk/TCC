@@ -68,13 +68,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Atualizar os dados de um usuário existente com base nos dados fornecidos na requisição.
-     * 
-     * @param  \App\Http\Requests\UserRequest  $request O objeto de requisição contendo os dados do usuário a ser atualizado.
-     * @param  \App\Models\User  $user O usuário a ser atualizado.
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function update(UserRequest $request, User $user): JsonResponse
     {
 

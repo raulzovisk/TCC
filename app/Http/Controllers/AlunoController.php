@@ -24,7 +24,7 @@ class AlunoController extends Controller
 
         $alunos = $query->paginate(10);
 
-        return view('aluno.index', ['alunos' => $alunos]);
+        return view('Aluno.index', ['alunos' => $alunos]);
     }
 
 

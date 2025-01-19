@@ -5,19 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Exercicio;
 use Illuminate\Http\Request;
+use Storage;
 
 class ExercicioController extends Controller
 {
     public function index(Request $request)
     {
-        return view('exercicio.index', ['exercicios' => Exercicio::orderBy('id', 'desc')->paginate(5)]);
+        return view('Exercicio.index', ['exercicios' => Exercicio::orderBy('id', 'desc')->paginate(5)]);
 
     }
 
     public function create()
     {
         $categorias = Categoria::all();
-        return view('exercicio.create', ['categorias' => $categorias]);
+        return view('Exercicio.create', ['categorias' => $categorias]);
 
     }
 
@@ -55,7 +56,7 @@ class ExercicioController extends Controller
 
         // Redirecionando para o dashboard com uma mensagem de sucesso
         $categorias = Categoria::all();
-        return view('exercicio.create', ['categorias' => $categorias])->with('success', 'Exercício criado com sucesso.');
+        return view('Exercicio.create', ['categorias' => $categorias])->with('success', 'Exercício criado com sucesso.');
     }
 
 
@@ -68,6 +69,35 @@ class ExercicioController extends Controller
     {
         $Exercicio = Exercicio::findOrFail($id);
 
+        // Validar os campos necessários
+        $validated = $request->validate([
+            'nome' => 'required|max:255',
+            'id_categoria' => 'required|integer',
+            'img_itens' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Lógica de upload de imagem
+        if ($request->hasFile('img_itens')) {
+            // Obtendo o nome completo do arquivo com a extensão
+            $filenameWithExt = $request->file('img_itens')->getClientOriginalName();
+            // Extraindo o nome do arquivo
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Extraindo a extensão do arquivo
+            $extension = $request->file('img_itens')->getClientOriginalExtension();
+            // Gerando um nome único para o arquivo
+            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+            // Fazendo o upload da imagem
+            $path = $request->file('img_itens')->storeAs('public/img_itens', $fileNameToStore);
+
+            // Deletar a imagem antiga se existir
+            if ($Exercicio->img_itens !== 'noimage.png') {
+                Storage::delete('public/img_itens/' . $Exercicio->img_itens);
+            }
+
+            // Atualizando o campo da imagem com o novo nome do arquivo
+            $Exercicio->img_itens = $fileNameToStore;
+        }
+
         $Exercicio->nome = $request->nome;
 
         // Verificar se a categoria no request é nula
@@ -77,8 +107,9 @@ class ExercicioController extends Controller
 
         $Exercicio->save();
 
-        return redirect()->route('Exercicio.create');
+        return redirect()->route('Exercicio.create')->with('success', 'Exercício atualizado com sucesso.');
     }
+
     public function delete(Request $request, $id)
     {
         $exercicio = Exercicio::findOrFail($id);

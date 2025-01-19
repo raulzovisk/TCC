@@ -25,7 +25,7 @@ class InstrutorController extends Controller
         
         $instrutores = $query->paginate(10);
         
-        return view('instrutor.index', ['instrutores' => $instrutores]);
+        return view('Instrutor.index', ['instrutores' => $instrutores]);
     }
     
     public function create(Request $request)

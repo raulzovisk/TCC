@@ -21,7 +21,7 @@ class FichaController extends Controller
             $fichas = collect();
         }
 
-        return view('ficha.index', compact('fichas'));
+        return view('Ficha.index', compact('fichas'));
     }
 
     public function create()
@@ -30,14 +30,14 @@ class FichaController extends Controller
         $categorias = Categoria::all();
         $exercicios = Exercicio::all();
 
-        return view('ficha.create', compact('alunos', 'categorias', 'exercicios'));
+        return view('Ficha.create', compact('alunos', 'categorias', 'exercicios'));
     }
 
     public function show($id)
     {
         $ficha = Ficha::with('exercicios')->findOrFail($id);
 
-        return view('ficha.show', ['ficha' => $ficha]);
+        return view('Ficha.show', ['ficha' => $ficha]);
     }
 
     public function store(Request $request)
@@ -80,7 +80,7 @@ class FichaController extends Controller
         $ficha = Ficha::findOrFail($id);
         $exercicios = Exercicio::all();
         $alunos = Aluno::all();
-        return view('ficha.edit', compact('ficha', 'exercicios', 'alunos'));
+        return view('Ficha.edit', compact('ficha', 'exercicios', 'alunos'));
     }
 
     public function update(Request $request, $id)

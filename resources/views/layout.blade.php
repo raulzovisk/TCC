@@ -55,7 +55,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ route('dashboard') }}">
                     <i class="fas fa-fw fa-angle-up"></i>
-                    <span>Dashboard</span></a>
+                    <span>Menu</span></a>
             </li>
 
             <!-- Divider -->

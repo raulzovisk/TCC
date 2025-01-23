@@ -125,39 +125,54 @@ class FichaController extends Controller
 
     public function getFichas(Request $request)
     {
-        // Obtém o usuário autenticado
+        // obtém o usuário autenticado através da requisição
         $user = $request->user();
 
-        // Encontrar o aluno relacionado ao usuário autenticado
-        $aluno = $user->aluno;  // Presume-se que o usuário tenha um relacionamento 'aluno'
+        // encontra o aluno relacionado ao usuário autenticado. 
+        $aluno = $user->aluno;
 
+        // verifica se o aluno foi encontrado, caso não, retorna um erro 404 com a mensagem 'Aluno não encontrado.'
         if (!$aluno) {
             return response()->json(['message' => 'Aluno não encontrado.'], 404);
         }
 
-        // Buscar as fichas relacionadas ao aluno, incluindo os exercícios
+        // busca as fichas do aluno, incluindo os exercícios associados a cada ficha.
+        // 'exercicios' é um relacionamento de 'Ficha' que contém os exercícios.
+        // o 'with' é usado para carregar os exercícios relacionados.
         $fichas = Ficha::with([
             'exercicios' => function ($query) {
+                // seleciona apenas os campos 'id', 'nome', e 'img_itens' dos exercícios
                 $query->select('id', 'nome', 'img_itens');
             }
-        ])->where('id_aluno', $aluno->id)->get();
+        ])
+            // filtra as fichas relacionadas ao aluno, com base no id do aluno
+            ->where('id_aluno', $aluno->id)
+            // recupera as fichas encontradas
+            ->get();
 
-        // Personalizar a estrutura de resposta para incluir as URLs completas das imagens
+        // inclui as URLs completas das imagens dos exercícios
         $fichas = $fichas->map(function ($ficha) {
+            // para cada ficha, percorre os exercícios relacionados
             $ficha->exercicios->each(function ($exercicio) {
+                // verifica se o exercício tem uma imagem associada e cria a URL da imagem
+                // se não houver imagem, uma imagem padrão 'noimage.png' será usada
                 $exercicio->img_url = $exercicio->img_itens
                     ? asset("storage/img_itens/{$exercicio->img_itens}")
                     : asset("storage/img_itens/noimage.png");
             });
+            // retorna a ficha com os exercícios atualizados
             return $ficha;
         });
 
+        // verifica se a coleção de fichas está vazia, se sim, retorna um erro 404 com a mensagem 'Nenhuma ficha encontrada.'
         if ($fichas->isEmpty()) {
             return response()->json(['message' => 'Nenhuma ficha encontrada.'], 404);
         }
 
+        // retorna a lista de fichas com status 200 (sucesso)
         return response()->json($fichas, 200);
     }
+
 
 
 }

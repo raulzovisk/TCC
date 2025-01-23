@@ -73,8 +73,8 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <img src="{{ asset('storage/img_itens/' . $exercicio->img_itens) }}"
-                                                                alt="Imagem do exercício" class="exercicio-img">
+                                                        <img src="{{ asset('storage/img_itens/' . $exercicio->img_itens) }}" alt="Imagem do exercício" class="exercicio-img">
+
                                                             {{ $exercicio->nome }}
                                                         </td>
                                                         <td>

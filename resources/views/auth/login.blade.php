@@ -11,6 +11,7 @@
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
 </head>
+
 <body>
 
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -20,6 +21,7 @@
                 <div class="featured-image mb-3">
                     <img src="/img/branco.png" class="img-fluid" style="width: 300px; margin-right: 15px">
                 </div>
+
             </div>
 
             <div class="col-md-6 right-box">
@@ -39,11 +41,14 @@
                     </div>
                     <div class="input-group mb-3">
                         <x-input id="email" class="form-control form-control-lg bg-light fs-6" type="email"
-                            name="email" :value="old('email')" required autofocus placeholder="Email address" />
+                            name="email" :value="old('email')" required autofocus placeholder="Email" />
                     </div>
                     <div class="input-group mb-1">
                         <x-input id="password" class="form-control form-control-lg bg-light fs-6" type="password"
-                            name="password" required placeholder="Password" />
+                            name="password" required placeholder="Senha" />
+                        <span class="input-group-text bg-light" id="togglePassword">
+                            <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                        </span>
                     </div>
                     <div class="input-group mb-5 d-flex justify-content-between">
                         <div class="form-check">
@@ -64,5 +69,25 @@
         </div>
     </div>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+        togglePassword.addEventListener('click', function() {
+            // Toggle the input type
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+            // Update the icon
+            togglePasswordIcon.classList.toggle('fa-eye');
+            togglePasswordIcon.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>
+
+<!-- Add Font Awesome CDN for the icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 </html>

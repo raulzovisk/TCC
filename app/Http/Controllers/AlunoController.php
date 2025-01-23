@@ -36,29 +36,37 @@ class AlunoController extends Controller
 
     public function list(Request $request)
     {
+        // Cria a consulta inicial para buscar usuários não associados a 'aluno'.
         $query = User::query()->whereNotIn('id', function ($query) {
             $query->select('id_user')->from('aluno');
         });
 
+        // Adiciona a pesquisa por nome, se o parâmetro 'search' estiver presente.
         if ($request->has('search')) {
             $search = $request->get('search');
             $query->where('name', 'like', "%{$search}%");
         }
 
+        // Ordena os resultados em ordem alfabética pelo nome.
+        $query->orderBy('name', 'asc');
+
+        // Pagina os resultados com 10 registros por página.
         $users = $query->paginate(10);
 
+        // Retorna a view com os dados.
         return view('Aluno.list', compact('users'));
     }
 
+
     public function store(Request $request)
     {
-        // Criação de um novo aluno
+        // criação de um novo aluno
         $aluno = new Aluno();
         $aluno->id_user = $request->input('id_user');
         $aluno->idade = $request->input('idade');
         $aluno->save();
 
-        // Criação da Medida Corporal associada ao Aluno
+        // criação da Medida Corporal associada ao Aluno
         $medidaCorporal = new MedidaCorporal();
         $medidaCorporal->id_aluno = $aluno->id;
         $medidaCorporal->data_medida = now(); // Data da medida
@@ -91,7 +99,7 @@ class AlunoController extends Controller
             ]
         ];
 
-        // Salva as medidas corporais
+        // salva as medidas corporais
         $medidaCorporal->save();
 
         return redirect()->route('Aluno.index')->with('success', 'Aluno e medidas corporais criados com sucesso!');
@@ -124,13 +132,23 @@ class AlunoController extends Controller
 
     public function update(Request $request, $id)
     {
+        // busca o aluno pelo ID 
+        //lança uma exceção se não for encontrado
         $aluno = Aluno::findOrFail($id);
 
-        // Recupera a última medida corporal
+        // recupera a última medida corporal do aluno, ordenando pela data mais recente
         $medidaCorporal = $aluno->medidasCorporais()->orderBy('data_medida', 'desc')->first();
 
-        // Adicionar a medida atual ao histórico antes de atualizar
+        // verifica se existe uma medida corporal antes de continuar
+        if (!$medidaCorporal) {
+            // retorna com erro caso não existam medidas corporais cadastradas
+            return redirect()->back()->with('error', 'Nenhuma medida corporal encontrada para o aluno.');
+        }
+
+        // recupera o histórico de medidas da última medida corporal ou cria um array vazio
         $historico = $medidaCorporal->historico_medidas ?? [];
+
+        // adiciona a medida atual (antes da atualização) ao histórico
         $historico[] = [
             'data_medida' => $medidaCorporal->data_medida,
             'peso' => $medidaCorporal->peso,
@@ -145,8 +163,10 @@ class AlunoController extends Controller
             'coxa_esquerda' => $medidaCorporal->coxa_esquerda,
         ];
 
-        // Atualizar os dados da medida corporal com os novos valores do request
+        // atualiza a data da medida corporal para o momento atual
         $medidaCorporal->data_medida = now();
+
+        // atualiza os valores da medida corporal com os dados recebidos na requisição
         $medidaCorporal->peso = $request->input('peso');
         $medidaCorporal->altura = $request->input('altura');
         $medidaCorporal->gordura = $request->input('gordura');
@@ -158,14 +178,15 @@ class AlunoController extends Controller
         $medidaCorporal->coxa_direita = $request->input('coxa_direita');
         $medidaCorporal->coxa_esquerda = $request->input('coxa_esquerda');
 
-        // Atualizar o histórico de medidas
+        // atualiza o histórico de medidas corporais
         $medidaCorporal->historico_medidas = $historico;
 
-        // Salvar as alterações
+        // salva as alterações no banco de dados
         $medidaCorporal->save();
 
         return redirect()->route('Aluno.index')->with('success', 'Dados do aluno atualizados com sucesso!');
     }
+
 
     public function delete(Request $request, $id)
     {

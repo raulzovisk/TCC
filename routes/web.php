@@ -13,6 +13,9 @@ use App\Http\Middleware\AdminMiddleware;
 
 
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect('/dashboard');
+    }
     return view('auth.login');
 });
 

@@ -7,7 +7,7 @@
     <div class="card shadow mb-4">
         <div class="card-header  d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Fichas de: {{ $aluno->user->name }}</h6>
-            <button onclick="history.back()" class="btn btn-primary ml-auto">Voltar</button>
+            <a href="{{route ('Aluno.index')}}" class="btn btn-primary ml-auto">Voltar</a>
         </div>
 
         <div class="col-md-12">
@@ -22,8 +22,8 @@
                                 Detalhes da Ficha
                             </div>
                             <div class="card-body">
-                                <p><strong>Ficha: </strong>{{ $ficha->descricao }}</p>
-                                <p><strong>Objetivo:</strong> {{ $ficha->objetivo }}</p>
+                                <p><strong>Ficha: </strong>{{ $ficha->nome }}</p>
+                                <p><strong>Objetivo:</strong> {{ $ficha->descricao }}</p>
                                 <p><strong>Data:</strong> {{ Carbon::parse($ficha->data)->format('d/m/Y') }}</p>
                                 <p><strong>Aluno:</strong> {{ $ficha->aluno->user->name }}</p>
 

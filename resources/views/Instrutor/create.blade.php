@@ -3,7 +3,7 @@
     <div class="card shadow mb-4 ">
         <div class="card-header py-3 d-flex">
             <h6 class="m-2 font-weight-bold text-primary">Cadastrar Instrutor</h6>
-            <button onclick="history.back()" class="btn btn-secondary ml-auto">Voltar</button>
+            <a href="{{ route(name: 'Instrutor.index') }}" class="btn btn-secondary ml-auto">Voltar</a>
         </div>
         <div class="card-body table-responsive">
             
@@ -21,6 +21,10 @@
             <form action="{{ route('Instrutor.create') }}" method="GET" class="mb-3">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control rounded" placeholder="Buscar por nomes...">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Buscar</button>
+                        <a href="{{ route('Instrutor.create') }}" class="btn btn-secondary">Limpar</a>
+                    </div>
                 </div>
             </form>
 
